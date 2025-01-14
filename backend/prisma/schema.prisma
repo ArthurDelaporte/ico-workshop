@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid()) // Utilisation d'un UUID comme ID
+  createdAt DateTime @default(now()) @map("created_at")
+  email     String   @unique
+  firstname String
+  lastname  String
+  birthday  DateTime
+  role      String
+
+  // Relation avec Player
+  players Player[]
+
+  @@map("user") // Map à la table "user" dans la base de données
+}
+
+model Card {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  img         String?
+  name        String
+  description String?
+
+  // Relation avec Player
+  players Player[]
+
+  @@map("card")
+}
+
+model Party {
+  id            String   @id @default(uuid())
+  createdAt     DateTime @default(now()) @map("created_at")
+  online        Boolean  @default(false)
+  password      String?
+  status        String
+  hostUser      String   @map("host_user")
+  numberPlayers Int      @map("number_players")
+  scoreMarins   Int      @map("score_marins")
+  scorePirates  Int      @map("score_pirates")
+  aventure      Json
+
+  // Relation avec Player
+  players Player[]
+
+  @@map("party")
+}
+
+model Player {
+  id           String   @id @default(uuid())
+  createdAt    DateTime @default(now()) @map("created_at")
+  name         String
+  cardId       String?  @map("cardId")
+  userId       String?  @map("userId")
+  partyId      String?  @map("partyId")
+  lastAventure Boolean  @default(false) @map("last_aventure")
+
+  // Relations
+  card  Card?  @relation(fields: [cardId], references: [id])
+  user  User?  @relation(fields: [userId], references: [id])
+  party Party? @relation(fields: [partyId], references: [id])
+
+  @@map("player")
+}
