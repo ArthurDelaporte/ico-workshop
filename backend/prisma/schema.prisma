@@ -25,9 +25,11 @@ model User {
 model Card {
   id          String   @id @default(uuid())
   createdAt   DateTime @default(now()) @map("created_at")
-  img         String?
   name        String
   description String?
+  img         String?
+  type        String
+  numero      Int
 
   // Relation avec Player
   players Player[]
