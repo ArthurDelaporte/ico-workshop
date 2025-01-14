@@ -1,17 +1,26 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const app = express();
 
-// Middleware pour le parsing JSON
+const corsOptions = {
+    origin: process.env.CLIENT_URL || "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+};
+
+app.use(cors(corsOptions));
+
+
 app.use(express.json());
 
-// Importer les routes
+
 const authRoutes = require("./routes/auth");
 
-// Définir les routes API
+
 app.use("/api/auth", authRoutes);
 
-// Route par défaut
+
 app.get("/", (req, res) => {
     res.send("Bienvenue dans le backend de ton jeu !");
 });
