@@ -1,67 +1,99 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [error, setError] = useState('');
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    firstname: "",
+    lastname: "",
+    birthday: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    // Simule l'inscription en affichant un message
-    if (email && password && firstname && lastname) {
-      alert('Inscription réussie!');
-    } else {
-      setError('Tous les champs sont requis');
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSignUp = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Erreur inconnue");
+      alert("Inscription réussie !");
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex min-h-screen bg-teal-100 justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-semibold text-teal-700 text-center mb-8">Inscription</h2>
-        <form onSubmit={handleSignUp}>
-          <input
-            type="text"
-            value={firstname}
-            onChange={(e) => setFirstname(e.target.value)}
-            placeholder="Prénom"
-            className="w-full p-4 mb-4 border border-teal-300 rounded-lg"
-            required
-          />
-          <input
-            type="text"
-            value={lastname}
-            onChange={(e) => setLastname(e.target.value)}
-            placeholder="Nom"
-            className="w-full p-4 mb-4 border border-teal-300 rounded-lg"
-            required
-          />
+    <div className="min-h-screen bg-teal-50 flex flex-col justify-center items-center px-6 py-8">
+      <div className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
+        <h2 className="text-2xl font-semibold text-teal-700 text-center mb-8">
+          Inscription
+        </h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <div className="space-y-4">
           <input
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
             placeholder="Email"
-            className="w-full p-4 mb-4 border border-teal-300 rounded-lg"
-            required
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
           />
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
             placeholder="Mot de passe"
-            className="w-full p-4 mb-6 border border-teal-300 rounded-lg"
-            required
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
+          <input
+            type="text"
+            name="firstname"
+            placeholder="Prénom"
+            value={formData.firstname}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
+          <input
+            type="text"
+            name="lastname"
+            placeholder="Nom"
+            value={formData.lastname}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
+          />
+          <input
+            type="date"
+            name="birthday"
+            placeholder="Date de naissance"
+            value={formData.birthday}
+            onChange={handleChange}
+            className="w-full px-4 py-3 border rounded-lg"
           />
           <button
-            type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"
+            onClick={handleSignUp}
+            className="w-full text-center bg-teal-600 text-white py-3 text-lg font-medium rounded-lg shadow-md hover:bg-teal-700 transition duration-300"
+            disabled={loading}
           >
-            S'inscrire
+            {loading ? "Inscription..." : "S'inscrire"}
           </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-        </form>
+        </div>
       </div>
     </div>
   );
