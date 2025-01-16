@@ -2,6 +2,9 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
 
+import { getPartyInfo } from "../database/party";
+import { getPlayerInfo } from "../database/player";
+
 const CaptainRoleReveal = () => {
   const { players } = usePlayerContext();
   const navigate = useNavigate();
@@ -29,7 +32,7 @@ const CaptainRoleReveal = () => {
         </div>
 
         {/* Informations du capitaine */}
-        <h1 className="text-xl font-bold text-gray-800">{captain.name} (Capitaine)</h1>
+        <p className="text-xl font-bold text-gray-800">{captain.name} (Capitaine)</p>
         <p className="text-lg font-semibold text-teal-700 mt-4">Ton rôle est</p>
         <p className="text-2xl font-bold text-gray-800">{captain.mainRole}</p>
 
