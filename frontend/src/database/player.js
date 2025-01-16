@@ -1,6 +1,6 @@
 import { addData, getData} from './indexedDB';
 
-async function setPlayerName(partyId, playerName) {
+export async function setPlayerName(partyId, playerName) {
     // Récupérer les joueurs de la partie
     const party = await getData('party', partyId);
     if (!party) throw new Error('Party introuvable.');
@@ -28,7 +28,7 @@ async function setPlayerName(partyId, playerName) {
     throw new Error('Tous les joueurs ont déjà un nom.');
 }
 
-async function getAllPlayersName(partyId) {
+export async function getAllPlayersName(partyId) {
     const party = await getData('party', partyId);
 
     const playersName = []
@@ -41,7 +41,7 @@ async function getAllPlayersName(partyId) {
     return playersName;
 }
 
-async function getAllPlayers(partyId) {
+export async function getAllPlayers(partyId) {
     const party = await getData('party', partyId);
 
     const playersName = []

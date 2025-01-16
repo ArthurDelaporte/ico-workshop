@@ -1,6 +1,6 @@
 import { addData } from './indexedDB';
 
-async function initializeParty(numberPlayers) {
+export async function initializeParty(numberPlayers) {
     // Validation du nombre de joueurs
     if (numberPlayers < 7 || numberPlayers > 20) {
         throw new Error('Le nombre de joueurs doit être entre 7 et 20.');

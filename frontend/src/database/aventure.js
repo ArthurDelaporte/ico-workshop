@@ -1,6 +1,6 @@
 import { getData, addData } from "./indexedDB";
 
-async function createAventure(partyId, teamPlayersId) {
+export async function createAventure(partyId, teamPlayersId) {
     const party = await getData('party', partyId);
     const aventureId = crypto.randomUUID();
     const aventure = {
@@ -21,7 +21,7 @@ async function createAventure(partyId, teamPlayersId) {
     return aventure;
 }
 
-async function teamAventureReject(partyId) {
+export async function teamAventureReject(partyId) {
     const party = await getData('party', partyId);
     const aventureId = party.aventures[-1].id;
     const aventure = await getData('aventure', aventureId);
@@ -37,7 +37,7 @@ async function teamAventureReject(partyId) {
     return aventure;
 }
 
-// async function newTeamAventure(partyId, teamPlayersId) {
+// export async function newTeamAventure(partyId, teamPlayersId) {
 //     const party = await getData('party', partyId);
 //     const aventureId = party.aventures[-1].id;
 //     const aventure = await getData('aventure', aventureId);
@@ -49,7 +49,7 @@ async function teamAventureReject(partyId) {
 //     return aventure;
 // }
 
-async function finalizeAventure(partyId) {
+export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);
     const aventureId = party.aventures[-1].id;
     const aventure = await getData('aventure', aventureId);
@@ -82,7 +82,7 @@ async function finalizeAventure(partyId) {
     return { party, aventure };
 }
 
-async function changeCaptain(partyId) {
+export async function changeCaptain(partyId) {
     const party = await getData('party', partyId);
 
     party.last_captains.push(party.actual_captain);
