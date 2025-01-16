@@ -8,7 +8,8 @@ import Dashboard from './components/Dashbord';
 import Rules_admin from './components/Rules_admin';
 import Cards_admin from './components/Cards_admin';
 import Users_admin from './components/Users_admin';
-
+import Stats_admin from './components/Stats_admin';
+import Bugs_admin from './components/Bugs_admin';
 
 import Homepage from './components/Homepage'
 
@@ -26,6 +27,9 @@ function App() {
       <Route path="/rules_admin" element={<Rules_admin />} />
       <Route path="/cards_admin" element={<Cards_admin />} />
       <Route path="/users_admin" element={<Users_admin />} />
+      <Route path="/stats_admin" element={<Stats_admin />} />
+      <Route path="/bugs_admin" element={<Bugs_admin />} />
+      
       </Routes>
     </Router>
   );
