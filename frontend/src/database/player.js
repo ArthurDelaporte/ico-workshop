@@ -1,9 +1,15 @@
-import { getAllData, addData } from './indexedDB';
+import { addData, getData} from './indexedDB';
 
 async function setPlayerName(partyId, playerName) {
     // Récupérer les joueurs de la partie
     const party = await getData('party', partyId);
     if (!party) throw new Error('Party introuvable.');
+
+    const allPlayersName = await getAllPlayersName(partyId);
+
+    if (playerName in allPlayersName) {
+        throw new Error('Player name already exists');
+    }
 
     for (const playerId of party.playersId) {
         const player = await getData('player', playerId);
@@ -20,4 +26,30 @@ async function setPlayerName(partyId, playerName) {
     }
 
     throw new Error('Tous les joueurs ont déjà un nom.');
+}
+
+async function getAllPlayersName(partyId) {
+    const party = await getData('party', partyId);
+
+    const playersName = []
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+        playersName.push(player.name);
+    }
+
+    return playersName;
+}
+
+async function getAllPlayers(partyId) {
+    const party = await getData('party', partyId);
+
+    const playersName = []
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+        playersName.push(player);
+    }
+
+    return playersName;
 }

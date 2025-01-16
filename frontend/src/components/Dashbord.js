@@ -10,7 +10,7 @@ const Dashboard = () => {
                     <span className="inline-block p-3 text-yellow-700">
                         🏴‍☠️
                     </span>
-                    <Link to="/rules_admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+                    <Link to="/rules-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
                         Gestion des règles du jeu
                     </Link>
                 </li>
@@ -18,7 +18,7 @@ const Dashboard = () => {
                     <span className="inline-block p-3 text-yellow-700">
                         🗺️
                     </span>
-                    <Link to="/cards_admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+                    <Link to="/cards-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
                         Gestion des cartes
                     </Link>
                 </li>
@@ -26,7 +26,7 @@ const Dashboard = () => {
                     <span className="inline-block p-3 text-yellow-700">
                         ⚓
                     </span>
-                    <Link to="/users_admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+                    <Link to="/users-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
                         Gestion des utilisateurs
                     </Link>
                 </li>
@@ -34,7 +34,7 @@ const Dashboard = () => {
                     <span className="inline-block p-3 text-yellow-700">
                         📊
                     </span>
-                    <Link to="/stats_admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+                    <Link to="/stats-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
                         Statistiques
                     </Link>
                 </li>
@@ -42,7 +42,7 @@ const Dashboard = () => {
                     <span className="inline-block p-3 text-yellow-700">
                         🐙
                     </span>
-                    <Link to="/bugs_admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+                    <Link to="/bugs-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
                         Gestion des bugs/suggestions
                     </Link>
                 </li>
