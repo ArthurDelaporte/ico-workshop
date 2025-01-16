@@ -3,6 +3,14 @@ import Homepage from './components/Homepage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
 import StartGame from './components/StartGame';
+
+
+import Dashboard from './components/Dashbord';
+import Rules_admin from './components/Rules_admin';
+import Cards_admin from './components/Cards_admin';
+import Users_admin from './components/Users_admin';
+
+
 import GameSetup from './components/GameSetup';
 import PlayerChoseName from './components/PlayerChoseName';
 import PlayerRoleReveal from './components/PlayerRoleReveal';
@@ -33,7 +41,13 @@ function App() {
           <Route path="/player-turn" element={<PlayerTurn />} />
           <Route path="/player-card-choice" element={<PlayerCardChoice />} />
           <Route path="/action-card-selection" element={<ActionCardSelection />} />
-        </Routes>
+  
+
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/rules_admin" element={<Rules_admin />} />
+      <Route path="/cards_admin" element={<Cards_admin />} />
+      <Route path="/users_admin" element={<Users_admin />} />
+      </Routes>
       </Router>
     </PlayerProvider>
   );
