@@ -24,9 +24,6 @@ async function initializeParty(numberPlayers) {
         aventures: []
     };
 
-    // Ajouter l'objet Party dans IndexedDB
-    await addData('party', party);
-
     // Création des objets Player
     const players = roles.map((role, index) => {
         const playerId = crypto.randomUUID();
@@ -42,14 +39,17 @@ async function initializeParty(numberPlayers) {
 
         // Stocker l'ID du joueur dans l'objet Party
         party.playersId.push(playerId);
+        party.future_captains.push(playerId);
 
         return player;
     });
 
+    party.actual_captain = party.playersId[0];
+
     // Mettre à jour l'objet Party avec les IDs des joueurs
     await addData('party', party);
 
-    return { partyId, players };
+    return party;
 }
 
 /**
@@ -63,14 +63,14 @@ function generateRoles(numberPlayers) {
 
     // Ajouter les marins
     for (let i = 0; i < numberMarins; i++) {
-        const cardId = Math.floor(Math.random() * 2) + 1;
-        roles.push({ cardId: cardId }); // Card ID des marins
+        const cardId = Math.floor(Math.random() * 2) + 1; // Random pour le Card ID des marins
+        roles.push({ cardId: cardId });
     }
 
     // Ajouter les pirates
     for (let i = 0; i < numberPirates; i++) {
-        const cardId = Math.floor(Math.random() * 2) + 4;
-        roles.push({ cardId: cardId }); // Card ID des pirates
+        const cardId = Math.floor(Math.random() * 2) + 4; // Random pour le Card ID des pirates
+        roles.push({ cardId: cardId });
     }
 
     // Ajouter la sirène
