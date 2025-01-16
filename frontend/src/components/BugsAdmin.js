@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaCheckCircle, FaEdit, FaTrashAlt, FaBug, FaLightbulb, FaCommentAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckCircle, FaEdit, FaTrashAlt, FaBug, FaLightbulb, FaCommentAlt } from 'react-icons/fa';
 
 const BugsAdmin = () => {
     const [bugs, setBugs] = useState([
@@ -42,49 +42,68 @@ const BugsAdmin = () => {
     };
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
-            <h1 className="text-3xl font-bold mb-6 text-indigo-600">Gestion des Bugs et Suggestions</h1>
-            <div className="bg-white p-4 rounded-lg shadow-lg overflow-auto">
+        <div className="min-h-screen bg-[#00253E] py-6 px-4 font-sans">
+            {/* Barre supérieure avec retour au Dashboard */}
+            <div className="w-full max-w-4xl flex items-center justify-between mb-6">
+                <button
+                    onClick={() => (window.location.href = "./dashboard")}
+                    className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
+                >
+                    <FaArrowLeft className="mr-2" />
+                </button>
+                <h1
+                    className="text-4xl font-bold text-[#F5E0A4] text-center"
+                    style={{ fontFamily: "'Alatsi', sans-serif" }}
+                >
+                    Gestion des Bugs et Suggestions
+                </h1>
+                <div className="w-8" /> {/* Placeholder pour équilibrer le design */}
+            </div>
+
+            <div className="bg-white p-6 rounded-lg shadow-lg overflow-auto">
                 <table className="min-w-full table-auto text-sm">
                     <thead>
-                        <tr className="bg-gray-200">
-                            <th className="px-2 py-2 text-left">Titre</th>
-                            <th className="px-2 py-2 text-left sm:block md:table-cell">Description</th>
-                            <th className="px-2 py-2 text-left sm:block md:table-cell">Joueur</th>
-                            <th className="px-2 py-2 text-left">Statut</th>
-                            <th className="px-2 py-2 text-left">Actions</th>
+                        <tr className="bg-[#F5E0A4]">
+                            <th className="px-4 py-3 text-left text-[#00253E]">Titre</th>
+                            <th className="px-4 py-3 text-left sm:block md:table-cell text-[#00253E]">Description</th>
+                            <th className="px-4 py-3 text-left sm:block md:table-cell text-[#00253E]">Joueur</th>
+                            <th className="px-4 py-3 text-left text-[#00253E]">Statut</th>
+                            <th className="px-4 py-3 text-left text-[#00253E]">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {bugs.map((bug) => (
-                            <tr key={bug.id} className="border-b">
-                                <td className="px-2 py-2 flex items-center">
-                                    {bug.title.toLowerCase().includes('bug') ? <FaBug className="text-red-500 mr-2" /> : <FaLightbulb className="text-yellow-500 mr-2" />}
+                            <tr key={bug.id} className="border-b hover:bg-gray-100">
+                                <td className="px-4 py-3 flex items-center text-[#00253E]">
+                                    {bug.title.toLowerCase().includes('bug') ? 
+                                        <FaBug className="text-red-500 mr-4 text-xl" /> : 
+                                        <FaLightbulb className="text-yellow-500 mr-4 text-xl" />
+                                    }
                                     <div className="break-words">{bug.title}</div>
                                 </td>
-                                <td className="px-2 py-2 sm:block md:table-cell">{bug.description}</td>
-                                <td className="px-2 py-2 sm:block md:table-cell">
+                                <td className="px-4 py-3 sm:block md:table-cell">{bug.description}</td>
+                                <td className="px-4 py-3 sm:block md:table-cell">
                                     <div>
-                                        <strong>Nom:</strong> {bug.player.name}<br />
-                                        <strong>Email:</strong> {bug.player.email}
+                                        <strong className="text-[#AF2127]">Nom:</strong> {bug.player.name}<br />
+                                        <strong className="text-[#AF2127]">Email:</strong> {bug.player.email}
                                     </div>
                                 </td>
-                                <td className="px-2 py-2">
-                                    <span className={`px-2 py-1 rounded-full text-white ${bug.status === 'Résolu' ? 'bg-green-500' : bug.status === 'En cours' ? 'bg-yellow-500' : 'bg-red-500'}`}>
+                                <td className="px-4 py-3">
+                                    <span className={`px-3 py-2 rounded-full text-white ${bug.status === 'Résolu' ? 'bg-green-500' : bug.status === 'En cours' ? 'bg-yellow-500' : 'bg-red-500'} whitespace-nowrap`}>
                                         {bug.status}
                                     </span>
                                 </td>
-                                <td className="px-2 py-2 flex space-x-1">
-                                    <button onClick={() => updateStatus(bug.id, 'En cours')} className="text-yellow-500 hover:text-yellow-700">
+                                <td className="px-4 py-3 flex space-x-2">
+                                    <button onClick={() => updateStatus(bug.id, 'En cours')} className="text-yellow-500 hover:text-yellow-700 text-xl">
                                         <FaEdit />
                                     </button>
-                                    <button onClick={() => updateStatus(bug.id, 'Résolu')} className="text-green-500 hover:text-green-700">
+                                    <button onClick={() => updateStatus(bug.id, 'Résolu')} className="text-green-500 hover:text-green-700 text-xl">
                                         <FaCheckCircle />
                                     </button>
-                                    <button onClick={() => deleteBug(bug.id)} className="text-red-500 hover:text-red-700">
+                                    <button onClick={() => deleteBug(bug.id)} className="text-red-500 hover:text-red-700 text-xl">
                                         <FaTrashAlt />
                                     </button>
-                                    <button onClick={() => addComment(bug.id, 'Nouveau commentaire')} className="text-blue-500 hover:text-blue-700">
+                                    <button onClick={() => addComment(bug.id, 'Nouveau commentaire')} className="text-blue-500 hover:text-blue-700 text-xl">
                                         <FaCommentAlt />
                                     </button>
                                 </td>
