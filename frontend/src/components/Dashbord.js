@@ -1,48 +1,74 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { FaAnchor, FaChartBar, FaMapMarkedAlt, FaSkullCrossbones, FaUsers, FaBug } from 'react-icons/fa';
 
 const Dashboard = () => {
     return (
-        <div className="min-h-screen bg-cyan-400 flex flex-col items-center py-6 px-4">
-            <h1 className="text-4xl font-bold text-white mb-6 text-center">Admin Dashboard</h1>
-            <ul className="w-full max-w-md bg-yellow-100 shadow-lg rounded-lg divide-y divide-yellow-300">
-                <li className="hover:bg-yellow-200 flex items-center">
-                    <span className="inline-block p-3 text-yellow-700">
-                        🏴‍☠️
-                    </span>
-                    <Link to="/rules-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+        <div
+            className="min-h-screen bg-[#00253E] flex flex-col items-center py-6 px-4"
+            style={{ fontFamily: "'Alata', sans-serif" }}
+        >
+            {/* Titre du Dashboard */}
+            <h1
+                className="text-5xl font-bold text-[#F5E0A4] mb-10 text-center"
+                style={{ fontFamily: "'Alatsi', sans-serif" }}
+            >
+                <FaSkullCrossbones className="inline-block mr-3" /> Tableau de Bord Admin
+            </h1>
+
+            {/* Liste des options */}
+            <ul className="w-full max-w-lg bg-white shadow-2xl rounded-lg divide-y divide-gray-300">
+                {/* Gestion des règles */}
+                <li className="hover:bg-[#F5E0A4] flex items-center">
+                    <FaSkullCrossbones className="text-[#CE5960] text-2xl ml-4 mr-4" />
+                    <Link
+                        to="/rules-admin"
+                        className="block flex-1 px-4 py-3 text-gray-800 text-lg font-semibold hover:text-[#AF2127]"
+                    >
                         Gestion des règles du jeu
                     </Link>
                 </li>
-                <li className="hover:bg-yellow-200 flex items-center">
-                    <span className="inline-block p-3 text-yellow-700">
-                        🗺️
-                    </span>
-                    <Link to="/cards-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+
+                {/* Gestion des cartes */}
+                <li className="hover:bg-[#F5E0A4] flex items-center">
+                    <FaMapMarkedAlt className="text-[#CE5960] text-2xl ml-4 mr-4" />
+                    <Link
+                        to="/cards-admin"
+                        className="block flex-1 px-4 py-3 text-gray-800 text-lg font-semibold hover:text-[#AF2127]"
+                    >
                         Gestion des cartes
                     </Link>
                 </li>
-                <li className="hover:bg-yellow-200 flex items-center">
-                    <span className="inline-block p-3 text-yellow-700">
-                        ⚓
-                    </span>
-                    <Link to="/users-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+
+                {/* Gestion des utilisateurs */}
+                <li className="hover:bg-[#F5E0A4] flex items-center">
+                    <FaUsers className="text-[#CE5960] text-2xl ml-4 mr-4" />
+                    <Link
+                        to="/users-admin"
+                        className="block flex-1 px-4 py-3 text-gray-800 text-lg font-semibold hover:text-[#AF2127]"
+                    >
                         Gestion des utilisateurs
                     </Link>
                 </li>
-                <li className="hover:bg-yellow-200 flex items-center">
-                    <span className="inline-block p-3 text-yellow-700">
-                        📊
-                    </span>
-                    <Link to="/stats-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+
+                {/* Statistiques */}
+                <li className="hover:bg-[#F5E0A4] flex items-center">
+                    <FaChartBar className="text-[#CE5960] text-2xl ml-4 mr-4" />
+                    <Link
+                        to="/stats-admin"
+                        className="block flex-1 px-4 py-3 text-gray-800 text-lg font-semibold hover:text-[#AF2127]"
+                    >
                         Statistiques
                     </Link>
                 </li>
-                <li className="hover:bg-yellow-200 flex items-center">
-                    <span className="inline-block p-3 text-yellow-700">
-                        🐙
-                    </span>
-                    <Link to="/bugs-admin" className="block flex-1 px-4 py-3 text-yellow-800 text-lg font-semibold">
+
+                {/* Gestion des bugs/suggestions */}
+                <li className="hover:bg-[#F5E0A4] flex items-center">
+                    <FaBug className="text-[#CE5960] text-2xl ml-4 mr-4" />
+                    <Link
+                        to="/bugs-admin"
+                        className="block flex-1 px-4 py-3 text-gray-800 text-lg font-semibold hover:text-[#AF2127]"
+                    >
                         Gestion des bugs/suggestions
                     </Link>
                 </li>

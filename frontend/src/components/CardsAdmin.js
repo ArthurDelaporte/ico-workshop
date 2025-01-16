@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaArrowLeft } from 'react-icons/fa'; 
 
 const initialCardsData = [
     { id: 1, name: 'Carte 1', front: '/path/to/front1.jpg', back: '/path/to/back1.jpg', description: 'Description de la Carte 1' },
@@ -38,6 +39,10 @@ const CardStore = () => {
 
     const handleImageChange = (e, side, isNewCard = false) => {
         const file = e.target.files[0];
+        if (!file || !file.type.startsWith("image/")) {
+            alert("Veuillez sélectionner un fichier image valide.");
+            return;
+        }
         const reader = new FileReader();
         reader.onloadend = () => {
             if (isNewCard) {
@@ -56,6 +61,10 @@ const CardStore = () => {
     };
 
     const handleSaveChanges = () => {
+        if (!selectedCard.name || !selectedCard.front || !selectedCard.back || !selectedCard.description) {
+            alert("Tous les champs doivent être remplis.");
+            return;
+        }
         setCards(prevCards => prevCards.map(card => 
             card.id === selectedCard.id ? selectedCard : card
         ));
@@ -63,11 +72,17 @@ const CardStore = () => {
     };
 
     const handleDelete = () => {
-        setCards(prevCards => prevCards.filter(card => card.id !== selectedCard.id));
-        handleClose();
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette carte ?")) {
+            setCards(prevCards => prevCards.filter(card => card.id !== selectedCard.id));
+            handleClose();
+        }
     };
 
     const handleAddNewCard = () => {
+        if (!newCard.name || !newCard.front || !newCard.back || !newCard.description) {
+            alert("Tous les champs doivent être remplis.");
+            return;
+        }
         setCards(prevCards => [
             ...prevCards,
             { ...newCard, id: Date.now() }
@@ -77,14 +92,29 @@ const CardStore = () => {
     };
 
     return (
-        <div className="min-h-screen bg-blue-900 p-6">
-            <h1 className="text-4xl font-bold text-white text-center mb-6">Gestion des Cartes</h1>
+        <div className="min-h-screen bg-[#00253E] p-6 font-sans">
+            {/* Barre supérieure avec retour au Dashboard */}
+                  <div className="w-full max-w-4xl flex items-center justify-between mb-6">
+                    <button
+                      onClick={() => (window.location.href = "./dashboard")}
+                      className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
+                    >
+                      <FaArrowLeft className="mr-2" />
+                    </button>
+                    <h1
+                      className="text-4xl font-bold text-[#F5E0A4] text-center"
+                      style={{ fontFamily: "'Alatsi', sans-serif" }}
+                    >
+                      Gestion des Cartes
+                    </h1>
+                    <div className="w-8" /> {/* Placeholder pour équilibrer le design */}
+                  </div>
 
             {/* Bouton pour afficher/masquer le formulaire d'ajout */}
             <div className="text-center mb-6">
                 <button 
                     onClick={() => setIsAddFormVisible(!isAddFormVisible)} 
-                    className="bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600"
+                    className="bg-[#F5E0A4] text-gray-900 px-4 py-2 rounded hover:bg-[#CE5960]"
                 >
                     {isAddFormVisible ? 'Cacher le Formulaire' : 'Ajouter une Nouvelle Carte'}
                 </button>
@@ -93,7 +123,7 @@ const CardStore = () => {
             {/* Formulaire d'ajout d'une nouvelle carte */}
             {isAddFormVisible && (
                 <div className="bg-white p-4 rounded-lg shadow-lg mb-6">
-                    <h2 className="text-2xl font-bold mb-4">Ajouter une Nouvelle Carte</h2>
+                    <h2 className="text-2xl font-bold mb-4" style={{ fontFamily: 'Alata, sans-serif' }}>Ajouter une Nouvelle Carte</h2>
                     <div className="mb-4">
                         <label className="block text-gray-700">Nom de la Carte</label>
                         <input 
@@ -131,7 +161,7 @@ const CardStore = () => {
                     </div>
                     <button 
                         onClick={handleAddNewCard} 
-                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+                        className="bg-[#AF2127] text-white px-4 py-2 rounded hover:bg-[#CE5960]"
                     >
                         Ajouter la Carte
                     </button>
@@ -150,7 +180,7 @@ const CardStore = () => {
                             <h2 className="text-lg font-bold">{card.name}</h2>
                             <button 
                                 onClick={() => handleCardClick(card)} 
-                                className="mt-2 bg-blue-700 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                className="mt-2 bg-[#CE5960] text-white px-4 py-2 rounded hover:bg-[#AF2127]"
                             >
                                 Détails
                             </button>
@@ -164,7 +194,7 @@ const CardStore = () => {
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
                     <div className="bg-white w-11/12 md:w-1/2 lg:w-1/3 rounded-lg shadow-lg overflow-hidden">
                         <div className="p-4">
-                            <h2 className="text-2xl font-bold mb-2">Modifier la Carte</h2>
+                            <h2 className="text-2xl font-bold mb-2" style={{ fontFamily: 'Alata, sans-serif' }}>Modifier la Carte</h2>
                             <div className="mb-4">
                                 <label className="block text-gray-700">Nom de la Carte</label>
                                 <input 
@@ -203,19 +233,19 @@ const CardStore = () => {
                             <div className="flex justify-end">
                                 <button 
                                     onClick={handleClose} 
-                                    className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-500"
+                                    className="bg-[#AF2127] text-white px-4 py-2 rounded hover:bg-[#CE5960]"
                                 >
                                     Annuler
                                 </button>
                                 <button 
                                     onClick={handleSaveChanges} 
-                                    className="ml-2 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-500"
+                                    className="ml-2 bg-[#AF2127] text-white px-4 py-2 rounded hover:bg-[#CE5960]"
                                 >
                                     Sauvegarder
                                 </button>
                                 <button 
                                     onClick={handleDelete} 
-                                    className="ml-2 bg-yellow-600 text-white px-4 py-2 rounded hover:bg-yellow-500"
+                                    className="ml-2 bg-[#CE5960] text-white px-4 py-2 rounded hover:bg-[#AF2127]"
                                 >
                                     Supprimer
                                 </button>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Bar, Pie } from 'react-chartjs-2';
 import 'chart.js/auto';
-import { FaGamepad, FaUserAlt, FaClock, FaChartLine, FaTimesCircle } from 'react-icons/fa';
+import { FaArrowLeft, FaGamepad, FaUserAlt, FaClock, FaChartLine, FaTimesCircle } from 'react-icons/fa';
 
 const StatsAdmin = ({ statsData = {} }) => {
     const {
@@ -38,51 +38,67 @@ const StatsAdmin = ({ statsData = {} }) => {
     };
 
     return (
-        <div className="p-6 bg-gradient-to-r from-blue-100 to-indigo-200 min-h-screen">
-            <h1 className="text-4xl font-extrabold text-indigo-800 mb-6">Tableau de bord des statistiques</h1>
+        <div className="min-h-screen bg-[#00253E] py-6 px-4 font-sans">
+            {/* Barre supérieure avec retour au Dashboard */}
+                                          <div className="w-full max-w-4xl flex items-center justify-between mb-6">
+                                            <button
+                                              onClick={() => (window.location.href = "./dashboard")}
+                                              className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
+                                            >
+                                              <FaArrowLeft className="mr-2" />
+                                            </button>
+                                            <h1
+                                              className="text-4xl font-bold text-[#F5E0A4] text-center"
+                                              style={{ fontFamily: "'Alatsi', sans-serif" }}
+                                            >
+                                              Tableau de bord des statistiques
+                                            </h1>
+                                            <div className="w-8" /> {/* Placeholder pour équilibrer le design */}
+                                          </div>
+           
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaGamepad className="mr-2 text-indigo-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaGamepad className="mr-2 text-[#AF2127]" />
                         Total des parties
                     </h2>
-                    <p className="text-3xl font-bold text-indigo-700">{totalGames}</p>
+                    <p className="text-3xl font-bold text-[#00253E]">{totalGames}</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaTimesCircle className="mr-2 text-red-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaTimesCircle className="mr-2 text-[#CE5960]" />
                         Parties abandonnées
                     </h2>
-                    <p className="text-3xl font-bold text-red-700">{abandonedGames}</p>
+                    <p className="text-3xl font-bold text-[#CE5960]">{abandonedGames}</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaClock className="mr-2 text-green-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaClock className="mr-2 text-[#F5E0A4]" />
                         Temps moyen d'une partie
                     </h2>
-                    <p className="text-3xl font-bold text-green-700">{averageGameTime} minutes</p>
+                    <p className="text-3xl font-bold text-[#F5E0A4]">{averageGameTime} minutes</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaClock className="mr-2 text-yellow-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaClock className="mr-2 text-[#F5E0A4]" />
                         Temps médian d'une partie
                     </h2>
-                    <p className="text-3xl font-bold text-yellow-700">{medianGameTime} minutes</p>
+                    <p className="text-3xl font-bold text-[#F5E0A4]">{medianGameTime} minutes</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaUserAlt className="mr-2 text-purple-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaUserAlt className="mr-2 text-[#AF2127]" />
                         Nombre total d'utilisateurs
                     </h2>
-                    <p className="text-3xl font-bold text-purple-700">{totalUsers}</p>
+                    <p className="text-3xl font-bold text-[#AF2127]">{totalUsers}</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow col-span-1 md:col-span-2">
-                    <h2 className="text-xl font-semibold">Répartition des parties par type</h2>
+                    <h2 className="text-xl font-semibold text-[#00253E]">Répartition des parties par type</h2>
                     <Pie data={gameTypesData} />
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow col-span-1 md:col-span-2">
-                    <h2 className="text-xl font-semibold flex items-center">
-                        <FaChartLine className="mr-2 text-teal-500" />
+                    <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
+                        <FaChartLine className="mr-2 text-[#4CAF50]" />
                         Croissance des utilisateurs
                     </h2>
                     <Bar data={userGrowthData} />
