@@ -16,6 +16,8 @@ import CrewSelection from './components/CrewSelection';
 import PlayerTurn from './components/PlayerTurn';
 import PlayerCardChoice from './components/PlayerCardChoice';
 import ActionCardSelection from './components/ActionCardSelection';
+import CaptainRevealCards from './components/CaptainRevealCards';
+import PlayerTurnNotification from './components/PlayerTurnNotification';
 import { PlayerProvider } from './PlayerContext';
 
 
@@ -41,6 +43,8 @@ function App() {
           <Route path="/rules-admin" element={<RulesAdmin />} />
           <Route path="/cards-admin" element={<CardsAdmin />} />
           <Route path="/users-admin" element={<UsersAdmin />} />
+          <Route path="/captain-reveal-cards" element={<CaptainRevealCards />} />
+          <Route path="/player-turn-notification" element={<PlayerTurnNotification />} />
         </Routes>
       </Router>
     </PlayerProvider>

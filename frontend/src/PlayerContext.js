@@ -8,8 +8,8 @@ export const PlayerProvider = ({ children }) => {
 
   const initializePlayers = (numberOfPlayers) => {
     const roles = [];
-    const marinsCount = Math.max(5, numberOfPlayers - 5); 
-    const piratesCount = 4; 
+    const marinsCount = Math.floor(numberOfPlayers / 2);
+    const piratesCount = numberOfPlayers - marinsCount - 1;
     const sirenesCount = 1; 
   
     for (let i = 0; i < marinsCount; i++) roles.push('Marin');
@@ -31,8 +31,13 @@ export const PlayerProvider = ({ children }) => {
   
 
   const nextPlayer = () => {
-    setCurrentPlayerIndex((prev) => prev + 1);
-  };
+    setCurrentPlayerIndex((prevIndex) => {
+      if (prevIndex + 1 < players.length) {
+        return prevIndex + 1; // Passe au joueur suivant
+      }
+      return prevIndex; // Ne dépasse pas la liste des joueurs
+    });
+  };  
 
   return (
     <PlayerContext.Provider
