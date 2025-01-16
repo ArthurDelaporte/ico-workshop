@@ -1,4 +1,4 @@
-import { addData } from './indexedDB';
+import {addData, getData} from './indexedDB';
 
 export async function initializeParty(numberPlayers) {
     // Validation du nombre de joueurs
@@ -50,6 +50,20 @@ export async function initializeParty(numberPlayers) {
     await addData('party', party);
 
     return party;
+}
+
+export async function getPartyInfo(partyId) {
+    try {
+        const party = await getData('party', partyId);
+        if (!party) {
+            console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
+            return null;
+        }
+        return party;
+    } catch (error) {
+        console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
+        return null;
+    }
 }
 
 /**
