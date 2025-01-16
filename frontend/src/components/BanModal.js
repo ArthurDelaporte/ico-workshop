@@ -32,7 +32,7 @@ const BanModal = ({ isOpen, onClose, onConfirm }) => {
     };
 
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div className="fixed inset-0 bg-indigo-100 bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg">
                 <h2 className="text-xl font-bold mb-4">Confirmer le bannissement</h2>
                 <p className="mb-4">Spécifiez la durée du bannissement :</p>

@@ -7,6 +7,8 @@ import Dashboard from './components/Dashbord';
 import RulesAdmin from './components/RulesAdmin';
 import CardsAdmin from './components/CardsAdmin';
 import UsersAdmin from './components/UsersAdmin';
+import StatsAdmin from './components/StatsAdmin';
+import BugsAdmin from './components/BugsAdmin';
 import GameSetup from './components/GameSetup';
 import PlayerChoseName from './components/PlayerChoseName';
 import PlayerRoleReveal from './components/PlayerRoleReveal';
@@ -45,6 +47,9 @@ function App() {
           <Route path="/users-admin" element={<UsersAdmin />} />
           <Route path="/captain-reveal-cards" element={<CaptainRevealCards />} />
           <Route path="/player-turn-notification" element={<PlayerTurnNotification />} />
+      <Route path="/stats-admin" element={<StatsAdmin />} />
+      <Route path="/bugs-admin" element={<BugsAdmin />} />
+      
         </Routes>
       </Router>
     </PlayerProvider>

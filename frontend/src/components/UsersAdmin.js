@@ -7,6 +7,10 @@ const UsersAdmin = () => {
         { id: 1, name: 'Alice', status: 'active' },
         { id: 2, name: 'Bob', status: 'banned' },
         { id: 3, name: 'Charlie', status: 'active' },
+        { id: 4, name: 'A', status: 'active' },
+        { id: 5, name: 'B', status: 'active' },
+        { id: 6, name: 'C', status: 'active' },
+        { id: 7, name: 'D', status: 'active' },
     ]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
@@ -14,7 +18,7 @@ const UsersAdmin = () => {
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 2;
+    const usersPerPage = 4;
 
     useEffect(() => {
         let filtered = users;
@@ -68,7 +72,7 @@ const UsersAdmin = () => {
     const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
     return (
-        <div className="min-h-screen bg-gray-100 py-6 px-4">
+        <div className="min-h-screen bg-purple-200 py-6 px-4">
             <div className="flex justify-between mb-4">
                 <div className="relative">
                     <input
