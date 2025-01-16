@@ -29,6 +29,7 @@ const GameSetup = () => {
   const handleStartGame = useCallback(async () => {
     setLoading(true);
     try {
+      await initializePlayers(numberOfPlayers);
       const party = await initializeParty(numberOfPlayers);
       console.log('Party created:', party);
       navigate(`/player-chose-name?partyId=${party.id}`); // ✅ Utilisation correcte du paramètre d'URL
