@@ -24,6 +24,12 @@ import RevealCards from './components/RevealCards';
 import VotingRules from './components/VotingRules';
 import { PlayerProvider } from './PlayerContext';
 import NewCaptainReveal from "./components/NewCaptainReveal";
+import MarinsWinEnd from './components/MarinsWinEnd';
+import MarinsWinRounds from './components/MarinsWinRound';
+import PiratesWinStart from './components/PiratesWinStart';
+import PiratesWinEnd from './components/PiratesWinEnd';
+import SirenWinEnd from './components/SirenWinEnd';
+import VoteSirene from './components/VoteSirene';
 
 
 function App() {
@@ -55,6 +61,13 @@ function App() {
           <Route path="/bugs-admin" element={<BugsAdmin />} />
           <Route path="/reveal-cards" element={<RevealCards />} />
           <Route path="voting-rules" element={<VotingRules />} />
+          <Route path="/marins-win-end" element={<MarinsWinEnd />} />
+          <Route path="/marins-win-round" element={<MarinsWinRounds />} />
+          <Route path="/pirates-win-start" element={<PiratesWinStart />} />
+          <Route path="/pirates-win-end" element={<PiratesWinEnd />} />
+          <Route path="/siren-win-end" element={<SirenWinEnd />} />
+          <Route path="/vote-sirene" element={<VoteSirene />} />
+          
         </Routes>
       </Router>
     </PlayerProvider>
