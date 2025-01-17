@@ -15,6 +15,7 @@ model User {
   lastname  String
   birthday  DateTime
   role      String
+  statusBan Boolean  @map("status_ban")
 
   // Relation avec Player
   players Player[]
@@ -70,4 +71,12 @@ model Player {
   party Party? @relation(fields: [partyId], references: [id])
 
   @@map("player")
+}
+
+model Rule {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  description String
+
+  @@map("rule")
 }

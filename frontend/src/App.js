@@ -23,6 +23,7 @@ import PlayerTurnNotification from './components/PlayerTurnNotification';
 import RevealCards from './components/RevealCards';
 import VotingRules from './components/VotingRules';
 import { PlayerProvider } from './PlayerContext';
+import NewCaptainReveal from "./components/NewCaptainReveal";
 
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
           <Route path="/rules-admin" element={<RulesAdmin />} />
           <Route path="/cards-admin" element={<CardsAdmin />} />
           <Route path="/users-admin" element={<UsersAdmin />} />
+          <Route path="/new-captain-reveal" element={<NewCaptainReveal />} />
           <Route path="/captain-reveal-cards" element={<CaptainRevealCards />} />
           <Route path="/player-turn-notification" element={<PlayerTurnNotification />} />
           <Route path="/stats-admin" element={<StatsAdmin />} />

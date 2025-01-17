@@ -55,7 +55,7 @@ const PlayerRoleReveal = () => {
         nextPlayer();
         navigate(`/player-chose-name?partyId=${partyId}`);
       } else {
-        navigate(`/game-instructions?partyId=${partyId}`);
+        navigate(`/new-captain-reveal?partyId=${partyId}`);
       }
     } catch (err) {
       console.error("Erreur lors de la vérification des joueurs sans nom :", err);

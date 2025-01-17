@@ -46,7 +46,7 @@ const RulesAdmin = () => {
           <FaArrowLeft className="mr-2" />
         </button>
         <h1
-          className="text-4xl font-bold text-[#F5E0A4] text-center"
+          className="text-4xl font-bold text-[#DED0B1] text-center"
           style={{ fontFamily: "'Alatsi', sans-serif" }}
         >
           Gestion des Règles
@@ -59,13 +59,13 @@ const RulesAdmin = () => {
         {rules.map((rule) => (
           <li
             key={rule.id}
-            className="flex justify-between items-center px-4 py-3 hover:bg-[#F5E0A4]"
+            className="flex justify-between items-center px-4 py-3 hover:bg-[#DED0B1]"
           >
             {editableRuleId === rule.id ? (
               <textarea
                 value={tempRuleText}
                 onChange={(e) => setTempRuleText(e.target.value)}
-                className="flex-grow bg-[#F5E0A4] text-gray-800 px-2 py-1 rounded border border-[#CE5960] focus:outline-none resize-none"
+                className="flex-grow bg-[#DED0B1] text-gray-800 px-2 py-1 rounded border border-[#CE5960] focus:outline-none resize-none"
                 rows="4"
               />
             ) : (
@@ -105,11 +105,11 @@ const RulesAdmin = () => {
           placeholder="Nouvelle règle"
           value={newRuleText}
           onChange={(e) => setNewRuleText(e.target.value)}
-          className="flex-grow bg-white text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-[#F5E0A4]"
+          className="flex-grow bg-white text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-[#DED0B1]"
         />
         <button
           onClick={addRule}
-          className="bg-[#F5E0A4] text-gray-900 px-4 py-2 rounded hover:bg-[#CE5960] flex items-center"
+          className="bg-[#DED0B1] text-gray-900 px-4 py-2 rounded hover:bg-[#CE5960] flex items-center"
         >
           <FaPlus className="mr-2" /> Ajouter
         </button>
