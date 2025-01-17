@@ -1,4 +1,5 @@
 import {addData, getData} from './indexedDB';
+import {getPlayerInfo} from "./player";
 
 export async function initializeParty(numberPlayers) {
     // Validation du nombre de joueurs
@@ -62,6 +63,34 @@ export async function getPartyInfo(partyId) {
         return party;
     } catch (error) {
         console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
+        return null;
+    }
+}
+
+export async function getActualCaptainInfo(partyId) {
+    try {
+        const party = await getData('party', partyId);
+        if (!party) {
+            console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
+            return null;
+        }
+
+        // Vérifie si `actual_captain` est défini
+        if (!party.actual_captain) {
+            console.warn(`Aucun capitaine défini pour la partie ${partyId}.`);
+            return null;
+        }
+
+        // Récupère les informations du capitaine
+        const captain = await getPlayerInfo(party.actual_captain);
+        if (!captain) {
+            console.error(`Impossible de récupérer les informations du capitaine (${party.actual_captain}).`);
+            return null;
+        }
+
+        return captain; // Retourne l'objet joueur correspondant au capitaine
+    } catch (error) {
+        console.error(`Erreur lors de la récupération du capitaine pour la partie (${partyId}):`, error);
         return null;
     }
 }
