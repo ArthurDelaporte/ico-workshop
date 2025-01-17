@@ -51,7 +51,7 @@ const PlayerTurn = () => {
 
   const handleNext = () => {
     if (!currentPlayer) return;
-    navigate(`/player-card-choice?partyId=${partyId}`);
+    navigate(`/player-role-reveal?partyId=${partyId}&playerId=${currentPlayer.id}`);
   };
 
   if (!currentPlayer) {
