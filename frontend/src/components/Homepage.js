@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const SignInOrSignUp = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-white px-6 py-8">
@@ -17,18 +19,28 @@ const SignInOrSignUp = () => {
         >
           Inscription
         </button>
-        <button
-          className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"
-          onClick={() => navigate('/signin')}
-        >
-          Connexion
-        </button>
-        <button
-          className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition duration-300"
-          onClick={() => navigate('/start-game')}
-        >
-          Commencer une partie
-        </button>
+          {!user ? (
+              <button
+                  className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"
+                  onClick={() => navigate('/signin')}
+              >
+                  Connexion
+              </button>
+          ) : (
+              <button
+                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
+                  onClick={() => logout()}
+              >
+                  Déconnexion
+              </button>
+          )
+          }
+          <button
+              className="w-full bg-yellow-500 text-white py-3 rounded-lg hover:bg-yellow-600 transition duration-300"
+              onClick={() => navigate('/start-game')}
+          >
+              Commencer une partie
+          </button>
       </div>
 
       <a href="#" className="text-sm text-teal-700 underline mt-4">
