@@ -33,7 +33,7 @@ export async function initializeParty(numberPlayers) {
             id: playerId,
             name: null,
             last_aventure: false,
-            cardId: role.cardId // Correspond au rôle
+            cardId: role.cardId
         };
 
         // Ajouter chaque joueur dans IndexedDB
@@ -61,10 +61,7 @@ export async function getPartyInfo(partyId) {
         console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
         return null;
       }
-      return {
-        score_marins: party.score_marins,
-        score_pirates: party.score_pirates,
-      };
+      return party;
     } catch (error) {
       console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
       return null;

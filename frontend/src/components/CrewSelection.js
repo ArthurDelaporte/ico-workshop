@@ -65,7 +65,8 @@ const CrewSelection = () => {
     const handleConfirmCrew = async () => {
         if (selectedCrew.length === maxCrewSize && aventure) {
             try {
-                await addTeamAventure(aventure.id, selectedCrew.map(player => player.id));
+                const sortedCrew = [...selectedCrew].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                await addTeamAventure(aventure.id, sortedCrew.map(player => player.id))
                 navigate(`/player-turn?partyId=${partyId}`);
             } catch (err) {
                 console.error("Erreur lors de l'ajout de l'équipe à l'aventure :", err);
@@ -79,8 +80,10 @@ const CrewSelection = () => {
     const handleCrewAccepted = async (accepted) => {
         if (accepted && aventure) {
             try {
-                await addTeamAventure(aventure.id, selectedCrew.map(player => player.id));
-                navigate(`/player-turn?partyId=${partyId}`);
+                const sortedCrew = [...selectedCrew].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                await addTeamAventure(aventure.id, sortedCrew.map(player => player.id)).then(() => {
+                    navigate(`/player-turn?partyId=${partyId}`);
+                });
             } catch (err) {
                 console.error("Erreur lors de l'ajout de l'équipe à l'aventure :", err);
                 setError("Une erreur est survenue lors de la validation de l'équipage.");

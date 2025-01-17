@@ -13,40 +13,51 @@ const CaptainRoleReveal = () => {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        if (!partyId) {
-            setError("Aucun ID de partie fourni.");
-            setLoading(false);
-            return;
-        }
+        const fetchData = async () => {
+            if (!partyId) {
+                setError("Aucun ID de partie fourni.");
+                setLoading(false);
+                return;
+            }
 
-        setLoading(true);
+            try {
+                const [captainData, partyData] = await Promise.all([
+                    getActualCaptainInfo(partyId),
+                    getPartyInfo(partyId)
+                ]);
 
-        Promise.all([getActualCaptainInfo(partyId), getPartyInfo(partyId)])
-            .then(([captainData, partyData]) => {
                 if (!captainData) {
-                    setError("Aucun capitaine trouvé. Vérifiez la configuration des joueurs.");
-                } else {
-                    setCaptain(captainData);
+                    throw new Error("Aucun capitaine trouvé. Vérifiez la configuration des joueurs.");
                 }
+                setCaptain(captainData);
 
                 if (!partyData) {
-                    setError("Impossible de récupérer les informations de la partie.");
-                } else {
-                    setParty(partyData);
+                    throw new Error("Impossible de récupérer les informations de la partie.");
                 }
-            })
-            .catch((err) => {
+
+                setParty(partyData);
+
+            } catch (err) {
                 console.error("Erreur lors de la récupération des données :", err);
-                setError("Une erreur est survenue. Veuillez réessayer.");
-            })
-            .finally(() => setLoading(false));
+                setError(err.message || "Une erreur est survenue. Veuillez réessayer.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, [partyId]);
 
     const handleNext = () => {
+        if (!party) {
+            console.error("Données de la partie non chargées.");
+            return;
+        }
+
         if (party?.aventures?.length === 0) {
             navigate(`/game-instructions?partyId=${partyId}`);
         } else {
-            navigate(`/captain-role-reveal?partyId=${partyId}`);
+            navigate(`/crew-selection?partyId=${partyId}`);
         }
     };
 

@@ -1,12 +1,12 @@
 import { getData, addData } from "./indexedDB";
 
-export async function createAventure(partyId, teamPlayersId) {
+export async function createAventure(partyId) {
     const party = await getData('party', partyId);
     const aventureId = crypto.randomUUID();
     const aventure = {
         id: aventureId,
         captain: party.actual_captain,
-        team: teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null })),
+        team: [],
         team1_status: null,
         team2_status: null
     };

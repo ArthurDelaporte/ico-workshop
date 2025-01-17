@@ -16,6 +16,8 @@ export async function setPlayerName(partyId, playerName) {
         if (player.name === null) {
             player.name = playerName;
 
+            player.created_at = new Date();
+
             // Mettre à jour l'objet Player
             await addData('player', player);
 
