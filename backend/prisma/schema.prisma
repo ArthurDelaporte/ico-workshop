@@ -30,8 +30,7 @@ model Card {
   description String?
   type        String
   numero      Int
-  back        String?
-  front       String?
+  image       String?
 
   // Relation avec Player
   players Player[]
