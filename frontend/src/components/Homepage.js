@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-[#00253E] px-6 py-8">
@@ -28,18 +30,28 @@ const HomePage = () => {
         >
           INSCRIPTION
         </button>
-        <button
-          className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
-          onClick={() => navigate('/signin')}
-        >
-          CONNEXION
-        </button>
-        <button
-          className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
-          onClick={() => navigate('/start-game')}
-        >
-          COMMENCER UNE PARTIE
-        </button>
+          {!user ? (
+              <button
+                  className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
+                  onClick={() => navigate('/signin')}
+              >
+                  Connexion
+              </button>
+          ) : (
+              <button
+                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
+                  onClick={() => logout()}
+              >
+                  Déconnexion
+              </button>
+          )
+          }
+          <button
+              className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
+              onClick={() => navigate('/start-game')}
+          >
+              Commencer une partie
+          </button>
       </div>
 
       {/* Mentions légales */}

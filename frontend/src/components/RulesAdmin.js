@@ -1,34 +1,61 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaEdit, FaPlus, FaTrashAlt } from "react-icons/fa";
+import axios from "axios";
 
 const RulesAdmin = () => {
-  const [rules, setRules] = useState([
-    { id: 1, text: "Chaque joueur doit respecter le temps de parole." },
-    { id: 2, text: "Le capitaine (maître du jeu) arbitre les débats." },
-    { id: 3, text: "Les cartes doivent être mélangées avant chaque partie." },
-  ]);
+  const API_URL = "http://localhost:1234/api/rules";
+  const [rules, setRules] = useState([]);
   const [editableRuleId, setEditableRuleId] = useState(null);
   const [tempRuleText, setTempRuleText] = useState("");
   const [newRuleText, setNewRuleText] = useState("");
+
+  // Charger les règles au montage du composant
+  useEffect(() => {
+    fetchRules();
+  }, []);
+
+  const fetchRules = async () => {
+    try {
+      const response = await axios.get(API_URL);
+      setRules(response.data);
+    } catch (error) {
+      console.error("Erreur lors du chargement des règles :", error);
+    }
+  };
+
+  const addRule = async () => {
+    if (newRuleText.trim()) {
+      try {
+        const response = await axios.post(API_URL, { description: newRuleText.trim() });
+        fetchRules(); // Rafraîchir la liste des règles après ajout
+        setNewRuleText(""); // Réinitialiser le champ
+      } catch (error) {
+        console.error("Erreur lors de l'ajout d'une règle :", error);
+      }
+    }
+  };
 
   const startEditing = (id, text) => {
     setEditableRuleId(id);
     setTempRuleText(text);
   };
 
-  const saveRule = (id) => {
-    setRules(rules.map((rule) => (rule.id === id ? { ...rule, text: tempRuleText } : rule)));
-    setEditableRuleId(null);
+  const saveRule = async (id) => {
+    try {
+      const response = await axios.put(`${API_URL}/${id}`, { description: tempRuleText });
+      setRules(rules.map((rule) => (rule.id === id ? response.data : rule)));
+      setEditableRuleId(null);
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de la règle :", error);
+    }
   };
 
-  const deleteRule = (id) => {
-    setRules(rules.filter((rule) => rule.id !== id));
-  };
-
-  const addRule = () => {
-    if (newRuleText.trim()) {
-      setRules([...rules, { id: rules.length + 1, text: newRuleText.trim() }]);
-      setNewRuleText(""); // Réinitialiser le champ
+  const deleteRule = async (id) => {
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      setRules(rules.filter((rule) => rule.id !== id));
+    } catch (error) {
+      console.error("Erreur lors de la suppression de la règle :", error);
     }
   };
 
@@ -66,10 +93,10 @@ const RulesAdmin = () => {
                 value={tempRuleText}
                 onChange={(e) => setTempRuleText(e.target.value)}
                 className="flex-grow bg-[#DED0B1] text-gray-800 px-2 py-1 rounded border border-[#CE5960] focus:outline-none resize-none"
-                rows="4"
+                rows="5" // Améliorer l'affichage des longues phrases
               />
             ) : (
-              <span className="text-gray-800 text-lg">{rule.text}</span>
+              <span className="text-gray-800 text-lg">{rule.description}</span>
             )}
             <div className="flex items-center gap-2">
               {editableRuleId === rule.id ? (
@@ -81,31 +108,33 @@ const RulesAdmin = () => {
                 </button>
               ) : (
                 <button
-                  onClick={() => startEditing(rule.id, rule.text)}
+                  onClick={() => startEditing(rule.id, rule.description)}
                   className="bg-[#CE5960] text-white px-3 py-1 rounded hover:bg-[#AF2127] flex items-center"
                 >
-                  <FaEdit className="mr-1" /> Modifier
+                  <FaEdit className="mr-1" />
+                  Modifier
                 </button>
               )}
               <button
                 onClick={() => deleteRule(rule.id)}
                 className="bg-[#AF2127] text-white px-3 py-1 rounded hover:bg-[#CE5960] flex items-center"
               >
-                <FaTrashAlt className="mr-1" /> Supprimer
+                <FaTrashAlt className="mr-1" />
+                Supprimer
               </button>
             </div>
           </li>
         ))}
       </ul>
 
-      {/* Ajout d'une nouvelle règle */}
+      {/* Ajouter une nouvelle règle */}
       <div className="w-full max-w-2xl flex items-center gap-4">
         <input
           type="text"
-          placeholder="Nouvelle règle"
           value={newRuleText}
           onChange={(e) => setNewRuleText(e.target.value)}
           className="flex-grow bg-white text-gray-800 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring focus:ring-[#DED0B1]"
+          placeholder="Nouvelle règle"
         />
         <button
           onClick={addRule}

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../AuthContext';
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -7,6 +8,7 @@ const SignIn = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -28,6 +30,9 @@ const SignIn = () => {
         throw new Error(data.error || "Erreur inconnue");
       }
 
+      login(data.user)
+
+      // Vérification du rôle de l'utilisateur
       const userRole = data.user?.role;
       if (userRole === 'admin') {
         navigate("/dashboard");

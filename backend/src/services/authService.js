@@ -41,9 +41,25 @@ const signIn = async ({ email, password }) => {
         throw new Error(`Erreur de connexion : ${error.message}`);
     }
 
+    const { session, user } = data;
+
+    const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: {
+            id: true,
+            firstname: true,
+            lastname: true,
+            role: true,
+        },
+    });
+
+    if (!dbUser) {
+        throw new Error(`Erreur de récupération de l'utilisateur`);
+    }
+
     return {
         message: "Connexion réussie",
-        user: data.user,
+        user: { id: dbUser.id, role: dbUser.role },
         accessToken: data.session.access_token,
     };
 };

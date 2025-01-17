@@ -28,9 +28,9 @@ model Card {
   createdAt   DateTime @default(now()) @map("created_at")
   name        String
   description String?
-  img         String?
   type        String
   numero      Int
+  image       String?
 
   // Relation avec Player
   players Player[]
