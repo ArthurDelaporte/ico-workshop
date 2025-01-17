@@ -16,8 +16,6 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      console.log(email);
-      console.log(password);
       const response = await fetch("http://localhost:1234/api/auth/signin", {
         method: "POST",
         headers: {
@@ -36,12 +34,9 @@ const SignIn = () => {
 
       // Vérification du rôle de l'utilisateur
       const userRole = data.user?.role;
-
       if (userRole === 'admin') {
-        // Redirige vers le tableau de bord admin
         navigate("/dashboard");
       } else {
-        // Redirige vers la page demandée ou la page d'accueil
         navigate("/");
       }
     } catch (err) {
@@ -52,36 +47,53 @@ const SignIn = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-teal-100 justify-center items-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-2xl font-semibold text-teal-700 text-center mb-8">Connexion</h2>
-        <form onSubmit={handleSignIn}>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="w-full p-4 mb-4 border border-teal-300 rounded-lg"
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Mot de passe"
-            className="w-full p-4 mb-6 border border-teal-300 rounded-lg"
-            required
-          />
-          <button
-            type="submit"
-            className="w-full bg-teal-600 text-white py-3 rounded-lg hover:bg-teal-700 transition duration-300"
-            disabled={loading}
-          >
-            {loading ? "Connexion..." : "Connexion"}
-          </button>
-          {error && <p className="text-red-500 text-center mt-4">{error}</p>}
-        </form>
+    <div className="flex flex-col items-center justify-between min-h-screen bg-[#00253E] px-6 py-8">
+      <div className="text-center mt-8">
+        <img
+          src="/img/homepage/logo_ico.png"
+          alt="Logo ICO"
+          className="w-auto h-24 mx-auto mb-4"
+        />
       </div>
+
+      <form onSubmit={handleSignIn} className="bg-[#00253E] w-full max-w-xs mt-4">
+        <label htmlFor="email" className="block text-white text-sm font-semibold mb-2">
+          Identifiant :
+        </label>
+        <input
+          type="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="adresse mail"
+          className="w-full p-4 mb-4 border border-[#DED0B1] rounded-lg bg-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#DED0B1]"
+          required
+        />
+        <label htmlFor="password" className="block text-white text-sm font-semibold mb-2">
+          Mot de passe :
+        </label>
+        <input
+          type="password"
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="mot de passe"
+          className="w-full p-4 mb-6 border border-[#DED0B1] rounded-lg bg-white text-black placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#DED0B1]"
+          required
+        />
+        <button
+          type="submit"
+          className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
+          disabled={loading}
+        >
+          {loading ? "Connexion..." : "CONNEXION"}
+        </button>
+        {error && <p className="text-red-500 text-center mt-4">{error}</p>}
+      </form>
+
+      <a href="#" className="text-[#DED0B1] text-sm underline mt-4 mb-8">
+        mentions légales
+      </a>
     </div>
   );
 };
