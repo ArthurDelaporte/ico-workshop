@@ -48,7 +48,7 @@ const HomePage = () => {
           }
           <button
               className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
-              onClick={() => navigate('/start-game')}
+              onClick={() => navigate('/game-setup')}
           >
               Commencer une partie
           </button>

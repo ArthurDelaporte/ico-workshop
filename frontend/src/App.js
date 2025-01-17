@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Homepage from './components/Homepage';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import StartGame from './components/StartGame';
 import Dashboard from './components/Dashbord';
 import RulesAdmin from './components/RulesAdmin';
 import CardsAdmin from './components/CardsAdmin';
@@ -43,7 +42,6 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/start-game" element={<StartGame />} />
             <Route path="/game-setup" element={<GameSetup />} />
             <Route path="/player-chose-name" element={<PlayerChoseName />} />
             <Route path="/player-role-reveal" element={<PlayerRoleReveal />} />
