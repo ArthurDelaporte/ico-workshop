@@ -71,3 +71,11 @@ model Player {
 
   @@map("player")
 }
+
+model Rule {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  description String
+
+  @@map("rule")
+}
