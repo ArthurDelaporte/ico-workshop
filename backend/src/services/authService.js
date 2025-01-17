@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Fonction d'inscription
-const signUp = async ({ email, password, firstname, lastname, birthday }) => {
+const signUp = async ({ email, password, firstname, lastname, birthday, role, statusBan }) => {
     // Création de l'utilisateur dans Supabase
     const { data, error } = await supabase.auth.signUp({
         email,
@@ -22,7 +22,8 @@ const signUp = async ({ email, password, firstname, lastname, birthday }) => {
             firstname,
             lastname,
             birthday: new Date(birthday),
-            role: "player", // Rôle par défaut
+            role,
+            statusBan,
         },
     });
 

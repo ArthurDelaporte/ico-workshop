@@ -3,12 +3,12 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-const corsOptions = {
-    origin: process.env.CLIENT_URL || "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    allowedHeaders: "Content-Type,Authorization",
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     origin: process.env.CLIENT_URL || "*",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     allowedHeaders: "Content-Type,Authorization",
+// };
+app.use(cors());
 
 app.use(express.json());
 
