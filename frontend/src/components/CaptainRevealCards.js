@@ -6,7 +6,7 @@ const CaptainRevealCards = () => {
 
   const handleReveal = () => {
     console.log('Cartes dévoilées.');
-    navigate('/'); // Redirection vers la prochaine étape ou la page principale
+    navigate('/reveal-cards');
   };
 
   return (

@@ -1,40 +1,79 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
+import { getPartyInfo, updatePartyCrew } from '../database/party';
 
 const CrewSelection = () => {
   const { players } = usePlayerContext();
   const navigate = useNavigate();
 
   const [selectedCrew, setSelectedCrew] = useState([]);
+  const [partyScores, setPartyScores] = useState({ marins: 0, pirates: 0 });
+  const maxCrewSize = 3;
+  const [searchParams] = useSearchParams();
+  const partyId = searchParams.get('partyId');
 
-  const maxCrewSize = 3; // Taille maximale de l'équipage
+  useEffect(() => {
+    const fetchPartyScores = async () => {
+      try {
+        const partyInfo = await getPartyInfo(partyId);
+        if (partyInfo) {
+          setPartyScores({
+            marins: partyInfo.score_marins,
+            pirates: partyInfo.score_pirates,
+          });
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des scores de la partie :', error);
+      }
+    };
+
+    fetchPartyScores();
+  }, [partyId]);
 
   const toggleCrewMember = (player) => {
     if (selectedCrew.includes(player)) {
-      // Si le joueur est déjà sélectionné, le retirer
       setSelectedCrew(selectedCrew.filter((p) => p !== player));
     } else if (selectedCrew.length < maxCrewSize) {
-      // Ajouter le joueur si la taille de l'équipage n'est pas dépassée
       setSelectedCrew([...selectedCrew, player]);
     }
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     if (selectedCrew.length === maxCrewSize) {
-      console.log('Équipage sélectionné :', selectedCrew);
-      navigate('/player-turn');
+        try {
+            const crewIds = selectedCrew.map(player => player.id);
+            await updatePartyCrew(partyId, crewIds);
+            console.log('Équipage sélectionné :', selectedCrew);
+            navigate('/player-turn');
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour de l\'équipage :', error);
+        }
     } else {
-      alert(`Vous devez sélectionner ${maxCrewSize} membres.`);
+        alert(`Vous devez sélectionner ${maxCrewSize} membres.`);
     }
-  };
+};
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6 py-8">
+      {/* Section titre et scores */}
       <div className="bg-red-600 text-white text-center py-4 px-6 rounded-lg mb-6 w-full max-w-md">
         <h1 className="text-xl font-bold">CHOISIS TON ÉQUIPAGE</h1>
-        <p className="text-sm">Annoncez aux joueurs votre équipage de {maxCrewSize} membres (Tu peux en faire partie)</p>
+        <p className="text-sm">
+          Annoncez aux joueurs votre équipage de {maxCrewSize} membres (Tu peux en faire partie)
+        </p>
+        <div className="mt-4 text-left">
+          <p className="text-sm">
+            <strong>Score des Marins :</strong> {partyScores.marins}
+          </p>
+          <p className="text-sm">
+            <strong>Score des Pirates :</strong> {partyScores.pirates}
+          </p>
+        </div>
       </div>
+
+      {/* Grille des joueurs */}
       <div className="grid grid-cols-3 gap-4 mb-6 w-full max-w-md">
         {players.map((player, index) => (
           <div
@@ -51,6 +90,8 @@ const CrewSelection = () => {
           </div>
         ))}
       </div>
+
+      {/* Boutons */}
       <button
         className="w-full bg-red-600 text-white py-3 rounded-lg mb-4 hover:bg-red-700 transition duration-300"
         onClick={() => navigate('/')}

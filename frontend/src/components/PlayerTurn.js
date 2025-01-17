@@ -6,16 +6,23 @@ const PlayerTurn = () => {
   const { players, currentPlayerIndex, nextPlayer } = usePlayerContext();
   const navigate = useNavigate();
 
+  const currentPlayer = players[currentPlayerIndex];
+
   const handleNext = () => {
+    console.log(`Current Player Index: ${currentPlayerIndex}`);
     if (currentPlayerIndex + 1 < players.length) {
-      nextPlayer(); // Passer au joueur suivant
-      navigate(`/player-turn`); // Redirige vers la même page pour le joueur suivant
+      nextPlayer();
+      console.log('Navigating to the next player');
+      navigate('/player-turn');
     } else {
-      navigate('/player-card-choice'); // Redirige vers une page de fin de jeu ou une autre action
+      console.log('All players have played, navigating to the next phase');
+      navigate('/player-card-choice');
     }
   };
 
-  const currentPlayer = players[currentPlayerIndex];
+  if (!currentPlayer) {
+    return <p className="text-red-500">Erreur : Joueur introuvable.</p>;
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6 py-8">

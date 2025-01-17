@@ -23,7 +23,7 @@ export async function createAventure(partyId, teamPlayersId) {
 
 export async function teamAventureReject(partyId) {
     const party = await getData('party', partyId);
-    const aventureId = party.aventures[-1].id;
+    const aventureId = party.aventures[party.aventures.length - 1];
     const aventure = await getData('aventure', aventureId);
 
     if (aventure.team1_status === null) {
@@ -37,43 +37,31 @@ export async function teamAventureReject(partyId) {
     return aventure;
 }
 
-// export async function newTeamAventure(partyId, teamPlayersId) {
-//     const party = await getData('party', partyId);
-//     const aventureId = party.aventures[-1].id;
-//     const aventure = await getData('aventure', aventureId);
-//
-//     aventure.team2 = teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null }));
-//
-//     await addData('aventure', aventure);
-//
-//     return aventure;
-// }
-
 export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);
-    const aventureId = party.aventures[-1].id;
+    const aventureId = party.aventures[party.aventures.length - 1]; 
     const aventure = await getData('aventure', aventureId);
 
     if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {
         await changeCaptain(partyId);
-
         return { party, aventure };
     }
-    else if (aventure.team1_status === "valid" || aventure.team2_status === "valid") {
-        const team1Choices = aventure.team.map((member) => member.choice);
-        const poisonCount = team1Choices.filter((choice) => choice === 'poison').length;
+
+    if (aventure.team1_status === "valid" || aventure.team2_status === "valid") {
+        const teamChoices = aventure.team.map((member) => member.choice);
+        const poisonCount = teamChoices.filter((choice) => choice === 'poison').length;
+        const islandCount = teamChoices.filter((choice) => choice === 'ile').length;
+        if (poisonCount === 0 && islandCount === teamChoices.length) {
+            party.score_marins += 1;
+        } else if (poisonCount > 0) {
+            party.score_pirates += 1;
+        }
     }
 
-    if (poisonCount === 0) {
-        party.score_marins += 1;
-    } else {
-        party.score_pirates += 1;
-    }
-
-    if (party.score_marins === 10) {
-        console.log("Victoire des marins et de la sirène")
-    } else if (party.score_pirates === 10) {
-        console.log("Victoire des pirates")
+    if (party.score_marins >= 10) {
+        console.log("Victoire des marins et de la sirène !");
+    } else if (party.score_pirates >= 10) {
+        console.log("Victoire des pirates !");
     }
 
     await addData('aventure', aventure);
@@ -88,11 +76,30 @@ export async function changeCaptain(partyId) {
     party.last_captains.push(party.actual_captain);
 
     if (party.last_captains.length === party.playersId.length) {
-        party.future_captains = party.playersId;
+        party.future_captains = [...party.playersId];
         party.last_captains = [];
     }
 
-    party.actual_captains = party.future_captains.shift()
+    party.actual_captain = party.future_captains.shift();
 
     await addData('party', party);
+}
+
+export async function updateAventureChoice(aventureId, playerId, choice) {
+    const aventure = await getData('aventure', aventureId);
+
+    if (!aventure) {
+        throw new Error('Aventure introuvable.');
+    }
+
+    const teamMember = aventure.team.find(member => member.playerId === playerId);
+    if (!teamMember) {
+        throw new Error('Joueur non trouvé dans l\'équipe.');
+    }
+
+    teamMember.choice = choice;
+
+    await addData('aventure', aventure);
+
+    return aventure;
 }

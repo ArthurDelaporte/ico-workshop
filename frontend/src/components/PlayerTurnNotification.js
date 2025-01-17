@@ -1,12 +1,36 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
+import { getPartyInfo } from '../database/party';
 
 const PlayerTurnNotification = () => {
   const { players, currentPlayerIndex } = usePlayerContext();
   const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+  
+
 
   const currentPlayer = players?.[currentPlayerIndex];
+  const [partyScores, setPartyScores] = React.useState({ marins: 0, pirates: 0 });
+
+  React.useEffect(() => {
+    const fetchPartyScores = async () => {
+      try {
+        const partyId = searchParams.get('partyId');
+        const partyInfo = await getPartyInfo(partyId);
+        if (partyInfo) {
+          setPartyScores({
+            marins: partyInfo.score_marins,
+            pirates: partyInfo.score_pirates,
+          });
+        }
+      } catch (error) {
+        console.error('Erreur lors de la récupération des scores de la partie :', error);
+      }
+    };
+
+    fetchPartyScores();
+  }, []);
 
   if (!currentPlayer) {
     return <p className="text-red-500">Erreur : Joueur introuvable.</p>;
@@ -14,7 +38,12 @@ const PlayerTurnNotification = () => {
 
   const handleNext = () => {
     console.log(`Le joueur ${currentPlayer.name} passe à la sélection de carte.`);
-    navigate('/action-card-selection'); // Redirige vers la sélection de carte
+
+    if (currentPlayerIndex === 0) {
+      navigate('/action-card-selection');
+    } else {
+      navigate('/crew-selection', { state: { partyScores } });
+    }
   };
 
   return (
@@ -23,6 +52,14 @@ const PlayerTurnNotification = () => {
         <h1 className="text-2xl font-bold text-gray-800 mb-4">{currentPlayer.name}</h1>
         <p className="text-lg text-red-500 font-bold">C'EST TON TOUR !</p>
         <p className="text-sm text-gray-700 mt-2">Passe le téléphone au joueur.</p>
+        <div className="text-left mt-4">
+          <p className="text-sm text-gray-700">
+            <strong>Score des Marins :</strong> {partyScores.marins}
+          </p>
+          <p className="text-sm text-gray-700">
+            <strong>Score des Pirates :</strong> {partyScores.pirates}
+          </p>
+        </div>
         <button
           className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300"
           onClick={handleNext}
