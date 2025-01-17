@@ -82,7 +82,7 @@ const UsersAdmin = () => {
                                   <FaArrowLeft className="mr-2" />
                                 </button>
                                 <h1
-                                  className="text-4xl font-bold text-[#F5E0A4] text-center"
+                                  className="text-4xl font-bold text-[#DED0B1] text-center"
                                   style={{ fontFamily: "'Alatsi', sans-serif" }}
                                 >
                                   Gestion des utilisateurs
@@ -147,7 +147,7 @@ const UsersAdmin = () => {
                     <button
                         key={index + 1}
                         onClick={() => paginate(index + 1)}
-                        className={`px-4 py-2 mx-1 rounded-lg ${currentPage === index + 1 ? 'bg-[#F5E0A4] text-[#00253E]' : 'bg-[#CE5960] text-white'}`}
+                        className={`px-4 py-2 mx-1 rounded-lg ${currentPage === index + 1 ? 'bg-[#DED0B1] text-[#00253E]' : 'bg-[#CE5960] text-white'}`}
                     >
                         {index + 1}
                     </button>

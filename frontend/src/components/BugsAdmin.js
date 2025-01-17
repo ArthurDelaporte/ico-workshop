@@ -52,7 +52,7 @@ const BugsAdmin = () => {
                     <FaArrowLeft className="mr-2" />
                 </button>
                 <h1
-                    className="text-4xl font-bold text-[#F5E0A4] text-center"
+                    className="text-4xl font-bold text-[#DED0B1] text-center"
                     style={{ fontFamily: "'Alatsi', sans-serif" }}
                 >
                     Gestion des Bugs et Suggestions
@@ -63,7 +63,7 @@ const BugsAdmin = () => {
             <div className="bg-white p-6 rounded-lg shadow-lg overflow-auto">
                 <table className="min-w-full table-auto text-sm">
                     <thead>
-                        <tr className="bg-[#F5E0A4]">
+                        <tr className="bg-[#DED0B1]">
                             <th className="px-4 py-3 text-left text-[#00253E]">Titre</th>
                             <th className="px-4 py-3 text-left sm:block md:table-cell text-[#00253E]">Description</th>
                             <th className="px-4 py-3 text-left sm:block md:table-cell text-[#00253E]">Joueur</th>

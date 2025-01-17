@@ -102,7 +102,7 @@ const CardStore = () => {
                       <FaArrowLeft className="mr-2" />
                     </button>
                     <h1
-                      className="text-4xl font-bold text-[#F5E0A4] text-center"
+                      className="text-4xl font-bold text-[#DED0B1] text-center"
                       style={{ fontFamily: "'Alatsi', sans-serif" }}
                     >
                       Gestion des Cartes
@@ -114,7 +114,7 @@ const CardStore = () => {
             <div className="text-center mb-6">
                 <button 
                     onClick={() => setIsAddFormVisible(!isAddFormVisible)} 
-                    className="bg-[#F5E0A4] text-gray-900 px-4 py-2 rounded hover:bg-[#CE5960]"
+                    className="bg-[#DED0B1] text-gray-900 px-4 py-2 rounded hover:bg-[#CE5960]"
                 >
                     {isAddFormVisible ? 'Cacher le Formulaire' : 'Ajouter une Nouvelle Carte'}
                 </button>

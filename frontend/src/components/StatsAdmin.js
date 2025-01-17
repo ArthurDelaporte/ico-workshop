@@ -48,7 +48,7 @@ const StatsAdmin = ({ statsData = {} }) => {
                                               <FaArrowLeft className="mr-2" />
                                             </button>
                                             <h1
-                                              className="text-4xl font-bold text-[#F5E0A4] text-center"
+                                              className="text-4xl font-bold text-[#DED0B1] text-center"
                                               style={{ fontFamily: "'Alatsi', sans-serif" }}
                                             >
                                               Tableau de bord des statistiques
@@ -73,17 +73,17 @@ const StatsAdmin = ({ statsData = {} }) => {
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
                     <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
-                        <FaClock className="mr-2 text-[#F5E0A4]" />
+                        <FaClock className="mr-2 text-[#DED0B1]" />
                         Temps moyen d'une partie
                     </h2>
-                    <p className="text-3xl font-bold text-[#F5E0A4]">{averageGameTime} minutes</p>
+                    <p className="text-3xl font-bold text-[#DED0B1]">{averageGameTime} minutes</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
                     <h2 className="text-xl font-semibold flex items-center text-[#00253E]">
-                        <FaClock className="mr-2 text-[#F5E0A4]" />
+                        <FaClock className="mr-2 text-[#DED0B1]" />
                         Temps médian d'une partie
                     </h2>
-                    <p className="text-3xl font-bold text-[#F5E0A4]">{medianGameTime} minutes</p>
+                    <p className="text-3xl font-bold text-[#DED0B1]">{medianGameTime} minutes</p>
                 </div>
                 <div className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
                     <h2 className="text-xl font-semibold flex items-center text-[#00253E]">

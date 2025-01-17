@@ -10,7 +10,7 @@ const Dashboard = () => {
         >
             {/* Titre du Dashboard */}
             <h1
-                className="text-5xl font-bold text-[#F5E0A4] mb-10 text-center"
+                className="text-5xl font-bold text-[#DED0B1] mb-10 text-center"
                 style={{ fontFamily: "'Alatsi', sans-serif" }}
             >
                 <FaSkullCrossbones className="inline-block mr-3" /> Tableau de Bord Admin
@@ -19,7 +19,7 @@ const Dashboard = () => {
             {/* Liste des options */}
             <ul className="w-full max-w-lg bg-white shadow-2xl rounded-lg divide-y divide-gray-300">
                 {/* Gestion des règles */}
-                <li className="hover:bg-[#F5E0A4] flex items-center">
+                <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaSkullCrossbones className="text-[#CE5960] text-2xl ml-4 mr-4" />
                     <Link
                         to="/rules-admin"
@@ -30,7 +30,7 @@ const Dashboard = () => {
                 </li>
 
                 {/* Gestion des cartes */}
-                <li className="hover:bg-[#F5E0A4] flex items-center">
+                <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaMapMarkedAlt className="text-[#CE5960] text-2xl ml-4 mr-4" />
                     <Link
                         to="/cards-admin"
@@ -41,7 +41,7 @@ const Dashboard = () => {
                 </li>
 
                 {/* Gestion des utilisateurs */}
-                <li className="hover:bg-[#F5E0A4] flex items-center">
+                <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaUsers className="text-[#CE5960] text-2xl ml-4 mr-4" />
                     <Link
                         to="/users-admin"
@@ -52,7 +52,7 @@ const Dashboard = () => {
                 </li>
 
                 {/* Statistiques */}
-                <li className="hover:bg-[#F5E0A4] flex items-center">
+                <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaChartBar className="text-[#CE5960] text-2xl ml-4 mr-4" />
                     <Link
                         to="/stats-admin"
@@ -63,7 +63,7 @@ const Dashboard = () => {
                 </li>
 
                 {/* Gestion des bugs/suggestions */}
-                <li className="hover:bg-[#F5E0A4] flex items-center">
+                <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaBug className="text-[#CE5960] text-2xl ml-4 mr-4" />
                     <Link
                         to="/bugs-admin"
