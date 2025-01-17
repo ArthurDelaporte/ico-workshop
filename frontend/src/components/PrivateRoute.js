@@ -9,7 +9,6 @@ const PrivateRoute = ({ element }) => {
         return <p>Chargement...</p>;
     }
 
-    // 🔥 Correction : Vérifie si l'utilisateur est null ou non admin
     if (!user || user.role !== 'admin') {
         return <Navigate to="/" replace />;
     }
