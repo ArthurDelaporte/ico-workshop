@@ -1,5 +1,6 @@
 import {addData, getData} from './indexedDB';
 import {getPlayerInfo} from "./player";
+import { v4 as uuidv4 } from 'uuid';
 
 export async function initializeParty(numberPlayers) {
     // Validation du nombre de joueurs
@@ -11,7 +12,7 @@ export async function initializeParty(numberPlayers) {
     const roles = generateRoles(numberPlayers);
 
     // Création de l'objet Party
-    const partyId = crypto.randomUUID();
+    const partyId = uuidv4();
     const party = {
         id: partyId,
         number_players: numberPlayers,
@@ -27,7 +28,7 @@ export async function initializeParty(numberPlayers) {
 
     // Création des objets Player
     const players = roles.map((role, index) => {
-        const playerId = crypto.randomUUID();
+        const playerId = uuidv4();
         const player = {
             id: playerId,
             name: null,

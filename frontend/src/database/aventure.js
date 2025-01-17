@@ -1,12 +1,13 @@
 import { getData, addData } from "./indexedDB";
+import { v4 as uuidv4 } from 'uuid';
 
-export async function createAventure(partyId, teamPlayersId) {
+export async function createAventure(partyId) {
     const party = await getData('party', partyId);
-    const aventureId = crypto.randomUUID();
+    const aventureId = uuidv4();
     const aventure = {
         id: aventureId,
         captain: party.actual_captain,
-        team: teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null })),
+        team: null,
         team1_status: null,
         team2_status: null
     };
@@ -18,12 +19,56 @@ export async function createAventure(partyId, teamPlayersId) {
     party.aventures.push(aventureId);
     await addData('party', party);
 
+    console.log("createAventure")
+    console.log(aventure);
+
     return aventure;
 }
 
-export async function teamAventureReject(partyId) {
+export async function getLastAventureInfo(partyId) {
     const party = await getData('party', partyId);
     const aventureId = party.aventures[-1].id;
+    try {
+        const aventure = await getData('aventure', aventureId);
+        if (!aventure) {
+            console.error(`Aucune partie trouvée avec l'ID ${aventureId}`);
+            return null;
+        }
+        return aventure;
+    } catch (error) {
+        console.error(`Erreur lors de la récupération de la partie (${aventureId}):`, error);
+        return null;
+    }
+}
+
+export async function getAventureInfo(aventureId) {
+    try {
+        const aventure = await getData('aventure', aventureId);
+        if (!aventure) {
+            console.error(`Aucune partie trouvée avec l'ID ${aventureId}`);
+            return null;
+        }
+        return aventure;
+    } catch (error) {
+        console.error(`Erreur lors de la récupération de la partie (${aventureId}):`, error);
+        return null;
+    }
+}
+
+export async function addTeamAventure(aventureId, teamPlayersId) {
+    const aventure = await getData('aventure', aventureId);
+
+    aventure.team = teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null }));
+
+    await addData('aventure', aventure);
+
+    console.log("addTeamAventure")
+    console.log(aventure);
+
+    return aventure;
+}
+
+export async function teamAventureReject(aventureId) {
     const aventure = await getData('aventure', aventureId);
 
     if (aventure.team1_status === null) {
@@ -33,6 +78,9 @@ export async function teamAventureReject(partyId) {
     }
 
     await addData('aventure', aventure);
+
+    console.log("teamAventureReject")
+    console.log(aventure);
 
     return aventure;
 }
@@ -57,12 +105,14 @@ export async function finalizeAventure(partyId) {
     if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {
         await changeCaptain(partyId);
 
+        console.log("finalizeAventure reject")
+        console.log(aventure);
+
         return { party, aventure };
     }
-    else if (aventure.team1_status === "valid" || aventure.team2_status === "valid") {
-        const team1Choices = aventure.team.map((member) => member.choice);
-        const poisonCount = team1Choices.filter((choice) => choice === 'poison').length;
-    }
+
+    const teamChoices = aventure.team.map((member) => member.choice);
+    const poisonCount = teamChoices.filter((choice) => choice === 'poison').length;
 
     if (poisonCount === 0) {
         party.score_marins += 1;
@@ -78,6 +128,9 @@ export async function finalizeAventure(partyId) {
 
     await addData('aventure', aventure);
     await addData('party', party);
+
+    console.log("finalizeAventure")
+    console.log(aventure);
 
     return { party, aventure };
 }
