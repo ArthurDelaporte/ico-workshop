@@ -21,7 +21,7 @@ export async function createAventure(partyId, teamPlayersId) {
     return aventure;
 }
 
-export async function teamAventureReject(partyId) {
+export async function getLastAventureInfo(partyId) {
     const party = await getData('party', partyId);
     const aventureId = party.aventures[party.aventures.length - 1];
     try {
@@ -92,7 +92,9 @@ export async function teamAventureReject(aventureId) {
 
 export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);
-    const aventureId = party.aventures[-1].id;
+    console.log("finalizeAventure", party);
+    const aventureId = party.aventures[0].id;
+    console.log("finalizeAventure", aventureId);
     const aventure = await getData('aventure', aventureId);
 
     if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {
