@@ -15,6 +15,7 @@ model User {
   lastname  String
   birthday  DateTime
   role      String
+  statusBan Boolean  @map("status_ban")
 
   // Relation avec Player
   players Player[]
