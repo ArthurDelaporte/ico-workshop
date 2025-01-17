@@ -5,13 +5,13 @@ const { signUp, signIn } = require("../services/authService");
 // Route pour l'inscription
 router.post("/signup", async (req, res) => {
     try {
-        const { email, password, firstname, lastname, birthday } = req.body;
+        const { email, password, firstname, lastname, birthday, role, statusBan } = req.body;
 
-        if (!email || !password || !firstname || !lastname || !birthday) {
+        if (!email || !password || !firstname || !lastname || !birthday || !role) {
             return res.status(400).json({ error: "Tous les champs sont requis." });
         }
 
-        const result = await signUp({ email, password, firstname, lastname, birthday });
+        const result = await signUp({ email, password, firstname, lastname, birthday, role, statusBan });
         res.status(201).json(result);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -22,6 +22,9 @@ router.post("/signup", async (req, res) => {
 router.post("/signin", async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        console.log(email);
+        console.log(password);
 
         if (!email || !password) {
             return res.status(400).json({ error: "Email et mot de passe requis." });

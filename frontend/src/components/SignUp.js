@@ -7,6 +7,8 @@ const SignUp = () => {
     firstname: "",
     lastname: "",
     birthday: "",
+    role: "player",
+    statusBan: false,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -19,8 +21,13 @@ const SignUp = () => {
   const handleSignUp = async () => {
     setLoading(true);
     setError("");
+    setFormData((prevState) => ({
+      ...prevState,
+      role: "player",
+      statusBan: false,
+    }));
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signup", {
+      const response = await fetch("http://localhost:1234/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
