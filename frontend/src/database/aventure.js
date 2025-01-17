@@ -1,13 +1,12 @@
 import { getData, addData } from "./indexedDB";
-import { v4 as uuidv4 } from 'uuid';
 
-export async function createAventure(partyId) {
+export async function createAventure(partyId, teamPlayersId) {
     const party = await getData('party', partyId);
-    const aventureId = uuidv4();
+    const aventureId = crypto.randomUUID();
     const aventure = {
         id: aventureId,
         captain: party.actual_captain,
-        team: null,
+        team: teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null })),
         team1_status: null,
         team2_status: null
     };
@@ -19,15 +18,12 @@ export async function createAventure(partyId) {
     party.aventures.push(aventureId);
     await addData('party', party);
 
-    console.log("createAventure")
-    console.log(aventure);
-
     return aventure;
 }
 
-export async function getLastAventureInfo(partyId) {
+export async function teamAventureReject(partyId) {
     const party = await getData('party', partyId);
-    const aventureId = party.aventures[-1].id;
+    const aventureId = party.aventures[party.aventures.length - 1];
     try {
         const aventure = await getData('aventure', aventureId);
         if (!aventure) {
@@ -79,9 +75,6 @@ export async function teamAventureReject(aventureId) {
 
     await addData('aventure', aventure);
 
-    console.log("teamAventureReject")
-    console.log(aventure);
-
     return aventure;
 }
 
@@ -104,10 +97,6 @@ export async function finalizeAventure(partyId) {
 
     if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {
         await changeCaptain(partyId);
-
-        console.log("finalizeAventure reject")
-        console.log(aventure);
-
         return { party, aventure };
     }
 
@@ -128,9 +117,6 @@ export async function finalizeAventure(partyId) {
 
     await addData('aventure', aventure);
     await addData('party', party);
-
-    console.log("finalizeAventure")
-    console.log(aventure);
 
     return { party, aventure };
 }

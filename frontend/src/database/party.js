@@ -56,17 +56,21 @@ export async function initializeParty(numberPlayers) {
 
 export async function getPartyInfo(partyId) {
     try {
-        const party = await getData('party', partyId);
-        if (!party) {
-            console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
-            return null;
-        }
-        return party;
-    } catch (error) {
-        console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
+      const party = await getData('party', partyId);
+      if (!party) {
+        console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
         return null;
+      }
+      return {
+        score_marins: party.score_marins,
+        score_pirates: party.score_pirates,
+      };
+    } catch (error) {
+      console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
+      return null;
     }
-}
+  }
+  
 
 export async function getActualCaptainInfo(partyId) {
     try {
@@ -122,4 +126,28 @@ function generateRoles(numberPlayers) {
 
     // Mélanger les rôles aléatoirement
     return roles.sort(() => Math.random() - 0.5);
+}
+
+/**
+ * Met à jour l'équipage sélectionné pour la partie
+ * @param {string} partyId - L'ID de la partie
+ * @param {Array} crew - Liste des IDs des joueurs sélectionnés pour l'équipage
+ */
+export async function updatePartyCrew(partyId, crew) {
+    try {
+        const party = await getData('party', partyId);
+        if (!party) {
+            throw new Error(`Aucune partie trouvée avec l'ID ${partyId}`);
+        }
+
+        // Mettre à jour l'équipage dans la partie
+        party.current_crew = crew;
+
+        // Sauvegarder les modifications
+        await addData('party', party);
+        console.log('Équipage mis à jour avec succès :', crew);
+    } catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'équipage :', error);
+        throw error;
+    }
 }

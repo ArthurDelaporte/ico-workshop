@@ -14,7 +14,9 @@ const SignIn = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/auth/signin", {
+      console.log(email);
+      console.log(password);
+      const response = await fetch("http://localhost:1234/api/auth/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,8 +30,16 @@ const SignIn = () => {
         throw new Error(data.error || "Erreur inconnue");
       }
 
-      alert("Connexion réussie !");
-      navigate("/dashboard"); // Redirection vers le tableau de bord après connexion
+      // Vérification du rôle de l'utilisateur
+      const userRole = data.user?.role;
+
+      if (userRole === 'admin') {
+        // Redirige vers le tableau de bord admin
+        navigate("/dashboard");
+      } else {
+        // Redirige vers la page demandée ou la page d'accueil
+        navigate("/");
+      }
     } catch (err) {
       setError(err.message);
     } finally {
