@@ -1,5 +1,6 @@
 import React from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
+import {updatePartyStatus} from '../database/party';
 
 const GameStartInstructions = () => {
   const navigate = useNavigate();
@@ -7,7 +8,8 @@ const GameStartInstructions = () => {
 
   const partyId = searchParams.get('partyId');
 
-  const handleStartGame = () => {
+  const handleStartGame = async () => {
+    await updatePartyStatus(partyId, "ilePoisonSteps");
     navigate(`/captain-role-reveal?partyId=${partyId}`);
   };
 

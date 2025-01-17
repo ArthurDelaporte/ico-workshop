@@ -56,18 +56,41 @@ export async function initializeParty(numberPlayers) {
 
 export async function getPartyInfo(partyId) {
     try {
-      const party = await getData('party', partyId);
-      if (!party) {
-        console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
-        return null;
-      }
-      return party;
+        const party = await getData('party', partyId);
+        if (!party) {
+            console.error(`Aucune partie trouvée avec l'ID ${partyId}`);
+            return null;
+        }
+        return party;
     } catch (error) {
-      console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
-      return null;
+        console.error(`Erreur lors de la récupération de la partie (${partyId}):`, error);
+        return null;
     }
-  }
-  
+}
+
+export async function updatePartyStatus(partyId, newStatus) {
+    try {
+        // Récupérer les informations de la party
+        const party = await getData('party', partyId);
+
+        if (!party) {
+            throw new Error(`Party avec l'ID ${partyId} introuvable.`);
+        }
+
+        // Mettre à jour le statut
+        party.status = newStatus;
+
+        // Enregistrer la modification dans IndexedDB
+        await addData('party', party);
+
+        console.log(`✅ Statut de la party mis à jour : ${newStatus}`);
+
+        return party;
+    } catch (error) {
+        console.error("❌ Erreur lors de la mise à jour du statut de la party :", error);
+        throw error;
+    }
+}
 
 export async function getActualCaptainInfo(partyId) {
     try {

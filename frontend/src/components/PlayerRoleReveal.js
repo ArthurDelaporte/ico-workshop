@@ -16,7 +16,7 @@ const PlayerRoleReveal = () => {
   const [party, setParty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [isChecking, setIsChecking] = useState(false); // Pour éviter plusieurs clics
+  const [isChecking, setIsChecking] = useState(false); // Empêcher les clics multiples
 
   useEffect(() => {
     if (!partyId || !playerId) {
@@ -49,13 +49,17 @@ const PlayerRoleReveal = () => {
     setIsChecking(true);
 
     try {
-      const hasPlayersUnnamed = await hasUnnamedPlayers(partyId);
+      if (party?.status === "initial") {
+        const hasPlayersUnnamed = await hasUnnamedPlayers(partyId);
 
-      if (hasPlayersUnnamed) {
-        nextPlayer();
-        navigate(`/player-chose-name?partyId=${partyId}`);
+        if (hasPlayersUnnamed) {
+          nextPlayer();
+          navigate(`/player-chose-name?partyId=${partyId}`);
+        } else {
+          navigate(`/new-captain-reveal?partyId=${partyId}`);
+        }
       } else {
-        navigate(`/new-captain-reveal?partyId=${partyId}`);
+        navigate(`/player-card-choice?partyId=${partyId}`)
       }
     } catch (err) {
       console.error("Erreur lors de la vérification des joueurs sans nom :", err);
@@ -66,11 +70,19 @@ const PlayerRoleReveal = () => {
   };
 
   if (loading) {
-    return <p className="text-center text-gray-700">Chargement...</p>;
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-teal-50 px-6 py-8">
+          <p className="text-xl font-bold text-gray-700">Chargement...</p>
+        </div>
+    );
   }
 
   if (error) {
-    return <p className="text-center text-red-500">{error}</p>;
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-teal-50 px-6 py-8">
+          <p className="text-xl font-bold text-red-500">{error}</p>
+        </div>
+    );
   }
 
   const isCaptain = party?.actual_captain === player?.id;
@@ -85,13 +97,25 @@ const PlayerRoleReveal = () => {
           <p className="text-2xl font-bold text-gray-800">
             {player.card?.name || 'Aucun rôle assigné'}
           </p>
-          <button
-              className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300 disabled:bg-gray-400"
-              onClick={handleNext}
-              disabled={isChecking} // Désactive le bouton pendant la vérification
-          >
-            {isChecking ? 'Vérification...' : 'OK'}
-          </button>
+
+          {/* Bouton conditionnel selon le statut de la partie */}
+          {party?.status === "initial" ? (
+              <button
+                  className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300 disabled:bg-gray-400"
+                  onClick={handleNext}
+                  disabled={isChecking}
+              >
+                {isChecking ? 'Vérification...' : 'OK'}
+              </button>
+          ) : (
+              <button
+                  className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300 disabled:bg-gray-400"
+                  onClick={handleNext}
+                  disabled={isChecking}
+              >
+                {isChecking ? 'Vérification...' : 'CHOISIS UNE CARTE'}
+              </button>
+          )}
         </div>
       </div>
   );
