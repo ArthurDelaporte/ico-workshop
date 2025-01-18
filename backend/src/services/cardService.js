@@ -14,28 +14,28 @@ const getCardById = async (id) => {
 };
 
 // Créer une nouvelle carte
-const createCard = async ({ name, description, img, type, numero }) => {
+const createCard = async ({ name, description, image, type, numero }) => {
     return await prisma.card.create({
         data: {
             name,
             description,
-            img,
             type,
-            numero
+            numero,
+            image
         },
     });
 };
 
 // Mettre à jour une carte par ID
-const updateCard = async (id, { name, description, img, type, numero }) => {
+const updateCard = async (id, { name, description, image, type, numero }) => {
     return await prisma.card.update({
         where: { id },
         data: {
             name,
             description,
-            img,
             type,
-            numero
+            numero,
+            image
         },
     });
 };

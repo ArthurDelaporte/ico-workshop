@@ -28,7 +28,6 @@ const Dashboard = () => {
                         Gestion des règles du jeu
                     </Link>
                 </li>
-
                 {/* Gestion des cartes */}
                 <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaMapMarkedAlt className="text-[#CE5960] text-2xl ml-4 mr-4" />
@@ -39,7 +38,6 @@ const Dashboard = () => {
                         Gestion des cartes
                     </Link>
                 </li>
-
                 {/* Gestion des utilisateurs */}
                 <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaUsers className="text-[#CE5960] text-2xl ml-4 mr-4" />
@@ -50,7 +48,6 @@ const Dashboard = () => {
                         Gestion des utilisateurs
                     </Link>
                 </li>
-
                 {/* Statistiques */}
                 <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaChartBar className="text-[#CE5960] text-2xl ml-4 mr-4" />
@@ -61,7 +58,6 @@ const Dashboard = () => {
                         Statistiques
                     </Link>
                 </li>
-
                 {/* Gestion des bugs/suggestions */}
                 <li className="hover:bg-[#DED0B1] flex items-center">
                     <FaBug className="text-[#CE5960] text-2xl ml-4 mr-4" />
@@ -73,6 +69,17 @@ const Dashboard = () => {
                     </Link>
                 </li>
             </ul>
+
+            {/* Flèche de retour */}
+            <div className="mt-10">
+                <Link
+                    to="/"
+                    className="flex flex-col items-center text-[#DED0B1] hover:text-[#AF2127] transition-transform duration-1000 transform hover:translate-y-10"
+                >
+                    <FaAnchor className="text-5xl animate-bounce" />
+                    <span className="mt-2 text-lg font-semibold">Retour à l'accueil</span>
+                </Link>
+            </div>
         </div>
     );
 };
