@@ -12,7 +12,6 @@ const ActionCardSelection = () => {
   const partyId = searchParams.get('partyId');
 
   const [selectedCard, setSelectedCard] = useState('');
-  // const [aventureInfo, setAventureInfo] = useState(getPlayerInfo(partyId));
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -20,7 +19,6 @@ const ActionCardSelection = () => {
   const [error, setError] = useState('');
   const [shuffledCards, setShuffledCards] = useState([]);
 
-  // Récupérer l'index du joueur actuel via l'aventure
   useEffect(() => {
     if (!partyId) {
       setError("ID de la partie manquant.");
@@ -38,18 +36,15 @@ const ActionCardSelection = () => {
           throw new Error("Aucune aventure en cours.");
         }
 
-        // Calculer l'index du joueur en fonction du nombre de choix à `null`
         const nullChoicesCount = aventure.team.filter(member => member.choice === null).length;
         const playerIndex = (3 - (nullChoicesCount % 3)) % 3;
 
         setCurrentPlayerIndex(playerIndex);
 
-        // Récupérer les infos du joueur actuel
         const playerId = aventure.team[playerIndex].playerId;
         const playerInfo = await getPlayerInfo(playerId);
         setCurrentPlayer(playerInfo);
 
-        // Générer un ordre aléatoire pour les cartes
         setShuffledCards(shuffleArray([{name:'ile', img: '/img/card/ile.png', disabled: false},
           {name: 'poison', img: '/img/card/poison.png', disabled: playerInfo.card.name !== 'Pirate'}]));
       } catch (err) {
@@ -63,7 +58,6 @@ const ActionCardSelection = () => {
     fetchAventureInfo();
   }, [partyId]);
 
-  // Fonction pour mélanger aléatoirement un tableau
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
 
   if (loading) {
