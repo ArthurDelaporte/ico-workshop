@@ -29,9 +29,9 @@ import PiratesWinStart from './components/PiratesWinStart';
 import PiratesWinEnd from './components/PiratesWinEnd';
 import SirenWinEnd from './components/SirenWinEnd';
 import VoteSirene from './components/VoteSirene';
-import { AuthProvider } from './AuthContext'; // Import du contexte
+import { AuthProvider } from './AuthContext'; 
 import PrivateRoute from './components/PrivateRoute';
-
+import ShipmentReturn from './components/ShipmentReturn';
 
 function App() {
   return (
@@ -68,6 +68,7 @@ function App() {
             <Route path="/pirates-win-end" element={<PiratesWinEnd />} />
             <Route path="/siren-win-end" element={<SirenWinEnd />} />
             <Route path="/vote-sirene" element={<VoteSirene />} />
+            <Route path="shipment-return" element={<ShipmentReturn />} />
           </Routes>
         </Router>
       </PlayerProvider>

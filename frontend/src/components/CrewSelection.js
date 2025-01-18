@@ -135,25 +135,34 @@ const CrewSelection = () => {
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-6">
-        {players.map((player) => (
-          <div
-            key={player.id}
-            className={`relative p-4 rounded-lg cursor-pointer shadow-lg ${
-              selectedCrew.some((p) => p.id === player.id)
-                ? 'bg-[#981B20] text-white'
-                : 'bg-[#DED0B1] text-[#00253E]'
-            }`}
-            onClick={() => toggleCrewMember(player)}
-          >
-            <img
-              src="/img/startgame/tete_de_mort_blanche.png"
-              alt="Icone"
-              className="w-full h-16 object-contain mx-auto"
-            />
-            <p className="mt-2 text-center font-bold">{player.name}</p>
-          </div>
-        ))}
+        {players.map((player) => {
+          const isSelected = selectedCrew.some((p) => p.id === player.id);
+          return (
+            <div
+              key={player.id}
+              className="relative cursor-pointer shadow-lg"
+              onClick={() => toggleCrewMember(player)}
+              style={{ width: "120px", height: "140px" }} 
+            >
+              <div
+                className="flex flex-col items-center justify-center p-2 bg-[#DED0B1] rounded-t-lg" 
+                style={{ height: "85%" }}
+              >
+                <img
+                  src={isSelected ? "/img/card/tete_de_mort_rouge.png" : "/img/homepage/tete_de_mort.png"}
+                  alt="Icone"
+                  className="w-14 h-14 mb-2"
+                />
+              </div>
+              <div className="bg-[#E2DAC7] w-full h-4 flex items-center justify-center rounded-b-lg">
+                <p className="text-sm font-bold text-[#00253E]">{player.name}</p>
+              </div>
+            </div>
+          );
+        })}
       </div>
+
+
 
       {party?.aventures?.length === 0 ? (
           <div className="flex flex-col gap-4 items-center w-full max-w-md px-24">
