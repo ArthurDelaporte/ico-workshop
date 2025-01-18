@@ -27,7 +27,7 @@ export async function initializeParty(numberPlayers) {
     };
 
     // Création des objets Player
-    const players = roles.map((role, index) => {
+    roles.map((role) => {
         const playerId = uuidv4();
         const player = {
             id: playerId,
@@ -46,7 +46,7 @@ export async function initializeParty(numberPlayers) {
         return player;
     });
 
-    party.actual_captain = party.playersId[0];
+    party.actual_captain = party.future_captains.shift()
 
     // Mettre à jour l'objet Party avec les IDs des joueurs
     await addData('party', party);
@@ -144,27 +144,4 @@ function generateRoles(numberPlayers) {
 
     // Mélanger les rôles aléatoirement
     return roles.sort(() => Math.random() - 0.5);
-}
-
-/**
- * Met à jour l'équipage sélectionné pour la partie
- * @param {string} partyId - L'ID de la partie
- * @param {Array} crew - Liste des IDs des joueurs sélectionnés pour l'équipage
- */
-export async function updatePartyCrew(partyId, crew) {
-    try {
-        const party = await getData('party', partyId);
-        if (!party) {
-            throw new Error(`Aucune partie trouvée avec l'ID ${partyId}`);
-        }
-
-        // Mettre à jour l'équipage dans la partie
-        party.current_crew = crew;
-
-        // Sauvegarder les modifications
-        await addData('party', party);
-    } catch (error) {
-        console.error('Erreur lors de la mise à jour de l\'équipage :', error);
-        throw error;
-    }
 }

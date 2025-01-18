@@ -1,5 +1,6 @@
 import {addData, getAllData, getData} from './indexedDB';
 import {getCardInfo} from "./card";
+import {getLastAventureInfo} from "./aventure";
 
 export async function setPlayerName(partyId, playerName) {
     // Récupérer les joueurs de la partie
@@ -130,6 +131,40 @@ export async function hasUnnamedPlayers(partyId) {
         return false; // Tous les joueurs ont un nom
     } catch (error) {
         console.error(`Erreur lors de la vérification des joueurs sans nom (${partyId}):`, error);
+        return false;
+    }
+}
+
+export async function updateLastAventureStatus(partyId) {
+    try {
+        if (!partyId) throw new Error("L'ID de la partie est requis.");
+
+        const players = await getAllPlayers(partyId);
+        if (!players || players.length === 0) {
+            throw new Error("Aucun joueur trouvé pour cette partie.");
+        }
+
+        for (const player of players) {
+            player.last_aventure = false;
+            await addData('player', player);
+        }
+
+        const lastAventure = await getLastAventureInfo(partyId);
+        if (!lastAventure || !lastAventure.team) {
+            throw new Error("Aucune aventure trouvée.");
+        }
+
+        for (const teamMember of lastAventure.team) {
+            const player = await getData('player', teamMember.playerId);
+            if (player) {
+                player.last_aventure = true;
+                await addData('player', player);
+            }
+        }
+
+        return true;
+    } catch (error) {
+        console.error("❌ Erreur lors de la mise à jour de last_aventure :", error);
         return false;
     }
 }

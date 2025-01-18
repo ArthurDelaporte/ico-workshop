@@ -1,11 +1,13 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 
 const VotingRules = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const partyId = searchParams.get('partyId')
 
   const handleOkClick = () => {
-    navigate('/player-turn-notification');
+    navigate(`/new-captain-reveal?partyId=${partyId}`);
   };
 
   return (
@@ -17,7 +19,7 @@ const VotingRules = () => {
             borderRadius: '16px',
           }}
         >
-        <h1 className="text-xl font-bold text-center text-[#981B20] mb-4">VOTEZ POUR LES EXPÉDITIONS !</h1>
+        <p className="text-xl font-bold text-center text-[#981B20] mb-4">VOTEZ POUR LES EXPÉDITIONS !</p>
         <ul className="text-sm text-black space-y-3 list-decimal list-inside leading-relaxed">
           <li>
             <span className="font-bold">ATTENTION !</span> À partir de ce tour et jusqu'à la fin de la partie, il y aura un vote lorsque trois personnes seront proposées. (La personne qui propose l'équipage est forcément pour.)

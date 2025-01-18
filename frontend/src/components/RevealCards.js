@@ -7,13 +7,13 @@ const RevealCards = () => {
     const partyId = searchParams.get('partyId');
 
     const displayedCards = [
-      { name: 'Carte Action', img: '/img/card/action_card.png' },
-      { name: 'Carte Action', img: '/img/card/action_card.png' },
-      { name: 'Carte Action', img: '/img/card/action_card.png' },
+        { id: 1, name: 'Carte Action', img: '/img/card/action_card.png' },
+        { id: 2, name: 'Carte Action', img: '/img/card/action_card.png' },
+        { id: 3, name: 'Carte Action', img: '/img/card/action_card.png' },
     ];
 
     const handleOkClick = () => {
-    navigate(`/shipment-return?partyId=${partyId}`);
+        navigate(`/shipment-return?partyId=${partyId}`);
     };
 
     return (
@@ -27,7 +27,7 @@ const RevealCards = () => {
             <div className="flex flex-col items-center gap-8">
                 {displayedCards.map((card) => (
                     <div
-                        key={card}
+                        key={card.id}
                         className="relative flex items-center justify-center"
                         style={{
                             width: '180px',

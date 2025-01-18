@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { getAllPlayers } from "../database/player";
+import {getAllPlayers, updateLastAventureStatus} from "../database/player";
 import { getPartyInfo } from "../database/party";
 import { createAventure, addTeamAventure, teamAventureReject, changeCaptain } from "../database/aventure";
 
@@ -9,9 +9,11 @@ const CrewSelection = () => {
   const [searchParams] = useSearchParams();
   const partyId = searchParams.get('partyId');
 
-  const [players, setPlayers] = useState([]);
-  const [party, setParty] = useState(null);
+  const [players, setPlayers] = useState(null);
+  const [playersLastAventure, setPlayersLastAventure] = useState([]);
+  const [party, setParty] = useState({});
   const [selectedCrew, setSelectedCrew] = useState([]);
+  const [impossibleCrew, setImpossibleCrew] = useState(false);
   const [aventure, setAventure] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -32,6 +34,11 @@ const CrewSelection = () => {
               if (!fetchedPlayers || fetchedPlayers.length === 0) {
                   setError("Aucun joueur trouvé pour cette partie.");
               } else {
+                  for (const player of fetchedPlayers) {
+                      if (player.last_aventure) {
+                          setPlayersLastAventure([...playersLastAventure, player])
+                      }
+                  }
                   setPlayers(fetchedPlayers);
               }
 
@@ -57,18 +64,22 @@ const CrewSelection = () => {
   const toggleCrewMember = (player) => {
     if (selectedCrew.some((p) => p.id === player.id)) {
       setSelectedCrew(selectedCrew.filter((p) => p.id !== player.id));
+        setImpossibleCrew(false);
     } else if (selectedCrew.length < maxCrewSize) {
-      setSelectedCrew([...selectedCrew, player]);
+      const newCrew = [...selectedCrew, player];
+      setSelectedCrew(newCrew);
+      if (party.aventures.length >= 1) {
+          if (newCrew.length === 3) {
+              setImpossibleCrew(newCrew[0].last_aventure && newCrew[1].last_aventure && newCrew[2].last_aventure);
+          }
+      }
     }
   };
 
   const handleConfirmCrew = async () => {
     if (selectedCrew.length === maxCrewSize && aventure) {
       try {
-        const sortedCrew = [...selectedCrew].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-        await addTeamAventure(aventure.id, sortedCrew.map(player => player.id)).then(() => {
-            navigate(`/player-turn?partyId=${partyId}`);
-        });
+          await teamAventureAccept();
       } catch (err) {
         setError("Une erreur est survenue lors de la validation.");
       }
@@ -80,10 +91,7 @@ const CrewSelection = () => {
     const handleCrewAccepted = async (accepted) => {
         if (accepted && aventure) {
             try {
-                const sortedCrew = [...selectedCrew].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-                await addTeamAventure(aventure.id, sortedCrew.map(player => player.id)).then(() => {
-                    navigate(`/player-turn?partyId=${partyId}`);
-                });
+                await teamAventureAccept();
             } catch (err) {
                 console.error("Erreur lors de l'ajout de l'équipe à l'aventure :", err);
                 setError("Une erreur est survenue lors de la validation de l'équipage.");
@@ -103,6 +111,15 @@ const CrewSelection = () => {
         }
     };
 
+    const teamAventureAccept = async () => {
+        const sortedCrew = [...selectedCrew].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+        await addTeamAventure(aventure.id, sortedCrew.map(player => player.id)).then(async () => {
+            await updateLastAventureStatus(partyId).then(() => {
+                navigate(`/player-turn?partyId=${partyId}`);
+            });
+        });
+    }
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E]">
@@ -121,13 +138,17 @@ const CrewSelection = () => {
 
   return (
     <div className="flex flex-col items-center justify-between min-h-screen bg-[#00253E] px-4 py-6">
-      <div className="text-center text-white mb-6">
-        <h1 className="text-2xl font-bold text-[#981B20]">CHOISIS TON ÉQUIPAGE</h1>
-        <p className="text-sm mt-2">Constitue un équipage de {maxCrewSize} membres (Tu peux en faire partie)</p>
+      <div className="text-center text-white mb-3">
+        <h1 className="text-3xl font-bold text-[#981B20]">CHOISIS TON ÉQUIPAGE</h1>
+        <p className="text-lg mt-2">Constitue un équipage de {maxCrewSize} membres (Tu peux en faire partie)</p>
           {party?.aventures?.length !== 0 && (
               <p className="text-sm">Scores : Marins {party.score_marins} | Pirates {party.score_pirates}</p>
           )}
       </div>
+
+      {impossibleCrew && (
+        <p className="text-lg text-[#981B20] text-center mb-3">Cette équipage a déjà réalisé la dernière aventure ! <br/> Change au moins un joueur.</p>
+      )}
 
       <div className="grid grid-cols-3 gap-4 mb-6">
         {players.map((player) => {
@@ -157,8 +178,6 @@ const CrewSelection = () => {
         })}
       </div>
 
-
-
       {party?.aventures?.length === 0 ? (
           <div className="flex flex-col gap-4 items-center w-full max-w-md px-24">
               <button
@@ -182,14 +201,14 @@ const CrewSelection = () => {
                       <button
                           className="bg-[#DED0B1] text-[#00253E] font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
                           onClick={() => handleCrewAccepted(true)}
-                          disabled={selectedCrew.length !== maxCrewSize}
+                          disabled={selectedCrew.length !== maxCrewSize || impossibleCrew}
                       >
                           ÉQUIPAGE ACCEPTÉ
                       </button>
                       <button
                           className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
                           onClick={() => handleCrewAccepted(false)}
-                          disabled={selectedCrew.length !== maxCrewSize}
+                          disabled={selectedCrew.length !== maxCrewSize || impossibleCrew}
                       >
                           ÉQUIPAGE REFUSÉ
                       </button>

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
-import { getLastAventureChoices } from "../database/aventure";
+import {changeCaptain, getLastAventureChoices} from "../database/aventure";
+import {getPartyInfo, updatePartyStatus} from "../database/party";
 
 const ShipmentReturn = () => {
   const navigate = useNavigate();
@@ -8,6 +9,7 @@ const ShipmentReturn = () => {
   const partyId = searchParams.get('partyId');
 
   const [cards, setCards] = useState([]);
+  const [party, setParty] = useState({});
   const [rolePoint, setRolePoint] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -19,43 +21,56 @@ const ShipmentReturn = () => {
       return;
     }
 
-    const fetchChoices = async () => {
-      try {
-        setLoading(true);
-        const choices = await getLastAventureChoices(partyId);
+    setLoading(true);
+
+    Promise.all([getPartyInfo(partyId), getLastAventureChoices(partyId)])
+      .then(([fetchedParty, choices]) => {
+        if (!fetchedParty) {
+          setError("Impossible de récupérer les informations de la partie.");
+        } else {
+          setParty(fetchedParty);
+        }
 
         if (!choices || choices.length === 0) {
           throw new Error("Aucune carte disponible.");
         }
 
         if (choices.includes("poison")) {
-            setRolePoint("pirates");
+          setRolePoint("pirates");
         } else {
-            setRolePoint("marins");
+          setRolePoint("marins");
         }
 
-        const mappedCards = choices.map((choice, index) => ({
+        const shuffledCards = choices.sort(() => Math.random() - 0.5);
+
+        const mappedCards = shuffledCards.map((choice, index) => ({
           id: index,
           img: `/img/card/${choice}.png`,
         }));
 
-
-        const shuffledCards = mappedCards.sort(() => Math.random() - 0.5);
-        setCards(shuffledCards);
-
-      } catch (err) {
+        setCards(mappedCards);
+      })
+      .catch((err) => {
         console.error("Erreur lors de la récupération des choix :", err);
         setError(err.message || "Une erreur est survenue.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchChoices();
+      })
+      .finally(() => setLoading(false));
   }, [partyId]);
 
-  const handleNextRound = () => {
-    navigate(`/next-round?partyId=${partyId}`);
+  const handleNextRound = async () => {
+    if (party.score_marins === 10 ) {
+
+    } else if (party.score_pirates === 10) {
+
+    }
+
+    await changeCaptain(partyId);
+    await updatePartyStatus(partyId, "ilePoisonChoices");
+    if (party?.aventures?.length === 1) {
+        navigate(`/voting-rules?partyId=${partyId}`);
+    } else {
+        navigate(`/new-captain-reveal?partyId=${partyId}`);
+    }
   };
 
   if (loading) {

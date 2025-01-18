@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
-import {getLastAventureInfo, updateAventureChoice, finalizeAventure} from "../database/aventure";
+import {getLastAventureInfo, updateAventureChoice} from "../database/aventure";
 import { getPlayerInfo } from "../database/player";
 import {updatePartyStatus} from "../database/party";
 
@@ -12,7 +12,7 @@ const ActionCardSelection = () => {
   const partyId = searchParams.get('partyId');
 
   const [selectedCard, setSelectedCard] = useState('');
-  const [aventureInfo, setAventureInfo] = useState(getPlayerInfo(partyId));
+  // const [aventureInfo, setAventureInfo] = useState(getPlayerInfo(partyId));
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ const ActionCardSelection = () => {
       try {
         const aventure = await getLastAventureInfo(partyId);
 
-        setAventureInfo(aventure)
+        // setAventureInfo(aventure)
 
         if (!aventure || !aventure.team) {
           throw new Error("Aucune aventure en cours.");
@@ -97,7 +97,6 @@ const ActionCardSelection = () => {
 
       if (currentPlayerIndex === 2){
         await updatePartyStatus(partyId, "ilePoisonReveal");
-        await finalizeAventure(partyId, aventureInfo.id);
         navigate(`/captain-reveal-cards?partyId=${partyId}`);
       } else {
         navigate(`/player-turn?partyId=${partyId}`);

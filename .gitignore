@@ -1,6 +1,7 @@
 /backend/node_modules/
 /backend/package-lock.json
-/.idea/workspace.xml
 /backend/.env
 /frontend/package-lock.json
 /git_update.sh
+/node_modules/
+/.idea/

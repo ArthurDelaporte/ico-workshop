@@ -109,8 +109,6 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
 
         aventure.team[teamIndex].choice = selectedCard;
 
-        await addData("aventure", aventure);
-
         if (teamIndex === 2) {
             const teamChoices = aventure.team.map((member) => member.choice);
             const poisonCount = teamChoices.filter((choice) => choice === 'poison').length;
@@ -122,6 +120,7 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
             }
         }
 
+        await addData("aventure", aventure);
         await addData('party', party);
 
         return aventure;
@@ -131,9 +130,8 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
     }
 }
 
-export async function finalizeAventure(partyId, aventureId) {
+export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);
-    const aventure = await getData('aventure', aventureId);
 
     if (party.score_marins === 10) {
         console.log("Victoire des marins et de la sirène")
@@ -141,10 +139,9 @@ export async function finalizeAventure(partyId, aventureId) {
         console.log("Victoire des pirates")
     }
 
-    await addData('aventure', aventure);
     await addData('party', party);
 
-    return { party, aventure };
+    return { party };
 }
 
 export async function changeCaptain(partyId) {
@@ -152,12 +149,12 @@ export async function changeCaptain(partyId) {
 
     party.last_captains.push(party.actual_captain);
 
-    if (party.last_captains.length === party.playersId.length) {
-        party.future_captains = party.playersId;
+    if (party.last_captains.length === party.number_players - 1) {
+        party.future_captains = party.last_captains;
         party.last_captains = [];
     }
 
-    party.actual_captains = party.future_captains.shift()
+    party.actual_captain = party.future_captains.shift();
 
     await addData('party', party);
 }
