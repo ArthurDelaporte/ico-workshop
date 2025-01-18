@@ -51,8 +51,6 @@ export async function initializeParty(numberPlayers) {
     // Mettre à jour l'objet Party avec les IDs des joueurs
     await addData('party', party);
 
-    console.log('Party created:', party);
-
     return party;
 }
 
@@ -84,8 +82,6 @@ export async function updatePartyStatus(partyId, newStatus) {
 
         // Enregistrer la modification dans IndexedDB
         await addData('party', party);
-
-        console.log(`✅ Statut de la party mis à jour : ${newStatus}`);
 
         return party;
     } catch (error) {
@@ -167,7 +163,6 @@ export async function updatePartyCrew(partyId, crew) {
 
         // Sauvegarder les modifications
         await addData('party', party);
-        console.log('Équipage mis à jour avec succès :', crew);
     } catch (error) {
         console.error('Erreur lors de la mise à jour de l\'équipage :', error);
         throw error;

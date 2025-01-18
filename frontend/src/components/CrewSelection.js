@@ -15,7 +15,6 @@ const CrewSelection = () => {
   const [aventure, setAventure] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
-  const [disabledBtnEquipage, setDisabledBtnEquipage] = useState(false);
 
   const maxCrewSize = 3;
 
@@ -92,13 +91,9 @@ const CrewSelection = () => {
         } else {
             try {
                 setSelectedCrew([]);
-                await teamAventureReject(aventure.id);
-
-                // Récupérer l'état mis à jour de l'aventure
-                const updatedAventure = await getPartyInfo(partyId).then(party => party.aventures.slice(-1)[0]);
-
+                const updatedAventure = await teamAventureReject(aventure.id);
                 if (updatedAventure.team1_status === "reject" && updatedAventure.team2_status === "reject") {
-                    await finalizeAventure(partyId);
+                    await finalizeAventure(party.id, aventure.id);
                     navigate(`/new-captain-reveal?partyId=${partyId}`);
                 }
             } catch (err) {
