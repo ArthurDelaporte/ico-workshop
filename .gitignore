@@ -3,3 +3,4 @@
 /.idea/workspace.xml
 /backend/.env
 /frontend/package-lock.json
+/git_update.sh
