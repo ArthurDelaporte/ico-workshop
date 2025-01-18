@@ -19,7 +19,7 @@ const ActionCardSelection = () => {
   const [error, setError] = useState('');
   const [shuffledCards, setShuffledCards] = useState([]);
 
-  useEffect(() => {
+  useEffect(async () => {
     if (!partyId) {
       setError("ID de la partie manquant.");
       setLoading(false);
@@ -29,8 +29,6 @@ const ActionCardSelection = () => {
     const fetchAventureInfo = async () => {
       try {
         const aventure = await getLastAventureInfo(partyId);
-
-        // setAventureInfo(aventure)
 
         if (!aventure || !aventure.team) {
           throw new Error("Aucune aventure en cours.");
@@ -55,7 +53,7 @@ const ActionCardSelection = () => {
       }
     };
 
-    fetchAventureInfo();
+    await fetchAventureInfo();
   }, [partyId]);
 
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
@@ -137,7 +135,7 @@ const ActionCardSelection = () => {
             <button
                 className="w-60 max-w-md text-2xl bg-black text-white py-2 rounded-lg mt-6 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleConfirmSelection}
-              disabled={isChecking} // Désactiver le bouton si aucune carte sélectionnée ou vérification en cours
+              disabled={isChecking}
           >
             SUIVANT
           </button>
