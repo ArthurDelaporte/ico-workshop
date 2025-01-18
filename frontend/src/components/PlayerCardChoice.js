@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
-import {getLastAventureInfo, updateAventureChoice} from "../database/aventure";
+import {getLastAventureInfo, updateAventureChoice, finalizeAventure} from "../database/aventure";
 import { getPlayerInfo } from "../database/player";
 import {updatePartyStatus} from "../database/party";
 
@@ -12,6 +12,7 @@ const ActionCardSelection = () => {
   const partyId = searchParams.get('partyId');
 
   const [selectedCard, setSelectedCard] = useState('');
+  const [aventureInfo, setAventureInfo] = useState(getPlayerInfo(partyId));
   const [currentPlayer, setCurrentPlayer] = useState(null);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -30,6 +31,8 @@ const ActionCardSelection = () => {
     const fetchAventureInfo = async () => {
       try {
         const aventure = await getLastAventureInfo(partyId);
+
+        setAventureInfo(aventure)
 
         if (!aventure || !aventure.team) {
           throw new Error("Aucune aventure en cours.");
@@ -94,7 +97,8 @@ const ActionCardSelection = () => {
 
       if (currentPlayerIndex === 2){
         await updatePartyStatus(partyId, "ilePoisonReveal");
-        navigate(`/player-turn-notification?partyId=${partyId}`);
+        await finalizeAventure(partyId, aventureInfo.id);
+        navigate(`/captain-reveal-cards?partyId=${partyId}`);
       } else {
         navigate(`/player-turn?partyId=${partyId}`);
       }
@@ -115,7 +119,7 @@ const ActionCardSelection = () => {
             <h1 className="text-2xl font-bold text-red-500">
               CHOISIS TA CARTE
             </h1>
-            <p className="text-sm mt-2">Les Marins ne peuvent prendre que des cartes îles</p>
+            <p className="text-sm mt-2">Les Marins et la Sirène ne peuvent prendre que des cartes îles</p>
             <p className="text-sm mt-2">contrairement aux Pirates qui ont le choix entre les deux</p>
           </div>
         </div>

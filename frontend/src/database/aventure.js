@@ -97,11 +97,8 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
     }
 }
 
-export async function finalizeAventure(partyId) {
+export async function finalizeAventure(partyId, aventureId) {
     const party = await getData('party', partyId);
-    console.log("finalizeAventure", party);
-    const aventureId = party.aventures[0].id;
-    console.log("finalizeAventure", aventureId);
     const aventure = await getData('aventure', aventureId);
 
     if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {

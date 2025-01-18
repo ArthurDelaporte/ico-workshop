@@ -6,9 +6,6 @@ export async function setPlayerName(partyId, playerName) {
     const party = await getData('party', partyId);
     if (!party) throw new Error('Party introuvable.');
 
-    console.log(party);
-    console.log(playerName);
-
     for (const playerId of party.playersId) {
         const player = await getData('player', playerId);
 
@@ -73,11 +70,6 @@ export async function getPlayerInfo(playerId) {
 
 export async function isPlayerNameUsed(partyId, playerName) {
     try {
-        console.log(getAllData('player'))
-
-        console.log("Vérification du partyId :", partyId);
-        console.log("Vérification du playerName :", playerName);
-
         // Vérifier si partyId est bien défini
         if (!partyId) {
             console.error("Erreur: partyId est undefined ou null.");
@@ -102,7 +94,6 @@ export async function isPlayerNameUsed(partyId, playerName) {
         for (const playerId of party.playersId) {
             const player = await getData('player', playerId);
             if (player && player.name === playerName) {
-                console.log(`Nom déjà utilisé: ${playerName}`);
                 return true;
             }
         }
