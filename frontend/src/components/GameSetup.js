@@ -31,7 +31,6 @@ const GameSetup = () => {
     try {
       await initializePlayers(numberOfPlayers);
       const party = await initializeParty(numberOfPlayers);
-      console.log('Party created:', party);
       navigate(`/player-chose-name?partyId=${party.id}`); // ✅ Utilisation correcte du paramètre d'URL
     } catch (error) {
       console.error('Erreur lors de l’initialisation de la partie :', error);

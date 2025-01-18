@@ -1,6 +1,5 @@
 import React from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
-import {updatePartyStatus} from '../database/party';
 
 const GameStartInstructions = () => {
   const navigate = useNavigate();
@@ -8,7 +7,6 @@ const GameStartInstructions = () => {
   const partyId = searchParams.get('partyId');
 
   const handleStartGame = async () => {
-    await updatePartyStatus(partyId, "ilePoisonSteps");
     navigate(`/captain-role-reveal?partyId=${partyId}`);
   };
 
@@ -23,6 +21,7 @@ const GameStartInstructions = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           height: '420px',
+          borderRadius: '25px',
         }}
       >
         {/* Titre */}
@@ -48,7 +47,7 @@ const GameStartInstructions = () => {
 
         {/* Bouton OK */}
         <button
-          className="w-full bg-[#00253E] text-white py-3 rounded-lg mt-4 hover:bg-gray-800 transition duration-300"
+          className="w-20 bg-[#00253E] text-white py-3 rounded-lg mt-4 hover:bg-gray-800 transition duration-300"
           onClick={handleStartGame}
         >
           OK

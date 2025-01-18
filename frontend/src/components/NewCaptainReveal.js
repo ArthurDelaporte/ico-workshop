@@ -81,16 +81,17 @@ const CaptainRoleReveal = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
             {/* Conteneur principal */}
             <div
-                className="relative p-6 rounded-lg shadow-md w-[90%] max-w-[380px] text-center"
+                className="relative p-6 shadow-md w-[90%] max-w-[380px] text-center"
                 style={{
                     backgroundImage: `url('/img/startgame/background_card.png')`,
                     backgroundSize: 'cover',
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
                     height: '420px',
+                    borderRadius: '25px',
                 }}
             >
-                {/* Icône capitaine */}
+                {/* Icône tete de mort */}
                 <img
                     src="/img/homepage/tete_de_mort.png"
                     alt="Icone"
@@ -99,13 +100,13 @@ const CaptainRoleReveal = () => {
                 />
 
                 {/* Informations du capitaine */}
-                <p className="text-xl font-bold text-[#00253E]">{captain.name} (Capitaine)</p>
-                <p className="text-2xl font-bold text-[#981B20] mt-4">C'EST TON TOUR !</p>
-                <p className="text-sm font-thin text-[#00253E] mt-2">Passez le téléphone au joueur</p>
+                <p className="text-3xl font-bold text-[#00253E]">{captain.name} (Capitaine)</p>
+                <p className="text-4xl font-bold text-[#981B20] mt-4">C'EST TON TOUR !</p>
+                <p className="text-sm font-thin italic text-[#00253E] mt-2">Passez le téléphone au joueur</p>
 
                 {/* Bouton OK */}
                 <button
-                    className="w-full bg-[#00253E] text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
+                    className="w-20 bg-[#00253E] text-white py-3 rounded-lg mt-28 hover:bg-gray-800 transition duration-300"
                     onClick={handleNext}
                 >
                     OK

@@ -51,6 +51,8 @@ export async function initializeParty(numberPlayers) {
     // Mettre à jour l'objet Party avec les IDs des joueurs
     await addData('party', party);
 
+    console.log('Party created:', party);
+
     return party;
 }
 

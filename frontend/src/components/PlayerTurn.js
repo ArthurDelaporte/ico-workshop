@@ -74,21 +74,40 @@ const PlayerTurn = () => {
   }
 
   return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 px-6 py-8">
-        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
-          <div className="text-4xl text-gray-600 mb-4">
-            <i className="fas fa-user"></i>
-          </div>
-          <h1 className="text-xl font-bold text-gray-800">{currentPlayer.name}</h1>
-          <p className="text-2xl font-bold text-red-600 mt-4">C’EST TON TOUR !</p>
-          <p className="text-sm text-gray-600 mt-2">Passez le téléphone au joueur</p>
-          <button
-              className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300"
-              onClick={handleNext}
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
+          {/* Conteneur principal */}
+          <div
+              className="relative p-6 shadow-md w-[90%] max-w-[380px] text-center"
+              style={{
+                  backgroundImage: `url('/img/startgame/background_card.png')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  height: '420px',
+                  borderRadius: '25px',
+              }}
           >
-            OK
-          </button>
-        </div>
+              {/* Icône tete de mort */}
+              <img
+                  src="/img/homepage/tete_de_mort.png"
+                  alt="Icone"
+                  className="mx-auto mb-4"
+                  style={{width: 'auto', height: 'auto'}}
+              />
+
+              {/* Informations du joueur */}
+              <p className="text-3xl font-bold text-[#00253E]">{currentPlayer.name}</p>
+              <p className="text-4xl font-bold text-[#981B20] mt-4">C'EST TON TOUR !</p>
+              <p className="text-sm font-thin italic text-[#00253E] mt-2">Passez le téléphone au joueur</p>
+
+              {/* Bouton OK */}
+              <button
+                  className="w-20 bg-[#00253E] text-white py-3 rounded-lg mt-28 hover:bg-gray-800 transition duration-300"
+                  onClick={handleNext}
+              >
+                  OK
+              </button>
+          </div>
       </div>
   );
 };

@@ -58,9 +58,6 @@ export async function addTeamAventure(aventureId, teamPlayersId) {
 
     await addData('aventure', aventure);
 
-    console.log("addTeamAventure")
-    console.log(aventure);
-
     return aventure;
 }
 
@@ -78,17 +75,27 @@ export async function teamAventureReject(aventureId) {
     return aventure;
 }
 
-// export async function newTeamAventure(partyId, teamPlayersId) {
-//     const party = await getData('party', partyId);
-//     const aventureId = party.aventures[-1].id;
-//     const aventure = await getData('aventure', aventureId);
-//
-//     aventure.team2 = teamPlayersId.map((playerId) => ({ playerId: playerId, choice: null }));
-//
-//     await addData('aventure', aventure);
-//
-//     return aventure;
-// }
+export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
+    try {
+        if (!partyId || !selectedCard) {
+            throw new Error("Paramètres manquants : partyId et selectedCard sont requis.");
+        }
+
+        const aventure = await getLastAventureInfo(partyId);
+        if (!aventure || !aventure.team) {
+            throw new Error("Aucune aventure valide trouvée pour cette partie.");
+        }
+
+        aventure.team[teamIndex].choice = selectedCard;
+
+        await addData("aventure", aventure);
+
+        return aventure;
+    } catch (error) {
+        console.error("❌ Erreur lors de la mise à jour du choix :", error);
+        return null;
+    }
+}
 
 export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);

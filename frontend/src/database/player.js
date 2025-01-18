@@ -62,7 +62,7 @@ export async function getPlayerInfo(playerId) {
             return null;
         }
 
-        player.card = await getCardInfo(player.cardId); // Ajout de l'info de la carte
+        player.card = await getCardInfo(player.cardId);
 
         return player; // Retourne l'objet joueur avec la carte
     } catch (error) {

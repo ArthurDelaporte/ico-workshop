@@ -17,6 +17,7 @@ const PlayerRoleReveal = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [isChecking, setIsChecking] = useState(false); // Empêcher les clics multiples
+  const [img, setImg] = useState('');
 
   useEffect(() => {
     if (!partyId || !playerId) {
@@ -35,6 +36,7 @@ const PlayerRoleReveal = () => {
           } else {
             setPlayer(playerData);
             setParty(partyData);
+            setImg(`/img/card/${playerData.card.img}.png`);
           }
         })
         .catch((err) => {
@@ -88,35 +90,46 @@ const PlayerRoleReveal = () => {
   const isCaptain = party?.actual_captain === player?.id;
 
   return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-teal-50 px-6 py-8">
-        <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
-          <p className="text-xl font-bold text-gray-800">
-            {player.name} {isCaptain ? "(Capitaine)" : ""}
-          </p>
-          <p className="text-lg font-semibold text-teal-700 mt-4">Ton rôle est</p>
-          <p className="text-2xl font-bold text-gray-800">
-            {player.card?.name || 'Aucun rôle assigné'}
-          </p>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
+        {/* Icône joueur */}
+        <img
+            src={img}
+            alt="Icone joueur"
+            className="mx-auto mb-4"
+            style={{ width: '150px', height: '150px', borderRadius: '10px' }}
+        />
+        {/* Informations du capitaine */}
+        <p className="text-3xl font-bold text-white">{player.name} {isCaptain ? "(Capitaine)" : ""}</p>
+        <p className="text-lg text-white mt-2 mb-2">Ton rôle est</p>
 
-          {/* Bouton conditionnel selon le statut de la partie */}
-          {party?.status === "initial" ? (
-              <button
-                  className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300 disabled:bg-gray-400"
-                  onClick={handleNext}
-                  disabled={isChecking}
-              >
-                {isChecking ? 'Vérification...' : 'OK'}
-              </button>
-          ) : (
-              <button
-                  className="w-full bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300 disabled:bg-gray-400"
-                  onClick={handleNext}
-                  disabled={isChecking}
-              >
-                {isChecking ? 'Vérification...' : 'CHOISIS UNE CARTE'}
-              </button>
-          )}
+        {/* Conteneur principal */}
+        <div
+            className="relative p-6 rounded-lg shadow-md w-[90%] max-w-[380px] text-center bg-[#DED0B1]"
+        >
+
+          {/* Informations du capitaine */}
+          <p className="text-5xl font-bold text-[#00253E] uppercase">{player.card.name}</p>
+
         </div>
+
+        {/* Bouton conditionnel selon le statut de la partie */}
+        {party?.status === "initial" ? (
+            <button
+                className="w-20 text-2xl bg-black text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
+                onClick={handleNext}
+                disabled={isChecking}
+            >
+              {isChecking ? 'Vérification...' : 'OK'}
+            </button>
+        ) : (
+            <button
+                className="w-48 text-2xl bg-black text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
+                onClick={handleNext}
+                disabled={isChecking}
+            >
+              {isChecking ? 'Vérification...' : 'CHOISIS UNE CARTE'}
+            </button>
+        )}
       </div>
   );
 };

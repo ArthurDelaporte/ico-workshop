@@ -29,8 +29,6 @@ const ActionCardSelection = () => {
       return;
     }
 
-    console.log(`Le joueur ${currentCrewPlayer.name} a choisi : ${selectedCard}`);
-
     const updatedPlayers = [...players];
     const globalIndex = players.findIndex((player) => player.name === currentCrewPlayer.name);
     updatedPlayers[globalIndex] = {
@@ -44,7 +42,6 @@ const ActionCardSelection = () => {
       setSelectedCard('');
       navigate('/player-turn-notification');
     } else {
-      console.log('Tous les joueurs de l\'équipage ont choisi leurs cartes.');
       navigate('/captain-reveal-cards'); // Terminez et passez au capitaine
     }
   };

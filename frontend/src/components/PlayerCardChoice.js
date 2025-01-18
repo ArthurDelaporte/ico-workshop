@@ -1,86 +1,156 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
+import {getLastAventureInfo, updateAventureChoice} from "../database/aventure";
+import { getPlayerInfo } from "../database/player";
+import {updatePartyStatus} from "../database/party";
 
 const ActionCardSelection = () => {
-  const { players, currentPlayerIndex, nextPlayer } = usePlayerContext();
+  const { nextPlayer } = usePlayerContext();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const partyId = searchParams.get('partyId');
+
   const [selectedCard, setSelectedCard] = useState('');
+  const [currentPlayer, setCurrentPlayer] = useState(null);
+  const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [isChecking, setIsChecking] = useState(false);
+  const [error, setError] = useState('');
+  const [shuffledCards, setShuffledCards] = useState([]);
 
+  // Récupérer l'index du joueur actuel via l'aventure
   useEffect(() => {
-    console.log('Players:', players);
-    console.log('Current Player Index:', currentPlayerIndex);
-    console.log('Current Player:', players[currentPlayerIndex]);
-  }, [players, currentPlayerIndex]);
+    if (!partyId) {
+      setError("ID de la partie manquant.");
+      setLoading(false);
+      return;
+    }
 
-  if (!players || players.length === 0) {
-    console.error('Erreur : Liste des joueurs vide.');
-    return <p className="text-red-500">Erreur : Liste des joueurs vide.</p>;
+    const fetchAventureInfo = async () => {
+      try {
+        const aventure = await getLastAventureInfo(partyId);
+
+        if (!aventure || !aventure.team) {
+          throw new Error("Aucune aventure en cours.");
+        }
+
+        // Calculer l'index du joueur en fonction du nombre de choix à `null`
+        const nullChoicesCount = aventure.team.filter(member => member.choice === null).length;
+        const playerIndex = (3 - (nullChoicesCount % 3)) % 3;
+
+        setCurrentPlayerIndex(playerIndex);
+
+        // Récupérer les infos du joueur actuel
+        const playerId = aventure.team[playerIndex].playerId;
+        const playerInfo = await getPlayerInfo(playerId);
+        setCurrentPlayer(playerInfo);
+
+        // Générer un ordre aléatoire pour les cartes
+        setShuffledCards(shuffleArray([{name:'ile', img: '/img/card/ile.png', disabled: false},
+          {name: 'poison', img: '/img/card/poison.png', disabled: playerInfo.card.name !== 'Pirate'}]));
+      } catch (err) {
+        console.error("Erreur lors de la récupération de l'aventure :", err);
+        setError(err.message || "Une erreur est survenue.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAventureInfo();
+  }, [partyId]);
+
+  // Fonction pour mélanger aléatoirement un tableau
+  const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
+
+  if (loading) {
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6 py-8">
+          <p className="text-xl font-bold text-gray-700">Chargement...</p>
+        </div>
+    );
   }
 
-  const currentPlayer = players[currentPlayerIndex];
-  if (!currentPlayer) {
-    console.error('Erreur : Joueur actuel introuvable.');
-    return <p className="text-red-500">Erreur : Joueur actuel introuvable.</p>;
+  if (error || !currentPlayer) {
+    return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6 py-8">
+          <p className="text-xl font-bold text-red-500">{error || "Erreur : Joueur actuel introuvable."}</p>
+        </div>
+    );
   }
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
   };
 
-  const handleConfirmSelection = () => {
-    if (!selectedCard) {
-      alert('Veuillez sélectionner une carte.');
-      return;
-    }
+  const handleConfirmSelection = async () => {
+    if (!selectedCard || isChecking) return;
+    setIsChecking(true);
 
-    console.log(`Le joueur ${currentPlayer.name} a choisi : ${selectedCard}`);
+    try {
+      nextPlayer();
 
-    nextPlayer();
+      await updateAventureChoice(partyId, selectedCard, currentPlayerIndex);
 
-    if (currentPlayerIndex + 1 < players.length) {
-      navigate('/player-turn-notification');
-    } else {
-      navigate('/captain-reveal-cards');
+      if (currentPlayerIndex === 2){
+        await updatePartyStatus(partyId, "ilePoisonReveal");
+        navigate(`/player-turn-notification?partyId=${partyId}`);
+      } else {
+        navigate(`/player-turn?partyId=${partyId}`);
+      }
+
+    } catch (err) {
+      console.error("Erreur lors de la validation de la carte :", err);
+      setError("Une erreur est survenue lors de la sélection.");
+    } finally {
+      setIsChecking(false);
     }
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6 py-8">
-      <div className="w-full max-w-md">
-        <div className="text-center bg-black py-4 rounded-lg shadow-md mb-6">
-          <h1 className="text-2xl font-bold text-red-500">
-            JOUEUR {currentPlayerIndex + 1} / {players.length}
-          </h1>
-          <p className="text-lg mt-2 text-white">Nom : {currentPlayer.name}</p>
-          <p className="text-sm mt-2">Carte sélectionnée : {selectedCard || 'Aucune'}</p>
+      <div className="flex flex-col items-center min-h-screen bg-[#00253E] text-white px-6 py-8">
+        {/* Informations du joueur */}
+        <div className="w-full max-w-md">
+          <div className="text-center py-4 rounded-lg">
+            <h1 className="text-2xl font-bold text-red-500">
+              CHOISIS TA CARTE
+            </h1>
+            <p className="text-sm mt-2">Les Marins ne peuvent prendre que des cartes îles</p>
+            <p className="text-sm mt-2">contrairement aux Pirates qui ont le choix entre les deux</p>
+          </div>
         </div>
+
+        {/* Sélection des cartes (ordre aléatoire) */}
+        <div className="flex flex-col items-center justify-center gap-5 max-w-md w-68">
+          {shuffledCards.map((card) => (
+              <button
+                  key={card.name}
+                  className={`py-6 rounded-lg text-black text-xl font-bold transition duration-300 w-68 ${
+                      ((selectedCard && selectedCard !== card.name) || card.disabled) && ('opacity-50')
+                  }`}
+                  onClick={() => handleCardClick(card.name)}
+                  disabled={card.disabled}
+              >
+                <img
+                  src={card.img}
+                  alt="Icone Carte Action"
+                  style={{width: '240px', height: '240px'}}
+                />
+              </button>
+          ))}
+        </div>
+
+        {/* Bouton de confirmation */}
+        {selectedCard && (
+            <button
+                className="w-60 max-w-md text-2xl bg-black text-white py-2 rounded-lg mt-6 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              onClick={handleConfirmSelection}
+              disabled={isChecking} // Désactiver le bouton si aucune carte sélectionnée ou vérification en cours
+          >
+            SUIVANT
+          </button>
+        )}
       </div>
-      <div className="grid grid-cols-1 gap-4 max-w-md w-full">
-        <button
-          className={`p-6 rounded-lg shadow-md text-black bg-white text-xl font-bold ${
-            selectedCard === 'ILE' ? 'ring-4 ring-teal-500' : ''
-          }`}
-          onClick={() => handleCardClick('ILE')}
-        >
-          ILE
-        </button>
-        <button
-          className={`p-6 rounded-lg shadow-md text-black bg-white text-xl font-bold ${
-            selectedCard === 'POISON' ? 'ring-4 ring-teal-500' : ''
-          }`}
-          onClick={() => handleCardClick('POISON')}
-        >
-          POISON
-        </button>
-      </div>
-      <button
-        className="w-full max-w-md bg-teal-600 text-white py-3 rounded-lg mt-6 hover:bg-teal-700 transition duration-300"
-        onClick={handleConfirmSelection}
-      >
-        CONFIRMER
-      </button>
-    </div>
   );
 };
 

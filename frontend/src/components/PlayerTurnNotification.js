@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { usePlayerContext } from '../PlayerContext';
 import { getPartyInfo } from '../database/party';
@@ -6,14 +6,12 @@ import { getPartyInfo } from '../database/party';
 const PlayerTurnNotification = () => {
   const { players, currentPlayerIndex } = usePlayerContext();
   const navigate = useNavigate();
-    const [searchParams] = useSearchParams();
-  
-
+  const [searchParams] = useSearchParams();
 
   const currentPlayer = players?.[currentPlayerIndex];
-  const [partyScores, setPartyScores] = React.useState({ marins: 0, pirates: 0 });
+  const [partyScores, setPartyScores] = useState({ marins: 0, pirates: 0 });
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchPartyScores = async () => {
       try {
         const partyId = searchParams.get('partyId');

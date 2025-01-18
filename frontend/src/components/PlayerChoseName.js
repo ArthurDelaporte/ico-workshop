@@ -78,6 +78,7 @@ const PlayerChoseName = () => {
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
           height: '420px',
+          borderRadius: '25px',
         }}
       >
         <img
@@ -101,11 +102,11 @@ const PlayerChoseName = () => {
         {isNameTaken && <p className="text-sm text-red-500 mt-1">Ce nom est déjà pris.</p>}
         {error && <p className="text-sm text-red-500 mt-4">{error}</p>}
         <button
-          className="w-full bg-[#353535] text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300 disabled:bg-gray-400"
+          className="w-20 bg-[#353535] text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300 disabled:bg-gray-400"
           onClick={handleSubmit}
           disabled={!playerName.trim() || isNameTaken || loading}
         >
-          {loading ? 'Chargement...' : 'OK'}
+          0K
         </button>
       </div>
     </div>
