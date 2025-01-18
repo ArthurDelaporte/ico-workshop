@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 
@@ -30,34 +30,35 @@ const HomePage = () => {
         >
           INSCRIPTION
         </button>
-          {!user ? (
-              <button
-                  className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
-                  onClick={() => navigate('/signin')}
-              >
-                  Connexion
-              </button>
-          ) : (
-              <button
-                  className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
-                  onClick={() => logout()}
-              >
-                  Déconnexion
-              </button>
-          )
-          }
+        {!user ? (
           <button
-              className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
-              onClick={() => navigate('/game-setup')}
+            className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
+            onClick={() => navigate('/signin')}
           >
-              Commencer une partie
+            Connexion
           </button>
+        ) : (
+          <button
+            className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
+            onClick={() => logout()}
+          >
+            Déconnexion
+          </button>
+        )}
+        <button
+          className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
+          onClick={() => navigate('/game-setup')}
+        >
+          Commencer une partie
+        </button>
       </div>
 
-      {/* Mentions légales */}
-      <a href="#" className="text-[#DED0B1] text-sm underline mt-4 mb-8 underline">
+      <button
+        className="text-[#DED0B1] text-sm underline mt-4 mb-8 underline"
+        onClick={() => navigate('/legal-mentions')}
+      >
         mentions légales
-      </a>
+      </button>
     </div>
   );
 };

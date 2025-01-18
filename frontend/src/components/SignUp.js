@@ -47,11 +47,10 @@ const SignUp = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Carte principale */}
       <div
         className="relative text-black p-6 rounded-lg shadow-md w-full max-w-md flex flex-col items-center"
         style={{
-          backgroundImage: "url('/img/startgame/background_card.png')", // Fond de la carte
+          backgroundImage: "url('/img/startgame/background_card.png')", 
           backgroundSize: "cover",
           backgroundPosition: "center",
           borderRadius: "16px",
@@ -64,7 +63,6 @@ const SignUp = () => {
           <p className="text-red-500 text-sm text-center mb-4">{error}</p>
         )}
         <div className="space-y-4 w-full">
-          {/* Email */}
           <input
             type="email"
             name="email"
@@ -73,7 +71,6 @@ const SignUp = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
-          {/* Mot de passe */}
           <input
             type="password"
             name="password"
@@ -82,7 +79,6 @@ const SignUp = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
-          {/* Prénom */}
           <input
             type="text"
             name="firstname"
@@ -91,7 +87,6 @@ const SignUp = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
-          {/* Nom */}
           <input
             type="text"
             name="lastname"
@@ -100,7 +95,6 @@ const SignUp = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
-          {/* Date de naissance */}
           <input
             type="date"
             name="birthday"
@@ -109,7 +103,6 @@ const SignUp = () => {
             onChange={handleChange}
             className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
-          {/* Bouton Inscription */}
           <button
             onClick={handleSignUp}
             className="w-full bg-black text-white py-3 text-lg font-bold rounded-lg shadow-md hover:bg-gray-800 transition duration-300"

@@ -33,6 +33,7 @@ import { AuthProvider } from './AuthContext';
 import PrivateRoute from './components/PrivateRoute';
 import ShipmentReturn from './components/ShipmentReturn';
 import FeedbackForm from './components/FeedbackForm';
+import LegalMentions from './components/LegalMentions';
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
             <Route path="/stats-admin" element={<PrivateRoute element={<StatsAdmin />} />} />
             <Route path="/bugs-admin" element={<PrivateRoute element={<BugsAdmin />} />} />
             <Route path="feedback-form" element={<FeedbackForm />} />
+            <Route path="/legal-mentions" element={<LegalMentions />} />
           </Routes>
         </Router>
       </PlayerProvider>
