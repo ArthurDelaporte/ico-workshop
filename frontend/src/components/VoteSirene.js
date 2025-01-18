@@ -11,7 +11,6 @@ const VoteSirene = ({ players = [], scores = { marins: 0, pirates: 0 } }) => {
   const handleConfirmVote = () => {
     if (selectedPlayer) {
       console.log(`Vote confirmé pour : ${selectedPlayer.name}`);
-      // Ajouter la logique backend ici
     } else {
       alert('Veuillez sélectionner un joueur avant de confirmer.');
     }
@@ -19,7 +18,6 @@ const VoteSirene = ({ players = [], scores = { marins: 0, pirates: 0 } }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Titre */}
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-[#981B20]">VOTE POUR TROUVER LA SIRÈNE</h1>
         <p className="text-sm text-white mt-2">
@@ -29,8 +27,6 @@ const VoteSirene = ({ players = [], scores = { marins: 0, pirates: 0 } }) => {
           <strong>Scores :</strong> Marins {scores?.marins || 0} | Pirates {scores?.pirates || 0}
         </p>
       </div>
-
-      {/* Liste des joueurs */}
       <div className="grid grid-cols-3 gap-4 mb-6 w-full max-w-md">
         {players.map((player) => {
           const isSelected = selectedPlayer?.id === player.id;
@@ -51,14 +47,11 @@ const VoteSirene = ({ players = [], scores = { marins: 0, pirates: 0 } }) => {
                 />
                 <p className="font-bold">{player.name}</p>
               </div>
-              {/* Bande blanche en bas */}
               <div className="bg-white w-full h-4 rounded-b-lg"></div>
             </div>
           );
         })}
       </div>
-
-      {/* Bouton Quitter */}
       <button
             className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
             onClick={() => navigate('/')}

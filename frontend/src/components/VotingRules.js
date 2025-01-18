@@ -10,7 +10,6 @@ const VotingRules = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Conteneur principal */}
       <div
           className="bg-cover bg-center text-black p-6 rounded-lg shadow-md w-full max-w-md"
           style={{

@@ -14,7 +14,6 @@ const SirenWinEnd = ({ players }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Carte principale */}
       <div
         className="relative text-black rounded-lg shadow-md w-full max-w-md p-6"
         style={{
@@ -23,18 +22,13 @@ const SirenWinEnd = ({ players }) => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Titre */}
         <h1 className="text-lg font-bold text-[#981B20] text-center mb-4">
           LA SIRÈNE REMPORTENT LA PARTIE SEULE !
         </h1>
-
-        {/* Texte principal */}
         <p className="text-sm text-center leading-relaxed text-black mb-6">
           En déjouant les plans des pirates et des marins, la sirène a su garder son identité
           secrète et remporte la partie seule. Félicitations !
         </p>
-
-        {/* Cartes des personnages */}
         <div className="grid grid-cols-2 gap-4 mb-6">
           {players?.length > 0 &&
             players.map((player, index) => (
@@ -51,8 +45,6 @@ const SirenWinEnd = ({ players }) => {
               </div>
             ))}
         </div>
-
-        {/* Boutons */}
         <div className="flex flex-col gap-4">
           <button
             className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"

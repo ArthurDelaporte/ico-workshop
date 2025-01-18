@@ -42,7 +42,7 @@ const ActionCardSelection = () => {
       setSelectedCard('');
       navigate('/player-turn-notification');
     } else {
-      navigate('/captain-reveal-cards'); // Terminez et passez au capitaine
+      navigate('/captain-reveal-cards');
     }
   };
 
@@ -57,8 +57,6 @@ const ActionCardSelection = () => {
           <p className="text-sm mt-2">Carte sélectionnée : {selectedCard || 'Aucune'}</p>
         </div>
       </div>
-
-      {/* Cartes */}
       <div className="grid grid-cols-1 gap-4 max-w-md w-full">
         <button
           className={`p-6 rounded-lg shadow-md text-black bg-white text-xl font-bold ${

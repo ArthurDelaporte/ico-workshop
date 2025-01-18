@@ -10,7 +10,6 @@ const MarinsWinRound = ({ rounds, players = [] }) => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Carte principale */}
       <div
         className="relative text-black rounded-lg shadow-md w-full max-w-md p-6"
         style={{
@@ -19,7 +18,6 @@ const MarinsWinRound = ({ rounds, players = [] }) => {
           backgroundPosition: 'center',
         }}
       >
-        {/* Titre */}
         <h1 className="text-lg font-bold text-teal-600 text-center mb-4">
           LES MARINS ONT REMPORTÉ {rounds} MANCHES !
         </h1>
@@ -27,8 +25,6 @@ const MarinsWinRound = ({ rounds, players = [] }) => {
         <p className="text-sm text-center leading-relaxed text-black mb-4">
           Félicitations, les marins et la sirène célèbrent leur victoire ensemble !
         </p>
-
-        {/* Cartes des personnages */}
         <div className="grid grid-cols-2 gap-4">
           {players.length > 0 ? (
             players.map((player, index) => (

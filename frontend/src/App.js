@@ -32,6 +32,7 @@ import VoteSirene from './components/VoteSirene';
 import { AuthProvider } from './AuthContext'; 
 import PrivateRoute from './components/PrivateRoute';
 import ShipmentReturn from './components/ShipmentReturn';
+import FeedbackForm from './components/FeedbackForm';
 
 function App() {
   return (
@@ -42,7 +43,6 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-
             <Route path="/game-setup" element={<GameSetup />} />
             <Route path="/player-chose-name" element={<PlayerChoseName />} />
             <Route path="/player-role-reveal" element={<PlayerRoleReveal />} />
@@ -64,13 +64,13 @@ function App() {
             <Route path="/siren-win-end" element={<SirenWinEnd />} />
             <Route path="/vote-sirene" element={<VoteSirene />} />
             <Route path="shipment-return" element={<ShipmentReturn />} />
-
             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path="/rules-admin" element={<PrivateRoute element={<RulesAdmin />} />} />
             <Route path="/cards-admin" element={<PrivateRoute element={<CardsAdmin />} />} />
             <Route path="/users-admin" element={<PrivateRoute element={<UsersAdmin />} />} />
             <Route path="/stats-admin" element={<PrivateRoute element={<StatsAdmin />} />} />
             <Route path="/bugs-admin" element={<PrivateRoute element={<BugsAdmin />} />} />
+            <Route path="feedback-form" element={<FeedbackForm />} />
           </Routes>
         </Router>
       </PlayerProvider>

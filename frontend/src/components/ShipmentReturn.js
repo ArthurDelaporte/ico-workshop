@@ -16,11 +16,8 @@ const ShipmentReturn = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Titre */}
       <h1 className="text-2xl font-bold text-[#981B20] mb-2">RETOUR DE L'EXPÉDITION</h1>
       <p className="text-center text-white text-sm mb-6">1 point pour les pirates !</p>
-
-      {/* Affichage des cartes */}
       <div className="flex flex-col items-center space-y-3">
         {cards.map((card) => (
           <div

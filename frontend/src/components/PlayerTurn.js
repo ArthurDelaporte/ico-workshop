@@ -75,7 +75,6 @@ const PlayerTurn = () => {
 
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-          {/* Conteneur principal */}
           <div
               className="relative p-6 shadow-md w-[90%] max-w-[380px] text-center"
               style={{
@@ -87,20 +86,15 @@ const PlayerTurn = () => {
                   borderRadius: '25px',
               }}
           >
-              {/* Icône tete de mort */}
               <img
                   src="/img/homepage/tete_de_mort.png"
                   alt="Icone"
                   className="mx-auto mb-4"
                   style={{width: 'auto', height: 'auto'}}
               />
-
-              {/* Informations du joueur */}
               <p className="text-3xl font-bold text-[#00253E]">{currentPlayer.name}</p>
               <p className="text-4xl font-bold text-[#981B20] mt-4">C'EST TON TOUR !</p>
               <p className="text-sm font-thin italic text-[#00253E] mt-2">Passez le téléphone au joueur</p>
-
-              {/* Bouton OK */}
               <button
                   className="w-20 bg-[#00253E] text-white py-3 rounded-lg mt-28 hover:bg-gray-800 transition duration-300"
                   onClick={handleNext}

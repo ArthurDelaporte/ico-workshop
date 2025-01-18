@@ -56,28 +56,20 @@ const CaptainRoleReveal = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-      {/* Icône joueur */}
       <img
           src={img}
           alt="Icone joueur"
           className="mx-auto mb-4"
           style={{ width: '150px', height: '150px', borderRadius: '10px' }}
       />
-      {/* Informations du capitaine */}
       <p className="text-3xl font-bold text-white">{captain.name} (Capitaine)</p>
       <p className="text-lg text-white mt-2 mb-2">Ton rôle est</p>
-
-      {/* Conteneur principal */}
       <div
         className="relative p-6 rounded-lg shadow-md w-[90%] max-w-[380px] text-center bg-[#DED0B1]"
       >
 
-        {/* Informations du capitaine */}
         <p className="text-5xl font-bold text-[#00253E] uppercase">{captain.card.name}</p>
-
       </div>
-
-      {/* Bouton OK */}
       <button
           className="w-20 text-2xl bg-black text-white py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
           onClick={() => navigate(`/crew-selection?partyId=${partyId}`)}

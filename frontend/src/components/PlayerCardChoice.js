@@ -113,7 +113,6 @@ const ActionCardSelection = () => {
 
   return (
       <div className="flex flex-col items-center min-h-screen bg-[#00253E] text-white px-6 py-8">
-        {/* Informations du joueur */}
         <div className="w-full max-w-md">
           <div className="text-center py-4 rounded-lg">
             <h1 className="text-2xl font-bold text-red-500">
@@ -123,8 +122,6 @@ const ActionCardSelection = () => {
             <p className="text-sm mt-2">contrairement aux Pirates qui ont le choix entre les deux</p>
           </div>
         </div>
-
-        {/* Sélection des cartes (ordre aléatoire) */}
         <div className="flex flex-col items-center justify-center gap-5 max-w-md w-68">
           {shuffledCards.map((card) => (
               <button
@@ -143,8 +140,6 @@ const ActionCardSelection = () => {
               </button>
           ))}
         </div>
-
-        {/* Bouton de confirmation */}
         {selectedCard && (
             <button
                 className="w-60 max-w-md text-2xl bg-black text-white py-2 rounded-lg mt-6 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
