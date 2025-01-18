@@ -64,14 +64,14 @@ function App() {
             <Route path="/pirates-win-end" element={<PiratesWinEnd />} />
             <Route path="/siren-win-end" element={<SirenWinEnd />} />
             <Route path="/vote-sirene" element={<VoteSirene />} />
-            <Route path="shipment-return" element={<ShipmentReturn />} />
+            <Route path="/shipment-return" element={<ShipmentReturn />} />
             <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
             <Route path="/rules-admin" element={<PrivateRoute element={<RulesAdmin />} />} />
             <Route path="/cards-admin" element={<PrivateRoute element={<CardsAdmin />} />} />
             <Route path="/users-admin" element={<PrivateRoute element={<UsersAdmin />} />} />
             <Route path="/stats-admin" element={<PrivateRoute element={<StatsAdmin />} />} />
             <Route path="/bugs-admin" element={<PrivateRoute element={<BugsAdmin />} />} />
-            <Route path="feedback-form" element={<FeedbackForm />} />
+            <Route path="/feedback-form" element={<FeedbackForm />} />
             <Route path="/legal-mentions" element={<LegalMentions />} />
           </Routes>
         </Router>
