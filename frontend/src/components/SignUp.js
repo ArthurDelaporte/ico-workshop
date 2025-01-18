@@ -46,56 +46,73 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-teal-50 flex flex-col justify-center items-center px-6 py-8">
-      <div className="bg-white p-8 rounded-lg shadow-xl max-w-lg w-full">
-        <h2 className="text-2xl font-semibold text-teal-700 text-center mb-8">
-          Inscription
+    <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
+      {/* Carte principale */}
+      <div
+        className="relative text-black p-6 rounded-lg shadow-md w-full max-w-md flex flex-col items-center"
+        style={{
+          backgroundImage: "url('/img/startgame/background_card.png')", // Fond de la carte
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          borderRadius: "16px",
+        }}
+      >
+        <h2 className="text-xl font-bold text-[#981B20] text-center mb-4">
+          INSCRIPTION
         </h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <div className="space-y-4">
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-4">{error}</p>
+        )}
+        <div className="space-y-4 w-full">
+          {/* Email */}
           <input
             type="email"
             name="email"
             placeholder="Email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-lg"
+            className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
+          {/* Mot de passe */}
           <input
             type="password"
             name="password"
             placeholder="Mot de passe"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-lg"
+            className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
+          {/* Prénom */}
           <input
             type="text"
             name="firstname"
             placeholder="Prénom"
             value={formData.firstname}
             onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-lg"
+            className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
+          {/* Nom */}
           <input
             type="text"
             name="lastname"
             placeholder="Nom"
             value={formData.lastname}
             onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-lg"
+            className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
+          {/* Date de naissance */}
           <input
             type="date"
             name="birthday"
             placeholder="Date de naissance"
             value={formData.birthday}
             onChange={handleChange}
-            className="w-full px-4 py-3 border rounded-lg"
+            className="w-full px-4 py-3 text-sm rounded-lg bg-[#DED0B1] text-[#00253E] border border-[#DED0B1]"
           />
+          {/* Bouton Inscription */}
           <button
             onClick={handleSignUp}
-            className="w-full text-center bg-teal-600 text-white py-3 text-lg font-medium rounded-lg shadow-md hover:bg-teal-700 transition duration-300"
+            className="w-full bg-black text-white py-3 text-lg font-bold rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
             disabled={loading}
           >
             {loading ? "Inscription..." : "S'inscrire"}
