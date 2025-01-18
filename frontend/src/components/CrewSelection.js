@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { getAllPlayers } from "../database/player";
 import { getPartyInfo } from "../database/party";
-import { createAventure, addTeamAventure, teamAventureReject, finalizeAventure } from "../database/aventure";
+import { createAventure, addTeamAventure, teamAventureReject, changeCaptain } from "../database/aventure";
 
 const CrewSelection = () => {
   const navigate = useNavigate();
@@ -93,7 +93,7 @@ const CrewSelection = () => {
                 setSelectedCrew([]);
                 const updatedAventure = await teamAventureReject(aventure.id);
                 if (updatedAventure.team1_status === "reject" && updatedAventure.team2_status === "reject") {
-                    await finalizeAventure(party.id, aventure.id);
+                    await changeCaptain(party.id);
                     navigate(`/new-captain-reveal?partyId=${partyId}`);
                 }
             } catch (err) {

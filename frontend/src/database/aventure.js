@@ -37,6 +37,25 @@ export async function getLastAventureInfo(partyId) {
     }
 }
 
+export async function getLastAventureChoices(partyId) {
+    try {
+        if (!partyId) {
+            throw new Error("Paramètre manquant : partyId est requis.");
+        }
+
+        const aventure = await getLastAventureInfo(partyId);
+        if (!aventure || !aventure.team) {
+            console.warn("Aucune aventure trouvée ou l'équipe est vide.");
+            return [];
+        }
+
+        return aventure.team.map(member => member.choice);
+    } catch (error) {
+        console.error("❌ Erreur lors de la récupération des choix :", error);
+        return [];
+    }
+}
+
 export async function getAventureInfo(aventureId) {
     try {
         const aventure = await getData('aventure', aventureId);
@@ -81,7 +100,9 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
             throw new Error("Paramètres manquants : partyId et selectedCard sont requis.");
         }
 
+        const party = await getData('party', partyId);
         const aventure = await getLastAventureInfo(partyId);
+
         if (!aventure || !aventure.team) {
             throw new Error("Aucune aventure valide trouvée pour cette partie.");
         }
@@ -89,6 +110,19 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
         aventure.team[teamIndex].choice = selectedCard;
 
         await addData("aventure", aventure);
+
+        if (teamIndex === 2) {
+            const teamChoices = aventure.team.map((member) => member.choice);
+            const poisonCount = teamChoices.filter((choice) => choice === 'poison').length;
+
+            if (poisonCount === 0) {
+                party.score_marins += 1;
+            } else {
+                party.score_pirates += 1;
+            }
+        }
+
+        await addData('party', party);
 
         return aventure;
     } catch (error) {
@@ -100,20 +134,6 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
 export async function finalizeAventure(partyId, aventureId) {
     const party = await getData('party', partyId);
     const aventure = await getData('aventure', aventureId);
-
-    if (aventure.team1_status === "reject" && aventure.team2_status === "reject") {
-        await changeCaptain(partyId);
-        return { party, aventure };
-    }
-
-    const teamChoices = aventure.team.map((member) => member.choice);
-    const poisonCount = teamChoices.filter((choice) => choice === 'poison').length;
-
-    if (poisonCount === 0) {
-        party.score_marins += 1;
-    } else {
-        party.score_pirates += 1;
-    }
 
     if (party.score_marins === 10) {
         console.log("Victoire des marins et de la sirène")
