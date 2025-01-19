@@ -118,7 +118,7 @@ Liste des dépendances principales :
 - Cors : Gestion des politiques de partage des ressources.
 - Nodemon : Pour un rechargement automatique du serveur lors des modifications de code.
 
-### Liens utiles
+## Liens utiles
 API de ICO : https://ico-workshop.onrender.com/
 
 Application ICO accessible en ligne : https://ico-game.vercel.app/
