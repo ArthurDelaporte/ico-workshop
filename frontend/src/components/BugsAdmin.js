@@ -385,7 +385,7 @@ const BugsAdmin = () => {
           <table className="min-w-full table-auto text-sm">
             <thead>
               <tr className="bg-[#DED0B1]">
-                <th className="px-4 py-3 text-left text-[#00253E]">Titre</th>
+                <th className="px-4 py-3 text-left text-[#00253E]">Type</th>
                 <th className="px-4 py-3 text-left text-[#00253E]">Description</th>
                 <th className="px-4 py-3 text-left text-[#00253E]">Joueur</th>
                 <th className="px-4 py-3 text-left text-[#00253E]">Statut</th>
