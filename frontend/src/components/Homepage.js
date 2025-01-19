@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 
@@ -39,7 +39,7 @@ const HomePage = () => {
           </button>
         ) : (
           <button
-            className="w-full bg-red-600 text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
+            className="w-full bg-[#DED0B1] text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
             onClick={() => logout()}
           >
             Déconnexion
