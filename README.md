@@ -101,21 +101,24 @@ npm start
 ### Frontend
 Liste des dépendances principales :
 
-React : Bibliothèque pour le frontend.
-React Router DOM : Gestion des routes.
-TailwindCSS : Framework CSS.
-Chart.js et React Chart.js : Visualisation des données.
-Axios : Gestion des requêtes HTTP.
-Backend
+- React : Bibliothèque pour le frontend.
+- React Router DOM : Gestion des routes.
+- TailwindCSS : Framework CSS.
+- Chart.js et React Chart.js : Visualisation des données.
+- Axios : Gestion des requêtes HTTP.
+
+
+### Backend
 Liste des dépendances principales :
 
-Express : Framework backend.
-Prisma : ORM pour gérer la base de données.
-Supabase : Plateforme backend as a service.
-dotenv : Gestion des variables d'environnement.
-Cors : Gestion des politiques de partage des ressources.
-Nodemon : Pour un rechargement automatique du serveur lors des modifications de code.
+- Express : Framework backend.
+- Prisma : ORM pour gérer la base de données.
+- Supabase : Plateforme backend as a service.
+- dotenv : Gestion des variables d'environnement.
+- Cors : Gestion des politiques de partage des ressources.
+- Nodemon : Pour un rechargement automatique du serveur lors des modifications de code.
 
 ### Liens utiles
 API de ICO : https://ico-workshop.onrender.com/
+
 Application ICO accessible en ligne : https://ico-game.vercel.app/
