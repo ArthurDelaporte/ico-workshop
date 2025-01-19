@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
-import { FaArrowLeft, FaCheckCircle, FaEdit, FaTrashAlt, FaBug, FaLightbulb, FaCommentAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaCheckCircle, FaEdit, FaTrashAlt, FaBug, FaLightbulb } from 'react-icons/fa';
 
 const BugsAdmin = () => {
     const [bugs, setBugs] = useState([
         { 
             id: 1, 
-            title: 'Bug dans le formulaire de connexion', 
+            Type: 'Bug', 
             description: 'Le bouton de soumission ne fonctionne pas.', 
             status: 'Ouvert', 
             comments: [], 
-            player: { name: 'John Doe', email: 'john.doe@example.com' } 
+            player: { email: 'john.doe@example.com' } 
         },
         { 
             id: 2, 
-            title: 'Suggestion d\'amélioration de l\'UI', 
+            Type: 'Suggestion', 
             description: 'Ajouter des animations sur les boutons.', 
             status: 'En cours', 
             comments: [], 
-            player: { name: 'Jane Smith', email: 'jane.smith@example.com' } 
+            player: { email: 'jane.smith@example.com' } 
         },
         { 
             id: 3, 
-            title: 'Erreur de chargement de la page de profil', 
+            Type: 'Suggestion', 
             description: 'La page de profil ne charge pas les données utilisateur.', 
             status: 'Résolu', 
             comments: [], 
-            player: { name: 'Alice Johnson', email: 'alice.johnson@example.com' } 
+            player: { email: 'alice.johnson@example.com' } 
         },
     ]);
 
@@ -75,16 +75,15 @@ const BugsAdmin = () => {
                         {bugs.map((bug) => (
                             <tr key={bug.id} className="border-b hover:bg-gray-100">
                                 <td className="px-4 py-3 flex items-center text-[#00253E]">
-                                    {bug.title.toLowerCase().includes('bug') ? 
+                                    {bug.Type.toLowerCase().includes('bug') ? 
                                         <FaBug className="text-red-500 mr-4 text-xl" /> : 
                                         <FaLightbulb className="text-yellow-500 mr-4 text-xl" />
                                     }
-                                    <div className="break-words">{bug.title}</div>
+                                    <div className="break-words">{bug.Type}</div>
                                 </td>
                                 <td className="px-4 py-3 sm:block md:table-cell">{bug.description}</td>
                                 <td className="px-4 py-3 sm:block md:table-cell">
                                     <div>
-                                        <strong className="text-[#AF2127]">Nom:</strong> {bug.player.name}<br />
                                         <strong className="text-[#AF2127]">Email:</strong> {bug.player.email}
                                     </div>
                                 </td>
@@ -103,9 +102,7 @@ const BugsAdmin = () => {
                                     <button onClick={() => deleteBug(bug.id)} className="text-red-500 hover:text-red-700 text-xl">
                                         <FaTrashAlt />
                                     </button>
-                                    <button onClick={() => addComment(bug.id, 'Nouveau commentaire')} className="text-blue-500 hover:text-blue-700 text-xl">
-                                        <FaCommentAlt />
-                                    </button>
+                                
                                 </td>
                             </tr>
                         ))}
