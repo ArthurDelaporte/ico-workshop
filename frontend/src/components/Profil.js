@@ -5,7 +5,7 @@ import { useAuth } from "../AuthContext";
 const Profil = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const API_URL = 'http://ico-workshop.onrender.com/api/users';
+  const API_URL = 'https://ico-workshop.onrender.com/api/users';
 
   const [profileData, setProfileData] = useState(null);
   const [loading, setLoading] = useState(true);
