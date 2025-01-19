@@ -73,6 +73,56 @@ export async function getAllMarins(partyId) {
     return players;
 }
 
+export async function getAllPiratesSirene(partyId) {
+    const party = await getData('party', partyId);
+
+    const players = []
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+
+        player.card = await getCardInfo(player.cardId);
+
+        if (player.card.name !== "Marin") {
+            players.push(player);
+        }
+    }
+
+    return players;
+}
+
+export async function getAllPirates(partyId) {
+    const party = await getData('party', partyId);
+
+    const players = []
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+
+        player.card = await getCardInfo(player.cardId);
+
+        if (player.card.name === "Pirate") {
+            players.push(player);
+        }
+    }
+
+    return players;
+}
+
+export async function getSirene(partyId) {
+    const party = await getData('party', partyId);
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+
+        player.card = await getCardInfo(player.cardId);
+
+        if (player.card.name === "Sirène") {
+            return player
+        }
+    }
+}
+
 export async function getPlayerInfo(playerId) {
     try {
         const player = await getData('player', playerId);

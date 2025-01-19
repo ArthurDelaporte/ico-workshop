@@ -71,7 +71,7 @@ const PlayerChoseName = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
       <div
-        className="relative p-6 rounded-lg shadow-md w-[90%] max-w-[380px] text-center"
+        className="relative p-6 rounded-lg w-[90%] max-w-[380px] text-center"
         style={{
           backgroundImage: `url('/img/startgame/background_card.png')`,
           backgroundSize: 'cover',

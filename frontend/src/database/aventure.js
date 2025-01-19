@@ -130,7 +130,7 @@ export async function updateAventureChoice(partyId, selectedCard, teamIndex) {
     }
 }
 
-export async function finalizeAventure(partyId) {
+export async function finalizeAventure(partyId, ) {
     const party = await getData('party', partyId);
 
     if (party.score_marins === 10) {

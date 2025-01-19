@@ -29,7 +29,7 @@ const PlayerTurnNotification = () => {
         <p className="text-2xl font-bold text-[#981B20] mb-4">C’EST TON TOUR !</p>
         <p className="text-sm text-[#00253E]">Passez le téléphone au joueur.</p>
         <button
-          className="bg-[#00253E] text-white font-bold py-2 px-6 rounded-lg mt-6 shadow-md hover:bg-[#001F33] transition duration-300"
+          className="bg-[#00253E] text-white font-bold py-2 px-6 rounded-lg mt-6 hover:bg-[#001F33] transition duration-300"
           onClick={handleNext}
         >
           OK

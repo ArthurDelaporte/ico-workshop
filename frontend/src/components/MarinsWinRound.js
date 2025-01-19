@@ -44,7 +44,7 @@ const MarinsWinRound = () => {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
             <div
-                className="relative text-black rounded-lg shadow-md w-full max-w-md p-5"
+                className="relative text-black rounded-lg w-full max-w-md p-5"
                 style={{
                     backgroundImage: "url('/img/startgame/background_card.png')",
                     backgroundSize: 'cover',
@@ -100,7 +100,7 @@ const MarinsWinRound = () => {
                 {/* Bouton */}
                 <div className="mt-6 w-full flex items-center justify-center">
                     <button
-                        className="w-20 bg-black text-white font-bold py-3 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
+                        className="w-20 bg-black text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
                         onClick={handleNext}
                         disabled={loading}
                     >
