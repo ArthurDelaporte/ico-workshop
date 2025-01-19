@@ -47,13 +47,13 @@ const HomePage = () => {
                 <div className="flex flex-col space-y-4">
                     <button
                         className="w-full bg-[#981B20] text-white text-lg font-bold py-3 rounded-lg hover:bg-[#7b1619] transition duration-300"
-                        onClick={() => navigate('/')}
+                        onClick={() => logout()}
                     >
                         DÉCONNEXION
                     </button>
                     <button
                         className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
-                        onClick={() => logout()}
+                        onClick={() => navigate('/')}
                     >
                         PROFIL
                     </button>
