@@ -1,0 +1,15 @@
+{
+  "name": "ico-workshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ArthurDelaporte/ico-workshop.git"
+  },
+  "private": true
+}
