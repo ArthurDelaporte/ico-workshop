@@ -18,42 +18,56 @@ const HomePage = () => {
       </div>
 
       {/* Texte d'invitation */}
-      <p className="text-[#DED0B1] text-center text-sm mt-4 underline">
-        Inscrivez-vous ou connectez-vous à votre compte
-      </p>
+      {user ? (
+        <p className="text-[#DED0B1] text-center text-sm mt-4 underline">
+            Inscrivez-vous ou connectez-vous à votre compte
+        </p>
+      ) : (
+          <div className="mt-4 h-5"></div>
+      )}
 
-      {/* Boutons */}
-      <div className="flex flex-col space-y-4 w-full max-w-xs">
-        <button
-          className="w-full bg-[#981B20] text-white text-lg font-bold py-3 rounded-lg hover:bg-[#7b1619] transition duration-300"
-          onClick={() => navigate('/signup')}
-        >
-          INSCRIPTION
-        </button>
-        {!user ? (
+        {/* Boutons */}
+        <div className="flex flex-col space-y-4 w-full max-w-xs">
+            {user ? (
+                <div className="flex flex-col space-y-4">
+                    <button
+                        className="w-full bg-[#981B20] text-white text-lg font-bold py-3 rounded-lg hover:bg-[#7b1619] transition duration-300"
+                        onClick={() => navigate('/signup')}
+                    >
+                        INSCRIPTION
+                    </button>
+                    <button
+                        className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
+                        onClick={() => navigate('/signin')}
+                    >
+                        CONNEXION
+                    </button>
+                </div>
+            ) : (
+                <div className="flex flex-col space-y-4">
+                    <button
+                        className="w-full bg-[#981B20] text-white text-lg font-bold py-3 rounded-lg hover:bg-[#7b1619] transition duration-300"
+                        onClick={() => navigate('/')}
+                    >
+                        DÉCONNEXION
+                    </button>
+                    <button
+                        className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
+                        onClick={() => navigate('/logout')}
+                    >
+                        PROFIL
+                    </button>
+                </div>
+            )}
           <button
-            className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
-            onClick={() => navigate('/signin')}
+              className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
+              onClick={() => navigate('/game-setup')}
           >
-            Connexion
+              Commencer une partie
           </button>
-        ) : (
-          <button
-            className="w-full bg-[#DED0B1] text-white py-3 rounded-lg hover:bg-red-700 transition duration-300"
-            onClick={() => logout()}
-          >
-            Déconnexion
-          </button>
-        )}
-        <button
-          className="w-full bg-black text-white text-lg font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
-          onClick={() => navigate('/game-setup')}
-        >
-          Commencer une partie
-        </button>
       </div>
 
-      <button
+        <button
         className="text-[#DED0B1] text-sm underline mt-4 mb-8 underline"
         onClick={() => navigate('/feedback-form')}
       >
