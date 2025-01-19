@@ -414,7 +414,7 @@ const BugsAdmin = () => {
                       className={`px-3 py-2 rounded-full text-white ${
                         bug.status === true
                           ? 'bg-green-500'
-                          : 'bg-yellow-500'
+                          : 'bg-red-500'
                       }`}
                     >
                       {bug.status}
