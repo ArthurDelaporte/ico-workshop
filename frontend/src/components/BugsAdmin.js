@@ -396,7 +396,7 @@ const BugsAdmin = () => {
               {bugs.map((bug) => (
                 <tr key={bug.id} className="border-b hover:bg-gray-100">
                   <td className="px-4 py-3 flex items-center text-[#00253E]">
-                    {bug.Type.toLowerCase().includes('bug') ? (
+                    {bug.type.toLowerCase().includes('bug') ? (
                       <FaBug className="text-red-500 mr-4 text-xl" />
                     ) : (
                       <FaLightbulb className="text-yellow-500 mr-4 text-xl" />
