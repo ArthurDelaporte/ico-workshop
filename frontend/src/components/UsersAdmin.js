@@ -3,34 +3,44 @@ import { FaArrowLeft, FaSearch, FaFilter, FaBan, FaUndo } from 'react-icons/fa';
 import BanModal from './BanModal';
 
 const UsersAdmin = () => {
-    const [users, setUsers] = useState([
-        { id: 1, name: 'Alice', status: 'active' },
-        { id: 2, name: 'Bob', status: 'banned' },
-        { id: 3, name: 'Charlie', status: 'active' },
-        { id: 4, name: 'A', status: 'active' },
-        { id: 5, name: 'B', status: 'active' },
-        { id: 6, name: 'C', status: 'active' },
-        { id: 7, name: 'D', status: 'active' },
-    ]);
+    const API_URL = "http://localhost:1234/api/users"; // Ajustez selon votre configuration backend
+    const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
-    const [filteredUsers, setFilteredUsers] = useState(users);
+    const [filteredUsers, setFilteredUsers] = useState([]);
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const usersPerPage = 4;
 
+    // Récupérer les utilisateurs depuis le backend
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Erreur lors du chargement des utilisateurs');
+                const data = await response.json();
+                setUsers(data);
+            } catch (error) {
+                console.error(error.message);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    // Filtrer les utilisateurs en fonction de la recherche et du statut
     useEffect(() => {
         let filtered = users;
 
         if (searchQuery) {
-            filtered = filtered.filter(user => 
-                user.name.toLowerCase().includes(searchQuery.toLowerCase())
+            filtered = filtered.filter(user =>
+                `${user.firstname} ${user.lastname}`.toLowerCase().includes(searchQuery.toLowerCase())
             );
         }
 
         if (filterStatus) {
-            filtered = filtered.filter(user => user.status === filterStatus);
+            filtered = filtered.filter(user => user.statusBan === (filterStatus === 'banned'));
         }
 
         setFilteredUsers(filtered);
@@ -44,23 +54,56 @@ const UsersAdmin = () => {
         setFilterStatus(status);
     };
 
-    const handleBanUser = (id) => {
+    const handleBanUser = async (id) => {
         setSelectedUserId(id);
         setIsBanModalOpen(true);
     };
 
-    const handleUnbanUser = (id) => {
-        setUsers(prevUsers => prevUsers.map(user => 
-            user.id === id ? { ...user, status: 'active' } : user
-        ));
+    const handleUnbanUser = async (id) => {
+        try {
+            const response = await fetch(`${API_URL}/${id}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ statusBan: false }),
+            });
+            if (!response.ok) throw new Error('Erreur lors de la mise à jour du statut utilisateur');
+
+            const updatedUser = await response.json();
+            setUsers((prevUsers) =>
+                prevUsers.map(user => (user.id === updatedUser.id ? updatedUser : user))
+            );
+        } catch (error) {
+            console.error(error.message);
+        }
     };
 
-    const handleConfirmBan = (banDuration) => {
-        setUsers(prevUsers => prevUsers.map(user => 
-            user.id === selectedUserId ? { ...user, status: 'banned' } : user
-        ));
-        setTimeout(() => handleUnbanUser(selectedUserId), banDuration * 60000);
-        setIsBanModalOpen(false);
+    const handleConfirmBan = async (banDuration) => {
+        try {
+            const response = await fetch(`${API_URL}/${selectedUserId}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ statusBan: true }),
+            });
+            if (!response.ok) throw new Error('Erreur lors de la mise à jour du statut utilisateur');
+
+            const updatedUser = await response.json();
+            setUsers((prevUsers) =>
+                prevUsers.map(user => (user.id === updatedUser.id ? updatedUser : user))
+            );
+
+            // Optionnel : Unban automatique après une durée donnée
+            if (banDuration > 0) {
+                setTimeout(() => handleUnbanUser(selectedUserId), banDuration * 60000);
+            }
+        } catch (error) {
+            console.error(error.message);
+        } finally {
+            setIsBanModalOpen(false);
+        }
     };
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
@@ -74,21 +117,22 @@ const UsersAdmin = () => {
     return (
         <div className="min-h-screen bg-[#00253E] py-6 px-4 font-sans">
             {/* Barre supérieure avec retour au Dashboard */}
-                              <div className="w-full max-w-4xl flex items-center justify-between mb-6">
-                                <button
-                                  onClick={() => (window.location.href = "./dashboard")}
-                                  className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
-                                >
-                                  <FaArrowLeft className="mr-2" />
-                                </button>
-                                <h1
-                                  className="text-4xl font-bold text-[#DED0B1] text-center"
-                                  style={{ fontFamily: "'Alatsi', sans-serif" }}
-                                >
-                                  Gestion des utilisateurs
-                                </h1>
-                                <div className="w-8" /> {/* Placeholder pour équilibrer le design */}
-                              </div>
+            <div className="w-full max-w-4xl flex items-center justify-between mb-6">
+                <button
+                    onClick={() => (window.location.href = "./dashboard")}
+                    className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
+                >
+                    <FaArrowLeft className="mr-2" />
+                </button>
+                <h1
+                    className="text-4xl font-bold text-[#DED0B1] text-center"
+                    style={{ fontFamily: "'Alatsi', sans-serif" }}
+                >
+                    Gestion des utilisateurs
+                </h1>
+                <div className="w-8" />
+            </div>
+
             {/* Barre de recherche et filtre */}
             <div className="flex justify-between mb-6">
                 <div className="relative">
@@ -119,9 +163,9 @@ const UsersAdmin = () => {
             <ul className="bg-white shadow-lg rounded-lg divide-y divide-gray-200">
                 {currentUsers.map(user => (
                     <li key={user.id} className="flex justify-between items-center px-4 py-3">
-                        <span className="text-lg">{user.name}</span>
+                        <span className="text-lg">{`${user.firstname} ${user.lastname}`}</span>
                         <div>
-                            {user.status !== 'banned' ? (
+                            {!user.statusBan ? (
                                 <button
                                     onClick={() => handleBanUser(user.id)}
                                     className="bg-[#CE5960] text-white px-4 py-2 rounded-lg mr-2 hover:bg-[#AF2127]"
