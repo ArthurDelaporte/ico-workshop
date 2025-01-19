@@ -34,6 +34,8 @@ import PrivateRoute from './components/PrivateRoute';
 import ShipmentReturn from './components/ShipmentReturn';
 import FeedbackForm from './components/FeedbackForm';
 import LegalMentions from './components/LegalMentions';
+import Profil from './components/Profil';
+import EditProfilePage from './components/EditProfilePage';
 
 function App() {
   return (
@@ -73,6 +75,8 @@ function App() {
             <Route path="/bugs-admin" element={<PrivateRoute element={<BugsAdmin />} />} />
             <Route path="/feedback-form" element={<FeedbackForm />} />
             <Route path="/legal-mentions" element={<LegalMentions />} />
+            <Route path="/profil" element={<Profil />} />
+            <Route path="edit-profile" element={<EditProfilePage />} />
           </Routes>
         </Router>
       </PlayerProvider>
