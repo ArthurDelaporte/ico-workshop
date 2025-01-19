@@ -53,7 +53,7 @@ const HomePage = () => {
                     </button>
                     <button
                         className="w-full bg-[#DED0B1] text-black text-lg font-bold py-3 rounded-lg hover:bg-[#c9b59a] transition duration-300"
-                        onClick={() => navigate('/logout')}
+                        onClick={() => logout()}
                     >
                         PROFIL
                     </button>
