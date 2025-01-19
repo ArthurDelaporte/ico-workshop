@@ -7,7 +7,7 @@ const StatsAdmin = () => {
     const [totalUsers, setTotalUsers] = useState(0);
     const [userGrowth, setUserGrowth] = useState({ dates: [], values: [] });
 
-    const API_URL = "http://localhost:1234/api/users"; // Modifiez selon votre configuration
+    const API_URL = "https://ico-workshop.onrender.com/api/users"; // Modifiez selon votre configuration
 
     // Statistiques statiques pour le moment
     const totalGames = 120;

@@ -3,7 +3,7 @@ import { FaArrowLeft, FaSearch, FaFilter, FaBan, FaUndo } from 'react-icons/fa';
 import BanModal from './BanModal';
 
 const UsersAdmin = () => {
-    const API_URL = "http://localhost:1234/api/users"; // Ajustez selon votre configuration backend
+    const API_URL = "https://ico-workshop.onrender.com/api/users"; // Ajustez selon votre configuration backend
     const [users, setUsers] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState('');

@@ -3,7 +3,7 @@ import { FaArrowLeft, FaEdit, FaPlus, FaTrashAlt } from "react-icons/fa";
 import axios from "axios";
 
 const RulesAdmin = () => {
-  const API_URL = "http://localhost:1234/api/rules";
+  const API_URL = "https://ico-workshop.onrender.com/api/rules";
   const [rules, setRules] = useState([]);
   const [editableRuleId, setEditableRuleId] = useState(null);
   const [tempRuleText, setTempRuleText] = useState("");
