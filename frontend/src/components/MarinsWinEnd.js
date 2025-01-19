@@ -1,8 +1,41 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {useNavigate, useSearchParams} from 'react-router-dom';
+import {getAllMarins} from "../database/player";
 
-const MarinsWinEnd = ({ players }) => {
+const MarinsWinEnd = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const partyId = searchParams.get('partyId');
+
+  const [players, setPlayers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchPlayers = async () => {
+      if (!partyId) {
+        setError("ID de la partie manquant.");
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const playerData = await getAllMarins(partyId);
+        const updatedPlayers = playerData.map(player => ({
+          ...player,
+          img: `/img/card/${player.card.img}.png`
+        }));
+        setPlayers(updatedPlayers);
+      } catch (err) {
+        console.error("Erreur lors de la récupération des joueurs :", err);
+        setError("Impossible de récupérer les joueurs.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPlayers();
+  }, [partyId]);
 
   const handleNewGame = () => {
     navigate('/game-setup');
@@ -16,7 +49,7 @@ const MarinsWinEnd = ({ players }) => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
       {/* Carte principale */}
       <div
-        className="relative text-black rounded-lg shadow-md w-full max-w-md p-6"
+        className="relative text-black rounded-lg shadow-md w-full max-w-md p-5"
         style={{
           backgroundImage: "url('/img/startgame/background_card.png')",
           backgroundSize: 'cover',
@@ -24,39 +57,61 @@ const MarinsWinEnd = ({ players }) => {
         }}
       >
         {/* Titre */}
-        <h1 className="text-lg font-bold text-teal-600 text-center mb-4">
-          LES MARINS REMPORTENT LA PARTIE !
+        <h1 className="text-2xl font-bold text-[#00253E] text-center mb-4">
+          LES MARINS ET LA SIRÈNE REMPORTENT LA PARTIE !
         </h1>
 
-        {/* Cartes des personnages */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          {players?.length > 0 &&
-            players.map((player, index) => (
-              <div
-                key={index}
-                className="bg-[#C5E4E7] p-4 rounded-lg flex flex-col items-center shadow-md"
-              >
-                <img
-                  src={player.img}
-                  alt={player.name}
-                  className="w-16 h-16 object-contain mb-2"
-                />
-                <p className="text-sm font-bold text-black">{player.name}</p>
+        {loading ? (
+            <p className="text-white text-center">Chargement des joueurs...</p>
+        ) : error ? (
+            <p className="text-red-500 text-center">{error}</p>
+        ) : (
+            <>
+            {/* Cartes des personnages */}
+              <div className="grid grid-cols-2 gap-4 place-items-center mb-6">
+                {players.length > 0 ? (
+                    players.map((player, index) => (
+
+                        <div
+                            key={index}
+                            className="relative cursor-pointer"
+                            style={{width: "120px", height: "120px"}}
+                        >
+                          <div
+                              className="flex flex-col items-center justify-center p-2 bg-[rgba(0,37,62)] rounded-t-lg"
+                              style={{height: "85%"}}
+                          >
+                            <img
+                                src={player.img}
+                                alt={player.name}
+                                className="w-20 h-20 mb-2"
+                            />
+                          </div>
+                          <div className="bg-[#00253E] w-full h-6 flex items-center justify-center rounded-b-lg">
+                            <p className="text-sm font-bold text-[#E2DAC7]">{player.name}</p>
+                          </div>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-white text-center col-span-2">
+                      Aucun joueur à afficher
+                    </p>
+                )}
               </div>
-            ))}
-        </div>
+            </>
+        )}
 
         {/* Boutons */}
         <div className="flex flex-col gap-4">
           <button
-            className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
-            onClick={handleNewGame}
+              className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
+              onClick={handleNewGame}
           >
             NOUVELLE PARTIE
           </button>
           <button
-            className="w-full bg-[#981B20] text-white font-bold py-3 rounded-lg shadow-md hover:bg-red-800 transition duration-300"
-            onClick={handleMenu}
+              className="w-full bg-[#981B20] text-white font-bold py-3 rounded-lg shadow-md hover:bg-red-800 transition duration-300"
+              onClick={handleMenu}
           >
             RETOUR AU MENU
           </button>

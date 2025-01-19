@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
-import {changeCaptain, getLastAventureChoices} from "../database/aventure";
+import {changeCaptain, finalizeAventure, getLastAventureChoices} from "../database/aventure";
 import {getPartyInfo, updatePartyStatus} from "../database/party";
 
 const ShipmentReturn = () => {
@@ -59,7 +59,8 @@ const ShipmentReturn = () => {
 
   const handleNextRound = async () => {
     if (party.score_marins === 10 ) {
-
+        await finalizeAventure(partyId);
+        navigate(`/marins-win-round?partyId=${partyId}`);
     } else if (party.score_pirates === 10) {
 
     }

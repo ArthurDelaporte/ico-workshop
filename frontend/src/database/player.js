@@ -46,7 +46,28 @@ export async function getAllPlayers(partyId) {
 
     for (const playerId of party.playersId) {
         const player = await getData('player', playerId);
+
+        player.card = await getCardInfo(player.cardId);
+
         players.push(player);
+    }
+
+    return players;
+}
+
+export async function getAllMarins(partyId) {
+    const party = await getData('party', partyId);
+
+    const players = []
+
+    for (const playerId of party.playersId) {
+        const player = await getData('player', playerId);
+
+        player.card = await getCardInfo(player.cardId);
+
+        if (player.card.name !== "Pirate") {
+            players.push(player);
+        }
     }
 
     return players;

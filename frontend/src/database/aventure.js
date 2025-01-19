@@ -134,8 +134,9 @@ export async function finalizeAventure(partyId) {
     const party = await getData('party', partyId);
 
     if (party.score_marins === 10) {
-        console.log("Victoire des marins et de la sirène")
+        party.status = 'finished_marins';
     } else if (party.score_pirates === 10) {
+        party.status = 'finished_pirates';
         console.log("Victoire des pirates")
     }
 
