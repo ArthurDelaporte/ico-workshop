@@ -24,10 +24,22 @@ const getAllUsers = async () => {
     }
 };
 
-// Récupérer une carte par ID
+// Récupérer un user par ID
 const getUserById = async (id) => {
     return await prisma.user.findUnique({
         where: { id },
+    });
+};
+
+// Mettre à jour un user par ID
+const updateUser = async (id, { firstname, lastname, birthday }) => {
+    return await prisma.user.update({
+        where: { id },
+        data: {
+            firstname,
+            lastname,
+            birthday: new Date(birthday)
+        },
     });
 };
 
@@ -44,39 +56,6 @@ const updateUserStatus = async (userId, statusBan) => {
         throw error;
     }
 };
-
-//// Regrouper les utilisateurs par mois pour la courbe de croissance
-//const getUserGrowth = async () => {
-//    try {
-//        const users = await prisma.user.findMany({
-//            select: { createdAt: true },
-//        });
-//
-//        // Groupement des utilisateurs par mois
-//        const userGrowth = users.reduce((acc, user) => {
-//            const monthYear = new Date(user.createdAt).toLocaleString('fr-FR', {
-//                year: 'numeric',
-//                month: 'long',
-//            });
-//            acc[monthYear] = (acc[monthYear] || 0) + 1;
-//            return acc;
-//        }, {});
-//
-//        // Formater les données pour la courbe
-//        const growthData = Object.entries(userGrowth).map(([date, count]) => ({
-//            date,
-//            count,
-//        }));
-//
-//        // Trier par date
-//        growthData.sort((a, b) => new Date(`01 ${a.date}`) - new Date(`01 ${b.date}`)); // Formatage pour trier correctement
-//
-//        return growthData;
-//    } catch (error) {
-//        console.error('Erreur lors de la récupération de la croissance des utilisateurs :', error.message);
-//        throw error;
-//    }
-//};
 
 // Regrouper les utilisateurs par jour pour la courbe de croissance
 const getUserGrowth = async () => {
@@ -111,4 +90,4 @@ const getUserGrowth = async () => {
 };
 
 
-module.exports = { getAllUsers, updateUserStatus, getUserGrowth, getUserById };
+module.exports = { getAllUsers, updateUserStatus, getUserGrowth, getUserById, updateUser };

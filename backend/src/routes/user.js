@@ -4,7 +4,8 @@ const {
     getAllUsers,
     updateUserStatus,
     getUserGrowth,
-    getUserById
+    getUserById,
+    updateUser
 } = require('../services/userService');
 
 // Route pour récupérer la liste des utilisateurs
@@ -27,6 +28,28 @@ router.get("/:id", async (req, res) => {
             return res.status(404).json({ error: "user non trouvée" });
         }
         res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Mettre à jour un user par ID
+router.put("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { firstname, lastname, birthday } = req.body;
+
+        const updatedUser = await updateUser(id, {
+            firstname,
+            lastname,
+            birthday
+        });
+
+        if (!updatedUser) {
+            return res.status(404).json({ error: "User non trouvée" });
+        }
+
+        res.status(200).json(updatedUser);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
