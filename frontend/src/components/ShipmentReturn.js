@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useNavigate, useSearchParams} from 'react-router-dom';
-import {changeCaptain, finalizeAventure, getLastAventureChoices} from "../database/aventure";
+import {changeCaptain, getLastAventureChoices} from "../database/aventure";
 import {getPartyInfo, updatePartyStatus} from "../database/party";
 
 const ShipmentReturn = () => {
@@ -59,10 +59,10 @@ const ShipmentReturn = () => {
 
   const handleNextRound = async () => {
     if (party.score_marins === 10 ) {
-        await finalizeAventure(partyId);
+        await updatePartyStatus(partyId, "finished_marins");
         navigate(`/marins-win-round?partyId=${partyId}`);
     } else if (party.score_pirates === 10) {
-
+        navigate(`/pirates-win-start?partyId=${partyId}`);
     }
 
     await changeCaptain(partyId);
@@ -115,7 +115,7 @@ const ShipmentReturn = () => {
 
       {/* Bouton Manche Suivante */}
       <button
-        className="mt-12 text-2xl bg-black text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
+        className="mt-12 text-2xl bg-black text-white font-bold py-3 px-6 rounded-lg hover:bg-gray-800 transition duration-300"
         onClick={handleNextRound}
       >
         MANCHE SUIVANTE

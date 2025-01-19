@@ -170,7 +170,7 @@ const CrewSelection = () => {
                   className="w-14 h-14 mb-2"
                 />
               </div>
-              <div className="bg-[#E2DAC7] w-full h-4 flex items-center justify-center rounded-b-lg">
+              <div className="bg-[#E2DAC7] w-full h-6 flex items-center justify-center rounded-b-lg">
                 <p className="text-sm font-bold text-[#00253E]">{player.name}</p>
               </div>
             </div>
@@ -181,14 +181,14 @@ const CrewSelection = () => {
       {party?.aventures?.length === 0 ? (
           <div className="flex flex-col gap-4 items-center w-full max-w-md px-24">
               <button
-                  className="bg-[#DED0B1] text-[#00253E] font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
+                  className="bg-[#DED0B1] text-[#00253E] font-bold py-3 px-6 rounded-lg w-full text-center text-2xl"
                   onClick={handleConfirmCrew}
                   disabled={selectedCrew.length !== maxCrewSize}
               >
                   CONFIRMER L’ÉQUIPAGE
               </button>
               <button
-                  className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
+                  className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center text-2xl"
                   onClick={() => navigate('/')}
               >
                   QUITTER LA PARTIE
@@ -199,14 +199,14 @@ const CrewSelection = () => {
               {selectedCrew.length !== 0 ? (
                   <div className="flex flex-col gap-4 items-center w-full max-w-md">
                       <button
-                          className="bg-[#DED0B1] text-[#00253E] font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
+                          className="bg-[#DED0B1] text-[#00253E] font-bold py-3 px-6 rounded-lg w-full text-center text-2xl"
                           onClick={() => handleCrewAccepted(true)}
                           disabled={selectedCrew.length !== maxCrewSize || impossibleCrew}
                       >
                           ÉQUIPAGE ACCEPTÉ
                       </button>
                       <button
-                          className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
+                          className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center text-2xl"
                           onClick={() => handleCrewAccepted(false)}
                           disabled={selectedCrew.length !== maxCrewSize || impossibleCrew}
                       >
@@ -215,7 +215,7 @@ const CrewSelection = () => {
                   </div>
               ) : (
                   <button
-                      className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center shadow-md text-2xl"
+                      className="bg-[#981B20] text-white font-bold py-3 px-6 rounded-lg w-full text-center text-2xl"
                       onClick={() => navigate('/')}
                   >
                       QUITTER LA PARTIE

@@ -13,7 +13,7 @@ const VotingRules = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
       <div
-          className="bg-cover bg-center text-black p-6 rounded-lg shadow-md w-full max-w-md"
+          className="bg-cover bg-center text-black p-6 rounded-lg w-full max-w-md"
           style={{
             backgroundImage: `url('/img/startgame/background_card.png')`,
             borderRadius: '16px',
@@ -35,7 +35,7 @@ const VotingRules = () => {
           </li>
         </ul>
         <button
-          className="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 shadow-md hover:bg-gray-800 transition duration-300"
+          className="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
           onClick={handleOkClick}
         >
           OK

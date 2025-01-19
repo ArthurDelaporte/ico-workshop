@@ -104,7 +104,7 @@ const PlayerRoleReveal = () => {
 
         {/* Conteneur principal */}
         <div
-            className="relative p-6 rounded-lg shadow-md w-[90%] max-w-[380px] text-center bg-[#DED0B1]"
+            className="relative p-6 rounded-lg w-[90%] max-w-[380px] text-center bg-[#DED0B1]"
         >
 
           {/* Informations du capitaine */}

@@ -49,7 +49,7 @@ const ActionCardSelection = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-white px-6 py-8">
       <div className="w-full max-w-md">
-        <div className="text-center bg-black py-4 rounded-lg shadow-md mb-6">
+        <div className="text-center bg-black py-4 rounded-lg mb-6">
           <h1 className="text-2xl font-bold text-red-500">
             JOUEUR {crewPlayerIndex + 1} / {maxCrewSize}
           </h1>
@@ -59,7 +59,7 @@ const ActionCardSelection = () => {
       </div>
       <div className="grid grid-cols-1 gap-4 max-w-md w-full">
         <button
-          className={`p-6 rounded-lg shadow-md text-black bg-white text-xl font-bold ${
+          className={`p-6 rounded-lg text-black bg-white text-xl font-bold ${
             selectedCard === 'ILE' ? 'ring-4 ring-teal-500' : ''
           }`}
           onClick={() => handleCardClick('ILE')}
@@ -67,7 +67,7 @@ const ActionCardSelection = () => {
           ILE
         </button>
         <button
-          className={`p-6 rounded-lg shadow-md text-black bg-white text-xl font-bold ${
+          className={`p-6 rounded-lg text-black bg-white text-xl font-bold ${
             selectedCard === 'POISON' ? 'ring-4 ring-teal-500' : ''
           }`}
           onClick={() => handleCardClick('POISON')}

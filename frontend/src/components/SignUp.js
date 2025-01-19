@@ -48,7 +48,7 @@ const SignUp = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
       <div
-        className="relative text-black p-6 rounded-lg shadow-md w-full max-w-md flex flex-col items-center"
+        className="relative text-black p-6 rounded-lg w-full max-w-md flex flex-col items-center"
         style={{
           backgroundImage: "url('/img/startgame/background_card.png')", 
           backgroundSize: "cover",
@@ -105,7 +105,7 @@ const SignUp = () => {
           />
           <button
             onClick={handleSignUp}
-            className="w-full bg-black text-white py-3 text-lg font-bold rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
+            className="w-full bg-black text-white py-3 text-lg font-bold rounded-lg hover:bg-gray-800 transition duration-300"
             disabled={loading}
           >
             {loading ? "Inscription..." : "S'inscrire"}

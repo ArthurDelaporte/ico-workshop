@@ -49,7 +49,7 @@ const MarinsWinEnd = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
       {/* Carte principale */}
       <div
-        className="relative text-black rounded-lg shadow-md w-full max-w-md p-5"
+        className="relative text-black rounded-lg w-full max-w-md p-5"
         style={{
           backgroundImage: "url('/img/startgame/background_card.png')",
           backgroundSize: 'cover',
@@ -57,7 +57,7 @@ const MarinsWinEnd = () => {
         }}
       >
         {/* Titre */}
-        <h1 className="text-2xl font-bold text-[#00253E] text-center mb-4">
+        <h1 className="text-3xl font-bold text-[#00253E] text-center mb-4">
           LES MARINS ET LA SIRÈNE REMPORTENT LA PARTIE !
         </h1>
 
@@ -78,7 +78,7 @@ const MarinsWinEnd = () => {
                             style={{width: "120px", height: "120px"}}
                         >
                           <div
-                              className="flex flex-col items-center justify-center p-2 bg-[rgba(0,37,62)] rounded-t-lg"
+                              className="flex flex-col items-center justify-center p-2 bg-[#00253E] rounded-t-lg"
                               style={{height: "85%"}}
                           >
                             <img
@@ -102,15 +102,15 @@ const MarinsWinEnd = () => {
         )}
 
         {/* Boutons */}
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 text-lg">
           <button
-              className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg shadow-md hover:bg-gray-800 transition duration-300"
+              className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg hover:bg-gray-800 transition duration-300"
               onClick={handleNewGame}
           >
             NOUVELLE PARTIE
           </button>
           <button
-              className="w-full bg-[#981B20] text-white font-bold py-3 rounded-lg shadow-md hover:bg-red-800 transition duration-300"
+              className="w-full bg-[#981B20] text-white font-bold py-3 rounded-lg hover:bg-red-800 transition duration-300"
               onClick={handleMenu}
           >
             RETOUR AU MENU
