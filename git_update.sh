@@ -1,5 +1,5 @@
 #!/bin/bash
 git add .
 git pull
-git commit -m "Ajout statistiques : Nombre total d'utilisateurs & Croissance des utilisateurs par jour "
+git commit -m "Maj frontend avec le lien ver le backend pour les APIs "
 git push
