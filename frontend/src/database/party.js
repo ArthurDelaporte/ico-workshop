@@ -23,7 +23,9 @@ export async function initializeParty(numberPlayers) {
         last_captains: [],
         future_captains: [],
         status: 'initial',
-        aventures: []
+        aventures: [],
+        created_at: new Date(),
+        finished_at: null,
     };
 
     // Création des objets Player
@@ -75,6 +77,10 @@ export async function updatePartyStatus(partyId, newStatus) {
 
         if (!party) {
             throw new Error(`Party avec l'ID ${partyId} introuvable.`);
+        }
+
+        if (newStatus.startsWith("finished")) {
+            party.finished_at = new Date();
         }
 
         // Mettre à jour le statut
