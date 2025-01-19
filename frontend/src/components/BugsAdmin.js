@@ -412,11 +412,9 @@ const BugsAdmin = () => {
                   <td className="px-4 py-3">
                     <span
                       className={`px-3 py-2 rounded-full text-white ${
-                        bug.status === 'Résolu'
+                        bug.status === true
                           ? 'bg-green-500'
-                          : bug.status === 'En cours'
-                          ? 'bg-yellow-500'
-                          : 'bg-red-500'
+                          : 'bg-yellow-500'
                       }`}
                     >
                       {bug.status}
