@@ -75,7 +75,7 @@ const Profil = () => {
 
   return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#00253E] px-6 py-8">
-        <div className="relative bg-[#DED0B1] p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+        <div className="relative bg-[#DED0B1] p-6 rounded-lg w-full max-w-sm text-center">
           <h1 className="text-2xl font-bold text-[#981B20] mb-4">Mon Profil</h1>
           <div className="text-[#00253E] text-sm leading-relaxed space-y-2">
             <p>
@@ -92,16 +92,22 @@ const Profil = () => {
             </p>
           </div>
           <button
-              className="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 shadow-md hover:bg-gray-800 transition duration-300"
+              className="w-full bg-black text-white font-bold py-3 rounded-lg mt-6 hover:bg-gray-800 transition duration-300"
               onClick={handleEditProfile}
           >
             Modifier le profil
           </button>
           <button
-              className="w-full bg-red-600 text-white font-bold py-3 rounded-lg mt-4 shadow-md hover:bg-red-700 transition duration-300"
+              className="w-full bg-red-600 text-white font-bold py-3 rounded-lg mt-4 hover:bg-red-700 transition duration-300"
               onClick={logout}
           >
             Déconnexion
+          </button>
+          <button
+              className="w-full bg-[#00253E] text-white font-bold py-3 rounded-lg mt-4 transition duration-300"
+              onClick={() => navigate('/')}
+          >
+            Page d'accueil
           </button>
         </div>
       </div>
