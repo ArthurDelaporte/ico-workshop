@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowLeft } from 'lucide-react';
 
 const CardStore = () => {
-    const API_URL = "http://localhost:1234/api/cards";
+    const API_URL = "https://ico-workshop.onrender.com/api/cards";
     const SUPABASE_BUCKET_URL = "https://xbnmuwxyhwecihcevzmw.supabase.co/storage/v1/object/public/card-images";
     const [cards, setCards] = useState([]);
     const [selectedCard, setSelectedCard] = useState(null);
