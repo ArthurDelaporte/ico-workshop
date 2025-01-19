@@ -141,6 +141,7 @@ const FeedbackForm = () => {
       type: feedbackType,
       description,
       player: email || null,
+      status: false
     };
 
     try {

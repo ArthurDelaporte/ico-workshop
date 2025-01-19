@@ -4,14 +4,14 @@ const bugService = require('../services/bugService');
 
 // Route pour créer un bug/suggestion
 router.post('/', async (req, res) => {
-    const { type, description, player } = req.body;
+    const { type, description, player, status } = req.body;
 
     if (!type || !description) {
         return res.status(400).json({ error: 'Type et description sont obligatoires.' });
     }
 
     try {
-        const newBug = await bugService.createBug({ type, description, player });
+        const newBug = await bugService.createBug({ type, description, player, status });
         res.status(201).json(newBug);
     } catch (error) {
         console.error('Erreur lors de la création du bug :', error.message);

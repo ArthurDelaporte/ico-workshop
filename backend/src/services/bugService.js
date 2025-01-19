@@ -9,12 +9,13 @@ const prisma = new PrismaClient();
  * @param {string} [data.player] - L'email du joueur (facultatif).
  * @returns {Promise<Object>} Le bug créé.
  */
-const createBug = async ({ type, description, player }) => {
+const createBug = async ({ type, description, player, status }) => {
     return await prisma.bug.create({
         data: {
             type,
             description,
-            player
+            player,
+            status
         },
     });
 };
