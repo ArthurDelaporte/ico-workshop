@@ -11,7 +11,7 @@ const UsersAdmin = () => {
     const [isBanModalOpen, setIsBanModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const usersPerPage = 4;
+    const usersPerPage = 10; //Nombre users/pages 
 
     // Récupérer les utilisateurs depuis le backend
     useEffect(() => {
