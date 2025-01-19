@@ -55,6 +55,13 @@ const HomePage = () => {
 
       <button
         className="text-[#DED0B1] text-sm underline mt-4 mb-8 underline"
+        onClick={() => navigate('/feedback-form')}
+      >
+        Contact
+      </button>
+
+      <button
+        className="text-[#DED0B1] text-sm underline mt-4 mb-8 underline"
         onClick={() => navigate('/legal-mentions')}
       >
         mentions légales

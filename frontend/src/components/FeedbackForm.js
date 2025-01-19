@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaArrowLeft} from 'react-icons/fa';
 
 const FeedbackForm = () => {
   const [feedbackType, setFeedbackType] = useState('bug'); // Par défaut "Bug"
@@ -34,9 +35,19 @@ const FeedbackForm = () => {
           borderRadius: '16px',
         }}
       >
-        <h1 className="text-xl font-bold text-[#981B20] text-center mb-4">
+       <div className="w-full max-w-4xl flex items-center justify-between mb-6">
+                       <button
+                           onClick={() => (window.location.href = "./")}
+                           className="text-[#CE5960] text-xl flex items-center hover:text-[#AF2127]"
+                       >
+                           <FaArrowLeft className="mr-2" />
+                       </button>
+                       <h1 className="text-xl font-bold text-[#981B20] text-center mb-4">
           REMONTER UN BUG OU FAIRE UNE SUGGESTION
         </h1>
+                       <div className="w-8" />
+                   </div>
+
         <div className="mb-4">
           <label className="block text-sm font-bold text-[#00253E] mb-2">
             Type de retour :
@@ -101,7 +112,7 @@ const FeedbackForm = () => {
           onClick={handleSubmit}
         >
           ENVOYER
-        </button>
+        </button> 
       </div>
     </div>
   );

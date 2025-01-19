@@ -1,5 +1,5 @@
 #!/bin/bash
 git add .
 git pull
-git commit -m "Maj frontend avec le lien ver le backend pour les APIs "
+git commit -m "intégrer FeedbackForm a homepage et le mettre a jour "
 git push
