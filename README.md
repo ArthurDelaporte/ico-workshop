@@ -10,7 +10,7 @@ Un projet collaboratif pour développer un jeu interactif intégrant un système
 | Pseudo      | Nom et Prénom       | Responsabilités                                                                 |
 |-------------|---------------------|--------------------------------------------------------------------------------|
 | **Richard** | LAM Richard         | Front du jeu, intégration des maquettes.                                       |
-| **Arthur**  | DELAPORTE Arthur    | Backend du jeu (en local), backend pour l'inscription/connexion, BDD, route admin protégée. |
+| **Arthur**  | DELAPORTE Arthur    | Backend du jeu (en local), backend pour l'inscription/connexion, BDD, route admin protégée, hébergement du front et du back. |
 | **Haithem** | HAMMAMI Haithem     | Front et backend du back-office, cahier des charges complets.                  |
 
 ---
@@ -55,49 +55,50 @@ CLIENT_URL="http://localhost:3000/"
 SUPABASE_URL="https://YOUR_SUPABASE_URL.supabase.co"
 SUPABASE_ANON_KEY="YOUR_SUPABASE_ANON_KEY"
 PORT=1234
+```
 
-Lancer le frontend
+## Lancer le frontend
 
 Naviguez dans le dossier frontend :
 
 ```bash
 cd frontend
-```bash
+```
 
 Installez les dépendances avec :
 ```bash
 npm install
-```bash
+```
 
 Démarrez le frontend avec 
 ```bash
 npm start
-```bash
+```
 
 Le frontend sera accessible à l'adresse : http://localhost:3000.
 
 
-Lancer le backend
+## Lancer le backend
 
 Naviguez dans le dossier backend :
 
 ```bash
 cd backend
-```bash
+```
 
 Installez les dépendances avec 
 ```bash
 npm install
-```bash
+```
 
 Démarrez le backend avec :
 ```bash
 npm start
-```bash
+```
 
 
-Dépendances
-Frontend
+## Dépendances
+### Frontend
 Liste des dépendances principales :
 
 React : Bibliothèque pour le frontend.
@@ -115,6 +116,6 @@ dotenv : Gestion des variables d'environnement.
 Cors : Gestion des politiques de partage des ressources.
 Nodemon : Pour un rechargement automatique du serveur lors des modifications de code.
 
-Liens utiles
+### Liens utiles
 API de ICO : https://ico-workshop.onrender.com/
 Application ICO accessible en ligne : https://ico-game.vercel.app/
