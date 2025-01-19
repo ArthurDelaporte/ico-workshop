@@ -424,13 +424,13 @@ const BugsAdmin = () => {
                   </td>
                   <td className="px-4 py-3 flex space-x-2">
                     <button
-                      onClick={() => updateStatus(bug.id, 'En cours')}
+                      onClick={() => updateStatus(bug.id, false)}
                       className="text-yellow-500 hover:text-yellow-700 text-xl"
                     >
                       <FaEdit />
                     </button>
                     <button
-                      onClick={() => updateStatus(bug.id, 'Résolu')}
+                      onClick={() => updateStatus(bug.id, true)}
                       className="text-green-500 hover:text-green-700 text-xl"
                     >
                       <FaCheckCircle />
