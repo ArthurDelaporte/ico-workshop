@@ -15,10 +15,12 @@ app.use(express.json());
 const authRoutes = require("./routes/auth");
 const cardRoutes = require("./routes/card");
 const ruleRoutes = require("./routes/rule");
+const userRoutes = require("./routes/user");
 
 app.use("/api/auth", authRoutes);
 app.use("/api/cards", cardRoutes);
 app.use("/api/rules", ruleRoutes);
+app.use("/api/users", userRoutes);
 
 app.get("/", (req, res) => {
     res.send("Bienvenue dans le backend de ton jeu !");
