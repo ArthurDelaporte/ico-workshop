@@ -27,7 +27,7 @@ const SignUp = () => {
       statusBan: false,
     }));
     try {
-      const response = await fetch("http://localhost:1234/api/auth/signup", {
+      const response = await fetch("https://ico-workshop.onrender.com/api/auth/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
