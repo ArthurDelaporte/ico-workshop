@@ -5,7 +5,7 @@ import {getLastAventureInfo, updateAventureChoice} from "../database/aventure";
 import { getPlayerInfo } from "../database/player";
 import {updatePartyStatus} from "../database/party";
 
-const ActionCardSelection = () => {
+const PlayerCardChoice = () => {
   const { nextPlayer } = usePlayerContext();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -19,7 +19,7 @@ const ActionCardSelection = () => {
   const [error, setError] = useState('');
   const [shuffledCards, setShuffledCards] = useState([]);
 
-  useEffect(async () => {
+  useEffect( () => {
     if (!partyId) {
       setError("ID de la partie manquant.");
       setLoading(false);
@@ -53,7 +53,7 @@ const ActionCardSelection = () => {
       }
     };
 
-    await fetchAventureInfo();
+    fetchAventureInfo();
   }, [partyId]);
 
   const shuffleArray = (array) => array.sort(() => Math.random() - 0.5);
@@ -144,4 +144,4 @@ const ActionCardSelection = () => {
   );
 };
 
-export default ActionCardSelection;
+export default PlayerCardChoice;
