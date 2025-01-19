@@ -18,7 +18,7 @@ const HomePage = () => {
       </div>
 
       {/* Texte d'invitation */}
-      {user ? (
+      {!user ? (
         <p className="text-[#DED0B1] text-center text-sm mt-4 underline">
             Inscrivez-vous ou connectez-vous à votre compte
         </p>
@@ -28,7 +28,7 @@ const HomePage = () => {
 
         {/* Boutons */}
         <div className="flex flex-col space-y-4 w-full max-w-xs">
-            {user ? (
+            {!user ? (
                 <div className="flex flex-col space-y-4">
                     <button
                         className="w-full bg-[#981B20] text-white text-lg font-bold py-3 rounded-lg hover:bg-[#7b1619] transition duration-300"
