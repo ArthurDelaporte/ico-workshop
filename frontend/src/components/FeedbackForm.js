@@ -161,7 +161,6 @@ const FeedbackForm = () => {
       }
 
       const result = await response.json();
-      console.log('Feedback envoyé :', result);
 
       alert('Merci pour votre retour !');
       setFeedbackType('bug');

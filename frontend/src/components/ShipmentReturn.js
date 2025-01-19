@@ -58,20 +58,22 @@ const ShipmentReturn = () => {
   }, [partyId]);
 
   const handleNextRound = async () => {
-    if (party.score_marins === 10 ) {
-        await updatePartyStatus(partyId, "finished_marins");
-        navigate(`/marins-win-round?partyId=${partyId}`);
-    } else if (party.score_pirates === 10) {
-        navigate(`/pirates-win-start?partyId=${partyId}`);
-    }
-
-    await changeCaptain(partyId);
-    await updatePartyStatus(partyId, "ilePoisonChoices");
-    if (party?.aventures?.length === 1) {
-        navigate(`/voting-rules?partyId=${partyId}`);
-    } else {
-        navigate(`/new-captain-reveal?partyId=${partyId}`);
-    }
+    await getPartyInfo(partyId).then(async (updateParty) => {
+        if (updateParty.score_marins === 10) {
+            await updatePartyStatus(partyId, "finished_marins");
+            navigate(`/marins-win-round?partyId=${partyId}`);
+        } else if (updateParty.score_pirates === 10) {
+            navigate(`/pirates-win-start?partyId=${partyId}`);
+        } else {
+            await changeCaptain(partyId);
+            await updatePartyStatus(partyId, "ilePoisonChoices");
+            if (updateParty?.aventures?.length === 1) {
+                navigate(`/voting-rules?partyId=${partyId}`);
+            } else {
+                navigate(`/new-captain-reveal?partyId=${partyId}`);
+            }
+        }
+    });
   };
 
   if (loading) {

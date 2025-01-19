@@ -137,7 +137,6 @@ export async function finalizeAventure(partyId, ) {
         party.status = 'finished_marins';
     } else if (party.score_pirates === 10) {
         party.status = 'finished_pirates';
-        console.log("Victoire des pirates")
     }
 
     await addData('party', party);

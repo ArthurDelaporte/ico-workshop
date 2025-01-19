@@ -21,7 +21,6 @@ const SirenWinEnd = () => {
 
           try {
               const sireneData = await getSirene(partyId);
-              console.log(sireneData);
               setSirene(sireneData);
           } catch (err) {
               console.error("Erreur lors de la récupération des joueurs :", err);

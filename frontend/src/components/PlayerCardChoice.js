@@ -85,14 +85,14 @@ const PlayerCardChoice = () => {
     try {
       nextPlayer();
 
-      await updateAventureChoice(partyId, selectedCard, currentPlayerIndex);
-
-      if (currentPlayerIndex === 2){
-        await updatePartyStatus(partyId, "ilePoisonReveal");
-        navigate(`/captain-reveal-cards?partyId=${partyId}`);
-      } else {
-        navigate(`/player-turn?partyId=${partyId}`);
-      }
+      await updateAventureChoice(partyId, selectedCard, currentPlayerIndex).then(async () => {
+        if (currentPlayerIndex === 2){
+          await updatePartyStatus(partyId, "ilePoisonReveal");
+          navigate(`/captain-reveal-cards?partyId=${partyId}`);
+        } else {
+          navigate(`/player-turn?partyId=${partyId}`);
+        }
+      });
 
     } catch (err) {
       console.error("Erreur lors de la validation de la carte :", err);
