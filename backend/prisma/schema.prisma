@@ -80,3 +80,14 @@ model Rule {
 
   @@map("rule")
 }
+
+
+model Bug {
+  id          String   @id @default(uuid())
+  createdAt   DateTime @default(now()) @map("created_at")
+  type        String
+  description String?
+  player       String?
+  status      Boolean  @default(false)
+  @@map("bug")
+}
