@@ -31,7 +31,7 @@ router.get('/', async (req, res) => {
 });
 
 // Route pour mettre à jour le statut d'un bug
-router.patch('/:id/status', async (req, res) => {
+router.put('/:id/status', async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 

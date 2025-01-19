@@ -314,7 +314,7 @@ const BugsAdmin = () => {
 
   const updateStatus = async (id, newStatus) => {
     try {
-      const response = await fetch(`${API_URL}/${id}`, {
+      const response = await fetch(`${API_URL}/${id}/status`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus }),
@@ -401,12 +401,12 @@ const BugsAdmin = () => {
                     ) : (
                       <FaLightbulb className="text-yellow-500 mr-4 text-xl" />
                     )}
-                    <div className="break-words">{bug.Type}</div>
+                    <div className="break-words">{bug.type}</div>
                   </td>
                   <td className="px-4 py-3">{bug.description}</td>
                   <td className="px-4 py-3">
                     <div>
-                      <strong className="text-[#AF2127]">Email:</strong> {bug.player?.email || 'Non fourni'}
+                      <strong className="text-[#AF2127]">Email:</strong> {bug.player || 'Non fourni'}
                     </div>
                   </td>
                   <td className="px-4 py-3">
