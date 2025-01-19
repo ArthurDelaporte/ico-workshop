@@ -4,6 +4,7 @@ const {
     getAllUsers,
     updateUserStatus,
     getUserGrowth,
+    getUserById
 } = require('../services/userService');
 
 // Route pour récupérer la liste des utilisateurs
@@ -14,6 +15,20 @@ router.get('/', async (req, res) => {
     } catch (error) {
         console.error('Erreur lors de la récupération des utilisateurs :', error.message);
         res.status(500).json({ error: 'Erreur serveur.' });
+    }
+});
+
+// Récupérer une carte par ID
+router.get("/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await getUserById(id);
+        if (!user) {
+            return res.status(404).json({ error: "user non trouvée" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 });
 

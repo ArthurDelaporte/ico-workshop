@@ -24,6 +24,13 @@ const getAllUsers = async () => {
     }
 };
 
+// Récupérer une carte par ID
+const getUserById = async (id) => {
+    return await prisma.user.findUnique({
+        where: { id },
+    });
+};
+
 // Mettre à jour le statut "statusBan" d'un utilisateur
 const updateUserStatus = async (userId, statusBan) => {
     try {
@@ -104,4 +111,4 @@ const getUserGrowth = async () => {
 };
 
 
-module.exports = { getAllUsers, updateUserStatus, getUserGrowth };
+module.exports = { getAllUsers, updateUserStatus, getUserGrowth, getUserById };
